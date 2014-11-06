@@ -59,7 +59,6 @@ grails.project.dependency.resolution = {
         compile ("se.skltp.vp:vp-hsa-cache:2.2.9-SNAPSHOT"){
           excludes 'spring-asm','slf4j-log4j12'
         }
-		    compile "se.skltp.tk:tp-vagval-admin-schemas:1.4.2-SNAPSHOT"
     }
 
     plugins {

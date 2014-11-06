@@ -23,11 +23,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-			<groupId>se.skltp.tk</groupId>
-			<artifactId>tp-vagval-admin-schemas</artifactId>
-			<version>${tak.version}</version>
-        </dependency>
 
         <dependency>
 			    <groupId>se.skltp.vp</groupId>
