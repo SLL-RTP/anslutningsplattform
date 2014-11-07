@@ -7,8 +7,9 @@ class UrlMappings {
             }
         }
 
-				"/angular"(view:"/angular")
         "/"(view:"/index")
+        "/anslutning"(view: "/anslutning/index")
+        "/bestallning"(view: "/bestallning/index")
         "500"(view:'/error')
 	}
 }

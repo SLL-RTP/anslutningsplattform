@@ -122,3 +122,6 @@ tak.sokvagvalsinfo.url = 'http://localhost:8090/tp-vagval-admin-services/SokVagv
 // HSA config
 //hsa.hsacache.files = ["classpath:hsacache.xml", "classpath:hsacachecomplementary.xml"]
 hsa.hsacache.files = ["grails-app/conf/hsacache.xml", "grails-app/conf/hsacachecomplementary.xml"]
+
+//Grails asset pipeline config
+grails.assets.minifyJs = false
