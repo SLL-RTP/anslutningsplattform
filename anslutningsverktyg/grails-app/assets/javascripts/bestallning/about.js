@@ -1,10 +1,9 @@
 'use strict';
 
-angular.module('bestallningApp')
-    .controller('AboutCtrl', function ($scope) {
+app.controller('AboutCtrl', ['$scope', 'Bestallning', function ($scope, Bestallning) {
         $scope.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
             'Karma'
         ];
-    });
+    }]);

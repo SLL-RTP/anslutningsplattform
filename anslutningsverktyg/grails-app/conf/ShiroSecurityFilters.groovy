@@ -25,7 +25,7 @@ class ShiroSecurityFilters {
               if(isPublic) return true
 
               // Ignore direct views (e.g. the default main index page) and assets.
-              if (!controllerName || controllerName == 'assets') return true
+              if (!controllerName || controllerName == 'assets' || controllerName == 'bestallning') return true
 
               // Access control by convention.
               accessControl()

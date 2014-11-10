@@ -11,5 +11,12 @@ class UrlMappings {
         "/anslutning"(view: "/anslutning/index")
         "/bestallning"(view: "/bestallning/index")
         "500"(view:'/error')
+
+        group "/api", {
+            "/bestallning"(controller: 'bestallning') {
+                action = [GET: 'list']
+                format = "json"
+            }
+        }
 	}
 }

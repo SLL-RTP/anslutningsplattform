@@ -1,6 +1,6 @@
 'use strict';
 
-angular
+var app = angular
     .module('anslutningApp', [
         'ngResource',
         'ngRoute',

@@ -12,6 +12,7 @@
 //= require angular-resource/angular-resource
 //= require bestallning/app
 //= require bestallning/about
+//= require bestallning/services
 //= require anslutning/app
 //= require_tree .
 //= require_self
