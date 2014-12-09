@@ -51,7 +51,7 @@ final class TakCache {
 	 * @param endpoint URL
 	 * @param behorigheter
 	 */
-	private synchronized static void cacheAnropsBehorighet(final String endpoint, final List<AnropsBehorighetsInfoType> behorigheter) {
+	private static void cacheAnropsBehorighet(final String endpoint, final List<AnropsBehorighetsInfoType> behorigheter) {
 		if(endpoint != null) {
 			final Set<String> currentKeys = new HashSet<String>();
 			ConcurrentHashMap<String, AnropsBehorighetDTO> cache;
@@ -83,7 +83,7 @@ final class TakCache {
 	 * @param endpoint URL
 	 * @param kontrakt
 	 */
-	private synchronized static void cacheTjanstecontract(final String endpoint, final List<TjanstekontraktInfoType> kontrakt) {
+	private static void cacheTjanstecontract(final String endpoint, final List<TjanstekontraktInfoType> kontrakt) {
 		if(endpoint != null) {
 			final Set<String> currentKeys = new HashSet<String>();
 			ConcurrentHashMap<String, TjanstekontraktDTO> cache;
@@ -115,7 +115,7 @@ final class TakCache {
 	 * @param endpoint
 	 * @param virtualiseringar
 	 */
-	private synchronized static void cacheVirtualiseringar(final String endpoint, final List<VirtualiseringsInfoType> virtualiseringar) {
+	private static void cacheVirtualiseringar(final String endpoint, final List<VirtualiseringsInfoType> virtualiseringar) {
 		if(endpoint != null) {
 			final Set<String> currentKeys = new HashSet<String>();
 			ConcurrentHashMap<String, VirtualiseringDTO> cache;
