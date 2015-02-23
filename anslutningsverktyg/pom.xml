@@ -16,7 +16,7 @@
     <description>anslutningsplattform</description>
 
     <properties>
-		<tak.version>1.4.2</tak.version>
+		<tak.version>1.5.1</tak.version>
     	<vp.version>2.2.9</vp.version>
         <grails.version>2.4.3</grails.version>
     </properties>
@@ -270,16 +270,6 @@
             <id>grails-plugins</id>
             <name>grails-plugins</name>
             <url>http://repo.grails.org/grails/plugins</url>
-        </repository>
-        <repository>
-            <id>muleforge</id>
-            <name>muleforge</name>
-            <url>http://repository.muleforge.org/</url>
-        </repository>
-        <repository>
-            <id>mulesoft</id>
-            <name>mulesoft</name>
-            <url>https://repository.mulesoft.org/nexus/content/repositories/releases/</url>
         </repository>
         <repository>
             <id>codehaus</id>
