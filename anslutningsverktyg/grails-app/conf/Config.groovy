@@ -16,10 +16,7 @@ def EXT_RESOURCES_DIR = ''
 
 environments {
     development {
-        EXT_RESOURCES_DIR = 'grails-app/conf'
-    }
-    production {
-        EXT_RESOURCES_DIR = '/www/inera/home/hhunberg/anslutningsplattform/'
+        EXT_RESOURCES_DIR = 'grails-app/conf/config.dir.external/data'
     }
 }
 //Dir where external resources as override properties and caches are placed
@@ -236,6 +233,11 @@ tak.env.id.'3' = 'ntjp-test'
 tak.env.name.'3' = 'NTjP TEST'
 tak.env.url.'3' = 'http://TODO-TEST'
 
+tak.env.id.'4' = 'hd-rivta-box'
+tak.env.name.'4' = 'HD RIVTA BOX'
+tak.env.url.'4' = 'http://33.33.33.33:8080/tak-services/SokVagvalsInfo/v2'
+
+
 environments {
 	development{
 		// HSA cache
@@ -254,21 +256,7 @@ environments {
         // Token used by client to invoke backend
         api.auth.token = 'secret-token'
 	}
-	test{
-		// HSA cache
-		hsa.hsacache.files = ["${EXT_RESOURCES_DIR}/hsacache-test.xml", "${EXT_RESOURCES_DIR}/hsacachecomplementary-test.xml"]
 
-		// RIV TA cache
-		rivta.cache.file = "${EXT_RESOURCES_DIR}/domains.xml"
-
-		// TAK cache location
-		tak.cache.location = "${EXT_RESOURCES_DIR}/tak"
-
-		grails.mail.disabled = true //Disable sending mail in test for now
-
-        // Token used by client to invoke backend
-        api.auth.token = 'secret-token'
-	}
 	production{
 		// HSA cache
 		hsa.hsacache.files = ["${EXT_RESOURCES_DIR}/hsacache.xml", "${EXT_RESOURCES_DIR}/hsacachecomplementary.xml"]
