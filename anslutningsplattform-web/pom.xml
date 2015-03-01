@@ -10,10 +10,10 @@
       <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>anslutningsplattform</artifactId>
+    <artifactId>anslutningsplattform-web</artifactId>
     <packaging>grails-app</packaging>
-    <name>anslutningsplattform</name>
-    <description>anslutningsplattform</description>
+    <name>anslutningsplattform-web</name>
+    <description>anslutningsplattform-web</description>
 
     <properties>
 		<tak.version>1.5.1</tak.version>

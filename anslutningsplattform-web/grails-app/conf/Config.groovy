@@ -233,9 +233,9 @@ tak.env.id.'3' = 'ntjp-test'
 tak.env.name.'3' = 'NTjP TEST'
 tak.env.url.'3' = 'http://TODO-TEST'
 
-tak.env.id.'4' = 'hd-rivta-box'
-tak.env.name.'4' = 'HD RIVTA BOX'
-tak.env.url.'4' = 'http://33.33.33.33:8080/tak-services/SokVagvalsInfo/v2'
+//tak.env.id.'4' = 'hd-rivta-box'
+//tak.env.name.'4' = 'HD RIVTA BOX'
+//tak.env.url.'4' = 'http://33.33.33.33:8080/tak-services/SokVagvalsInfo/v2'
 
 
 environments {
