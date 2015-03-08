@@ -5,6 +5,7 @@ import groovy.transform.ToString
 class TjansteKomponentDTO {
     String hsaId
     String namn
+    String organisation
     String huvudAnsvarigNamn
     String huvudAnsvarigEpost
     String huvudAnsvarigTelefon

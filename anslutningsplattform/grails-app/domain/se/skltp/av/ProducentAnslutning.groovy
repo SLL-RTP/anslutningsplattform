@@ -19,7 +19,7 @@ class ProducentAnslutning {
 	//To cascade deletes when ProducentBestallning is removed
 	static belongsTo = [producentBestallning: ProducentBestallning]
 	
-	static hasMany = [logiskAdresser: LogiskAdress]
+	static hasMany = [logiskaAdresser: LogiskAdress, nyaLogiskaAdresser: LogiskAdress, borttagnaLogiskaAdresser: LogiskAdress]
 
     static constraints = {
 		rivTaProfile nullable: false, blank: false 

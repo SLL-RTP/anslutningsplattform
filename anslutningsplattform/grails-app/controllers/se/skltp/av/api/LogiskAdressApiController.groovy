@@ -24,4 +24,9 @@ class LogiskAdressApiController extends RestfulController {
         }
         respond result
     }
+
+    def getForContract(String serviceComponentId, String environmentId, String serviceContractNamespace, int majorVersion, int minorVersion) {
+        respond logiskAdressService.getForServiceContract(serviceComponentId, environmentId, serviceContractNamespace, majorVersion, minorVersion)
+    }
+
 }

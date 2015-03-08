@@ -1,5 +1,7 @@
 package se.skltp.av.service
 
+import se.skltp.av.services.dto.AdressDTO
+
 import java.util.Date;
 import java.util.List;
 
@@ -202,6 +204,12 @@ class TakService {
 		contracts
 	}
 
+    AdressDTO getAdressByTjanstekontractAndHsaId(String takId, String namnrymd, String majorVersion, String minorVersion, String hsaId) {
+        new AdressDTO(
+                url: 'http://dummy.com/',
+                rivProfil: 'RIVTABP21'
+        )
+    }
 
 // END: PUBLIC METHODS
 

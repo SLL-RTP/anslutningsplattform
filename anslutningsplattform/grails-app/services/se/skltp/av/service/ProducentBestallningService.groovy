@@ -1,18 +1,13 @@
 package se.skltp.av.service
 
 import grails.transaction.Transactional
-
 import org.apache.shiro.crypto.hash.Sha256Hash
-
 import se.skltp.av.BestallningsHistorik
+import se.skltp.av.LogiskAdress
 import se.skltp.av.ProducentBestallning
 import se.skltp.av.TjansteKomponent
 import se.skltp.av.User
-import se.skltp.av.services.dto.AnsvarigDTO
-import se.skltp.av.services.dto.DriftMiljoDTO
-import se.skltp.av.services.dto.ProducentBestallningDTO
-import se.skltp.av.services.dto.TjansteDomanDTO
-import se.skltp.av.services.dto.TjansteKomponentDTO
+import se.skltp.av.services.dto.*
 import se.skltp.av.util.BestallningsStatus
 
 @Transactional(readOnly = true)
@@ -50,8 +45,7 @@ class ProducentBestallningService {
 				id: it.id,
 				status: it.status,
 				serviceDomain: serviceDomain,
-				serviceComponent:
-				serviceComponent,
+				serviceComponent: serviceComponent,
 				serviceConsumer: serviceConsumer,
 				targetEnvironment: targetEnvironment,
 				client: client)
@@ -59,57 +53,71 @@ class ProducentBestallningService {
     }
 
     @Transactional
-    def createProducentBestallning(producentBestallningDTO) {
-
-		User user = upsertUser(producentBestallningDTO)
-		
-		if(!user){
-			//TODO: User is not saved correctly, what to do?
-		}
-		
-		TjansteKomponent tjansteKomponent = upsertTjansteKomponent(producentBestallningDTO, user)
-		if(!tjansteKomponent){
-			//TODO: TjansteKomponent is not saved correctly, what to do?
-		}
-		
-		ProducentBestallning producentBestallning = upsertProducentBestallning(producentBestallningDTO, tjansteKomponent)
-		if(!producentBestallning){
-			//TODO: ProducentBestallning is not saved correctly, what to do?
-		}
-		
-		//create producentanslutningar
-		
-		
-		createProducentBestallningHistorik(producentBestallning, user.epost)
-
-		log.debug "Producentbestallning updated in database, lets return success"
-
-		return producentBestallning
+    def createProducentBestallning(ProducentBestallningDTO producentBestallningDTO) {
+        doCreateProducentBestallning(producentBestallningDTO, BestallningsStatus.NY)
     }
 
-	private ProducentBestallning upsertProducentBestallning(producentBestallningDTO, tjansteKomponent){
+    @Transactional
+    def createUpdateProducentBestallning(ProducentBestallningDTO producentBestallningDTO) {
+        doCreateProducentBestallning(producentBestallningDTO, BestallningsStatus.UPPDATERING)
+    }
 
-		ProducentBestallning producentBestallning = ProducentBestallning.get(producentBestallningDTO.id)
+    def private doCreateProducentBestallning(ProducentBestallningDTO producentBestallningDTO, BestallningsStatus status) {
+        User user = upsertUser(producentBestallningDTO)
+        if (!user) {
+            //TODO: User is not saved correctly, what to do?
+        }
+        TjansteKomponent tjansteKomponent = upsertTjansteKomponent(producentBestallningDTO, user)
+        if (!tjansteKomponent) {
+            //TODO: TjansteKomponent is not saved correctly, what to do?
+        }
+        ProducentBestallning producentBestallning = insertProducentBestallning(producentBestallningDTO, tjansteKomponent, status)
+        if (!producentBestallning) {
+            //TODO: ProducentBestallning is not saved correctly, what to do?
+        }
+        createProducentBestallningHistorik(producentBestallning, user.epost)
+        log.debug "Producentbestallning updated in database, lets return success"
+        return producentBestallning
+    }
 
-		if(!producentBestallning){
-			log.debug "ProducentBestallning not found in database, create a new one: $producentBestallningDTO"
-			
-			producentBestallning = new ProducentBestallning()
-			producentBestallning.setStatus(BestallningsStatus.NY.toString())
-		}else{
-			producentBestallning.setStatus(BestallningsStatus.UPPDATERAD.toString())
-		}
+    def private dtoToPersistedLogiskAdress = { logiskAdressDTO ->
+        def logiskAdress = LogiskAdress.findByHsaId(logiskAdressDTO.hsaId)
+        if (!logiskAdress) {
+            logiskAdress = new LogiskAdress(
+                    hsaId: logiskAdressDTO.hsaId
+            ).save()
+        }
+        logiskAdress
+    }
 
-		producentBestallning.setTjansteKomponent(tjansteKomponent)
-		producentBestallning.setMiljo(producentBestallningDTO.targetEnvironment.namn)
-		
-		if(!producentBestallning.validate()){
-			log.error "ProducentBestallning does not contain all mandatory attributes!"
-			log.error producentBestallning.errors
-		}
-		
-		return producentBestallning.save()
-	}
+    private ProducentBestallning insertProducentBestallning(ProducentBestallningDTO producentBestallningDTO, TjansteKomponent tjansteKomponent, BestallningsStatus status) {
+        ProducentBestallning producentBestallning = new ProducentBestallning()
+        producentBestallning.setStatus(status.toString())
+        producentBestallning.setTjansteKomponent(tjansteKomponent)
+        producentBestallning.setMiljo(producentBestallningDTO.targetEnvironment.namn)
+        producentBestallning.producentAnslutning = []
+        producentBestallning.roleOfClient = producentBestallningDTO.client.role
+        producentBestallningDTO.serviceContracts.each {
+            se.skltp.av.ProducentAnslutning pa = new se.skltp.av.ProducentAnslutning(
+                    rivTaProfile: it.address.rivProfil,
+                    url: it.address.url,
+                    tjansteKontrakt: it.namnrymd,
+                    validFromTime: new Date(0),
+                    validToTime: new Date(0),
+                    logiskaAdresser: it.logicalAddresses.collect(dtoToPersistedLogiskAdress),
+                    nyaLogiskaAdresser: it.newLogicalAddresses.collect(dtoToPersistedLogiskAdress),
+                    borttagnaLogiskaAdresser: it.removedLogicalAddresses.collect(dtoToPersistedLogiskAdress),
+                    producentBestallning: producentBestallning
+            )
+            producentBestallning.producentAnslutning.add(pa)
+        }
+        if (!producentBestallning.validate()) {
+            log.error "ProducentBestallning does not contain all mandatory attributes!"
+            log.error producentBestallning.errors
+        }
+
+        return producentBestallning.save()
+    }
 	
 	private TjansteKomponent upsertTjansteKomponent(producentBestallningDTO, user){
 		
@@ -126,6 +134,7 @@ class ProducentBestallningService {
 			it.user = user
 			hsaId = serviceComponent.hsaId
 			it.namn = serviceComponent.namn
+            organisation = serviceComponent.organisation
 			tekniskKontaktEpost = serviceComponent.tekniskKontaktEpost
 			tekniskKontaktNamn = serviceComponent.tekniskKontaktNamn
 			tekniskKontaktTelefon = serviceComponent.tekniskKontaktTelefon
@@ -135,6 +144,7 @@ class ProducentBestallningService {
 			huvudAnsvarigNamn = serviceComponent.huvudAnsvarigNamn
 			huvudAnsvarigTelefon = serviceComponent.huvudAnsvarigTelefon
 			ipadress = serviceComponent.ipadress
+            pingForConfiguration = serviceComponent.pingForConfiguration
 		}
 
 		if(!tjansteKomponent.validate()){
@@ -149,12 +159,12 @@ class ProducentBestallningService {
 		
 		AnsvarigDTO ansvarig = producentBestallningDTO.client
 		
-		User user = User.findByUsername(ansvarig.email)
+		User user = User.findByUsername(ansvarig.hsaId)
 		
 		if(!user){
 			log.debug "Tjanstekomponent responsible user not found in database, create a new one: $ansvarig"
 			
-			user = new User(username: ansvarig.email, passwordHash: new Sha256Hash("changeme").toHex())
+			user = new User(username: ansvarig.hsaId, passwordHash: new Sha256Hash("changeme").toHex())
 		}
 
 		user.with {

@@ -8,6 +8,8 @@ class ProducentBestallning {
 	String miljo
 	
 	String status
+
+    String roleOfClient
 	
 	static belongsTo = [tjansteKomponent: TjansteKomponent]
 		

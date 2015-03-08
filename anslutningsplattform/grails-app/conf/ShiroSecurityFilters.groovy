@@ -9,12 +9,14 @@ class ShiroSecurityFilters {
       auth: ['*'],
 	  assets: ['*'],
 	  producentBestallningApi: ['*'],
+      uppdateraProducentBestallningApi: ['*'],
 	  tjansteKomponentApi: ['*'],
 	  hsaApi: ['*'],
       driftMiljoApi: ['*'],
       tjansteDomanApi: ['*'],
       tjansteKontraktApi: ['*'],
-      logiskAdressApi: ['*']
+      logiskAdressApi: ['*'],
+      adressApi: ['*'],
     ]
 
     private boolean findAction(controllerName, actionName){

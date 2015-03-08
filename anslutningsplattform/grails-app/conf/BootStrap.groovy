@@ -57,6 +57,7 @@ class BootStrap {
                 def tk1 = new TjansteKomponent(
                         hsaId: "SE165565594230-0016",
                         namn: "NPÖ 2",
+                        organisation: "someOrg",
                         huvudAnsvarigNamn: "Kapo Kapo",
                         huvudAnsvarigEpost: "kapo@kapo.com",
                         huvudAnsvarigTelefon: "1234",
@@ -71,6 +72,7 @@ class BootStrap {
                 def tk2 = new TjansteKomponent(
                         hsaId: "SE5565594230-B3B",
                         namn: "Tieto Lifecare",
+                        organisation: "someOrg",
                         huvudAnsvarigNamn: "Hlava Hlava",
                         huvudAnsvarigEpost: "hlava@hlava.com",
                         huvudAnsvarigTelefon: "1234",
@@ -85,6 +87,7 @@ class BootStrap {
                 def tk3 = new TjansteKomponent(
                         hsaId: "SE2321000016-532S",
                         namn: "MVK",
+                        organisation: "someOrg",
                         huvudAnsvarigNamn: "Cabeza Cabeza",
                         huvudAnsvarigEpost: "cabeza@cabeza.com",
                         huvudAnsvarigTelefon: "1234",
@@ -99,6 +102,7 @@ class BootStrap {
                 def tk4 = new TjansteKomponent(
                         hsaId: "SE2321000016-6SW1",
                         namn: "L - Remittera",
+                        organisation: "someOrg",
                         huvudAnsvarigNamn: "머리",
                         huvudAnsvarigEpost: "meoli@meoli.com",
                         huvudAnsvarigTelefon: "1234",
@@ -109,16 +113,6 @@ class BootStrap {
                         funktionsBrevladaTelefon: "0987654321",
                         ipadress: "",
                         user: tkAnsvarig).save(failOnError:true)
-
-				new ProducentBestallning(
-						miljo: "TEST",
-						status: BestallningsStatus.NY,
-						tjansteKomponent: tk1).save(failOnError:true)
-
-				new ProducentBestallning(
-						miljo: "SIT",
-						status: BestallningsStatus.NY,
-						tjansteKomponent: tk1).save(failOnError:true)
 
                 new DriftMiljo(
                         namn: 'Test'

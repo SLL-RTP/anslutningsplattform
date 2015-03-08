@@ -10,16 +10,9 @@ class TjansteKontraktDTO {
     int minorVersion
     boolean installedInEnvironment
 	boolean installedForProducerHsaId
-	
-	/*
-	String toString() {
-		getClass().toString() +
-		"\n  namn: ${namn}" +
-		"\n  namnrymd: ${namnrymd}" +
-		"\n  majorVersion: ${majorVersion}" +
-		"\n  minorVersion: ${minorVersion}" +
-		"\n  installedInEnvironment: ${installedInEnvironment}" +
-		"\n  installedForProducerHsaId: ${installedForProducerHsaId}" 
-	}
-	*/
+    List<LogiskAdressDTO> logicalAddresses
+    List<LogiskAdressDTO> newLogicalAddresses
+    List<LogiskAdressDTO> removedLogicalAddresses
+    AdressDTO address
+
 }

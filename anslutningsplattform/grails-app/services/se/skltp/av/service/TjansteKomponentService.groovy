@@ -24,6 +24,7 @@ class TjansteKomponentService {
         new TjansteKomponentDTO(
                 hsaId: domainServiceComponent.hsaId,
                 namn: domainServiceComponent.namn,
+                organisation: domainServiceComponent.organisation,
                 huvudAnsvarigNamn: domainServiceComponent.huvudAnsvarigNamn,
                 huvudAnsvarigEpost: domainServiceComponent.huvudAnsvarigEpost,
                 huvudAnsvarigTelefon: domainServiceComponent.huvudAnsvarigTelefon,
@@ -32,7 +33,8 @@ class TjansteKomponentService {
                 tekniskKontaktTelefon: domainServiceComponent.tekniskKontaktTelefon,
                 funktionsBrevladaEpost: domainServiceComponent.funktionsBrevladaEpost,
                 funktionsBrevladaTelefon: domainServiceComponent.funktionsBrevladaTelefon,
-                ipadress: domainServiceComponent.ipadress
+                ipadress: domainServiceComponent.ipadress,
+                pingForConfiguration: domainServiceComponent.pingForConfiguration
         )
     }
 

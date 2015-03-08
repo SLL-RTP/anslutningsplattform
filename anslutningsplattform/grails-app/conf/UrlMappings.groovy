@@ -11,39 +11,54 @@ class UrlMappings {
         //API
         group "/api", {
 
-			"/serviceProducerConnectionOrders"(version: '1.0', namespace: 'v1', controller: 'producentBestallningApi') {
-				action = [POST:"save", GET:"list"]
-				format = "json"
-			}
-						
+            "/serviceProducerConnectionOrders"(version: '1.0', namespace: 'v1', controller: 'producentBestallningApi') {
+                action = [POST: "save", GET: "list"]
+                format = "json"
+            }
+
+            "/updateServiceProducerConnectionOrders"(version: '1.0', namespace: 'v1', controller: 'uppdateraProducentBestallningApi') {
+                action = [POST: "save"]
+                format = "json"
+            }
+
             "/hsa"(version: '1.0', namespace: 'v1', controller: 'hsaApi')
 
             "/serviceComponents"(version: '1.0', controller: 'tjansteKomponentApi') {
-                action = [GET:"query"]
+                action = [GET: "query"]
                 format = "json"
                 "/serviceComponents/$id"(version: '1.0', controller: 'tjansteKomponentApi') {
-                    action = [GET:"get",PUT:"put"]
+                    action = [GET: "get", PUT: "put"]
                     format = "json"
                 }
             }
 
+            "/serviceComponents/$serviceComponentId/$environmentId/$serviceContractNamespace/$majorVersion/$minorVersion/logicalAddresses"(version: '1.0', controller: 'logiskAdressApi') {
+                action = [GET: "getForContract"]
+                format = "json"
+            }
+
+            "/serviceComponents/$serviceComponentId/$environmentId/$serviceContractNamespace/$majorVersion/$minorVersion/address"(version: '1.0', controller: 'adressApi') {
+                action = [GET: "getAddress"]
+                format = "json"
+            }
+
             "/serviceDomains"(version: '1.0', controller: 'tjansteDomanApi') {
-                action = [GET:"list"]
+                action = [GET: "list"]
                 format = "json"
             }
 
             "/serviceContracts"(version: '1.0', controller: 'tjansteKontraktApi') {
-                action = [GET:"query"]
+                action = [GET: "query"]
                 format = "json"
             }
 
             "/logicalAddresses"(version: '1.0', controller: 'logiskAdressApi') {
-                action = [GET:"query"]
+                action = [GET: "query"]
                 format = "json"
             }
 
             "/environments"(version: '1.0', controller: 'driftMiljoApi') {
-                action = [GET:"list"]
+                action = [GET: "list"]
                 format = "json"
             }
         }

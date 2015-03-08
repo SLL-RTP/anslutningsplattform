@@ -37,7 +37,12 @@ class LogiskAdressService {
 		dtoList
     }
 
-    private getLogiskAdressMockDTOs(String query) {
+    List<LogiskAdressDTO> getForServiceContract(String serviceComponentId, String environmentId, String serviceContractNamespace, int majorVersion, int minorVersion) {
+        getLogiskAdressMockDTOs()
+    }
+
+    private static final Random rnd = new Random()
+    private static getLogiskAdressMockDTOs() {
         [
                 new LogiskAdressDTO(
                         hsaId: 'SE2321000065-7330028000014',
@@ -80,9 +85,7 @@ class LogiskAdressService {
                         namn: 'Kalmar Virserums läkarhus'
                 ),
         ].findAll {
-            query == null ||
-                    it.namn.toLowerCase().contains(query.toLowerCase()) ||
-                    it.hsaId.toLowerCase().contains(query.toLowerCase())
+            rnd.nextBoolean()
         }
 
     }
