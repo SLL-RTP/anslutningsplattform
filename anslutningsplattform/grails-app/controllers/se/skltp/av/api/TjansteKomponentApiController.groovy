@@ -6,6 +6,8 @@ import se.skltp.av.TjansteKomponent
 import se.skltp.av.services.dto.TjansteKomponentDTO;
 
 class TjansteKomponentApiController extends RestfulController {
+	
+	public static final int DEFAULT_FREE_TEXT_SEARCH_LIMIT = 10
 
     def tjansteKomponentService
 
@@ -16,7 +18,13 @@ class TjansteKomponentApiController extends RestfulController {
     def query() {
         log.debug params
         //TODO: Hämta bara namn och hsaId
-        def serviceComponentDTOs = tjansteKomponentService.query(params.query)
+		//TODO: hardwired takId ... until we get it in the request ...
+		def takId = "ntjp-test"
+		if ("production".equals(System.getProperty("grails.env", "dev"))) {
+			takId = "sll-qa"
+		}
+		
+        def serviceComponentDTOs = tjansteKomponentService.query(takId, params.query, params.hasProperty('limit') ? params.getInt('limit') : DEFAULT_FREE_TEXT_SEARCH_LIMIT)
         respond serviceComponentDTOs.collect {
             it.properties.minus(it.properties.findAll { it.value == null }) //hack to get rid of null values in the api
         }

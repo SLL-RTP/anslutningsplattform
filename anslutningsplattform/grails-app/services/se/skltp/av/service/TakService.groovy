@@ -20,6 +20,7 @@ import se.skltp.av.service.tak.persistence.TakCachePersistenceServices
 
 import se.skltp.av.services.dto.LogiskAdressDTO;
 import se.skltp.av.services.dto.TakRoutingEntryDTO
+import se.skltp.av.services.dto.TjansteKomponentDTO
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
@@ -204,6 +205,29 @@ class TakService {
 		contracts
 	}
 
+	List<TjansteKomponentDTO> freeTextSearchTjansteKomponent(String takId, String queryString, int limit) {
+		TakCacheServices tak = takCacheMap.get(takId)
+		// Note: TjansteKomponent is NOT exposed directly in TAK-services WSDL
+		// v1.5.1, only indirect so we have to go with that for now ...
+		// ... also means that we can only search for "hsaId", not "beskrivning"
+		// since it's not exposed
+		List<VirtualiseringDTO> virtualiseringar = tak.getAllVirtualiseringar();
+		// no search optimizations, just do a linear search for now ...
+		// NOTE: be careful to store/cache the TAK data locally - TAK data is locally
+		// owned by the cache which must be refreshed at repeated intervals
+		List<TjansteKomponentDTO> searchResult = new ArrayList<TjansteKomponentDTO>();
+		for (VirtualiseringDTO v : virtualiseringar) {
+			if (v.reciverId.toLowerCase().contains(queryString.toLowerCase())) {
+				searchResult.add(new TjansteKomponentDTO(hsaId: v.reciverId))
+				if (searchResult.size() == limit) {
+					break;
+				}
+			}
+		}
+
+		searchResult
+	}
+	
     AdressDTO getAdressByTjanstekontractAndHsaId(String takId, String namnrymd, String majorVersion, String minorVersion, String hsaId) {
         new AdressDTO(
                 url: 'http://dummy.com/',

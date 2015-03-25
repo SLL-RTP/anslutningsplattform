@@ -29,8 +29,38 @@ environments {
         }
     }
     production {
+        // TODO: tmp in-mem db to get things going ...
         dataSource {
-            jndiName = "java:comp/env/jdbc/AP"
+            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
+            url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
+        }        
+        /*
+        TODO: doesn't work with override config for some reason ...
+        dataSource {
+            // MySQL
+            //
+            // Ref: http://grails.github.io/grails-doc/2.4.3/ref/Plug-ins/dataSource.html
+            // Ref: http://grails.github.io/grails-doc/2.4.3/guide/single.html#dataSource
+            //
+            pooled = true
+            username = "ap_user"
+            password = "TODO_CHANGE_ME"
+            url = "jdbc:mysql://localhost:3306/anslutningsplattform?autoReconnect=true"
+            driverClassName = "com.mysql.jdbc.Driver"
+            dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
+            properties {
+                maxActive = 50
+                minIdle = 10
+                maxIdle = 25
+                maxWait = 10000
+                validationQuery = "SELECT 1"
+                //validationQueryTimeout = 5000
+                validationInterval = 60000
+                testOnBorrow = true
+                testWhileIdle = false
+                testOnReturn = false
+            }
         }
+        */
     }
 }
