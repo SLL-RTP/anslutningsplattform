@@ -30,10 +30,23 @@ class TjansteKomponentService {
 		
 		if (domainServiceComponents.size() < limit) {
 			// also search TAK
-			List<TjansteKomponentDTO> takList = takService.freeTextSearchTjansteKomponent(takId, queryString, limit)
+			//List<TjansteKomponentDTO> takList = takService.freeTextSearchTjansteKomponent(takId, queryString, limit)
 			// add TAK data to result, prioritize AP data that is richer
 			
 			// TODO: do not add duplicates ...
+			
+			// TODO: tmp hardcoded ...
+			def fakeTakTjanstekomponents = [
+				["SE2321000016-A21S", "SLL - Prosang"],
+				["SE2321000016-A22S", "HSF SLL - Remittera"],
+				["SE2321000016-A1DB", "SLL - Obstetrix"],
+				["SE2321000016-9119", "SLL - FlexLab"],
+				["SE2321000016-6RK5", "SLL - TakeCare"]
+			]			 
+			def takList = new ArrayList()
+			fakeTakTjanstekomponents.each {
+				takList.add(new TjansteKomponentDTO(hsaId: it[0], namn: it[1]))
+			}			
 			
 			domainServiceComponents.addAll(takList)
 		}
