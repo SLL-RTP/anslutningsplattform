@@ -1,10 +1,8 @@
 import org.apache.shiro.authc.AccountException
 import org.apache.shiro.authc.IncorrectCredentialsException
-import org.apache.shiro.authc.UnknownAccountException
 import org.apache.shiro.authc.SimpleAccount
-import org.apache.shiro.authz.permission.WildcardPermission
-
-import se.skltp.av.User
+import org.apache.shiro.authc.UnknownAccountException
+import se.skltp.ap.security.User
 
 class ShiroDbRealm {
     static authTokenClass = org.apache.shiro.authc.UsernamePasswordToken

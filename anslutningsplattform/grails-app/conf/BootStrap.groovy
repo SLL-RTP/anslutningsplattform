@@ -1,134 +1,84 @@
-import se.skltp.av.*
-import se.skltp.av.util.BestallningsStatus;
-
 import org.apache.shiro.crypto.hash.Sha256Hash
+import se.skltp.ap.Funktionkontakt
+import se.skltp.ap.Personkontakt
+import se.skltp.ap.Tjanstekomponent
+import se.skltp.ap.security.Role
+import se.skltp.ap.security.User
 
 class BootStrap {
 
-	def grailsApplication
+    def grailsApplication
 
-	def init = { servletContext ->
+    def init = { servletContext ->
 
-		environments {
-			production {
+        environments {
+            production {
 
-			}
-			development {
-				//Roles
-				def adminRole = new Role(name: 'ADMINISTRATÖR')
-				adminRole.addToPermissions("BestallningsHistorik:index")
-				adminRole.addToPermissions("LogiskAdress:index")
-				adminRole.addToPermissions("Role:*")
-				adminRole.addToPermissions("User:*")
-				adminRole.addToPermissions("Tjanstekomponent:index")
-				adminRole.save(failOnError:true)
+            }
+            development {
+                def pk1 = new Personkontakt(
+                        hsaId: "pk-hsa-1",
+                        namn: "Kapo Kapo",
+                        epost: "kapo@kapo.com",
+                        telefon: "031170920"
+                ).save(failOnError: true)
 
-				def tkAnsvarigRole = new Role(name: 'TJÄNSTEKOMPONENTANSVARIG')
-				tkAnsvarigRole.addToPermissions("BestallningsHistorik:*")
-				tkAnsvarigRole.addToPermissions("LogiskAdress:*")
-				tkAnsvarigRole.addToPermissions("Tjanstekomponent:*")
-				tkAnsvarigRole.addToPermissions("ProdcentAnslutning:*")
-				tkAnsvarigRole.addToPermissions("KonsumentAnslutning:*")
-				tkAnsvarigRole.save(failOnError:true)
+                def pk2 = new Personkontakt(
+                        hsaId: "pk-hsa-2",
+                        namn: "Hlava Hlava",
+                        epost: "hlava@hlava.com",
+                        telefon: "031170920"
+                ).save(failOnError: true)
 
+                def fk1 = new Funktionkontakt(
+                        epost: "info@help.org",
+                        telefon: "031170920"
+                ).save(failOnError: true)
 
-				//Admin user
-				def adminUser = new User(
-						namn: "Agda Andersson",
-						username: "admin",
-						epost: "admin@lorumipsum.nu",
-						datumSkapad: new Date(),
-						passwordHash: new Sha256Hash("password").toHex())
-
-				adminUser.addToRoles(adminRole)
-				adminUser.save(failOnError:true)
-
-				//Tjanstekomponent responsible user
-				def tkAnsvarig = new User(
-						namn: "Jöns Jönsson",
-						username: "user",
-						epost: "user@lorumipsum.nu",
-						datumSkapad: new Date(),
-						passwordHash: new Sha256Hash("password").toHex())
-
-				tkAnsvarig.addToRoles(tkAnsvarigRole)
-				tkAnsvarig.save(failOnError:true)
-
-                def tk1 = new TjansteKomponent(
+                def tk1 = new Tjanstekomponent(
                         hsaId: "SE165565594230-0016",
-                        namn: "NPÖ 2",
+                        beskrivning: "NPÖ 2",
                         organisation: "someOrg",
-                        huvudAnsvarigNamn: "Kapo Kapo",
-                        huvudAnsvarigEpost: "kapo@kapo.com",
-                        huvudAnsvarigTelefon: "1234",
-                        tekniskKontaktEpost: "kontakten@lorumipsum.nu",
-                        tekniskKontaktNamn: "Tolvan Tolvansson",
-                        tekniskKontaktTelefon: "1234567890",
-                        funktionsBrevladaEpost: "funktionsbrevladan@lorumipsum.nu",
-                        funktionsBrevladaTelefon: "0987654321",
-                        ipadress: "",
-                        user: tkAnsvarig).save(failOnError:true)
-
-                def tk2 = new TjansteKomponent(
-                        hsaId: "SE5565594230-B3B",
-                        namn: "Tieto Lifecare",
-                        organisation: "someOrg",
-                        huvudAnsvarigNamn: "Hlava Hlava",
-                        huvudAnsvarigEpost: "hlava@hlava.com",
-                        huvudAnsvarigTelefon: "1234",
-                        tekniskKontaktEpost: "kontakten@lorumipsum.nu",
-                        tekniskKontaktNamn: "Tolvan Tolvansson",
-                        tekniskKontaktTelefon: "1234567890",
-                        funktionsBrevladaEpost: "funktionsbrevladan@lorumipsum.nu",
-                        funktionsBrevladaTelefon: "0987654321",
-                        ipadress: "",
-                        user: tkAnsvarig).save(failOnError:true)
-
-                def tk3 = new TjansteKomponent(
-                        hsaId: "SE2321000016-532S",
-                        namn: "MVK",
-                        organisation: "someOrg",
-                        huvudAnsvarigNamn: "Cabeza Cabeza",
-                        huvudAnsvarigEpost: "cabeza@cabeza.com",
-                        huvudAnsvarigTelefon: "1234",
-                        tekniskKontaktEpost: "kontakten@lorumipsum.nu",
-                        tekniskKontaktNamn: "Tolvan Tolvansson",
-                        tekniskKontaktTelefon: "1234567890",
-                        funktionsBrevladaEpost: "funktionsbrevladan@lorumipsum.nu",
-                        funktionsBrevladaTelefon: "0987654321",
-                        ipadress: "",
-                        user: tkAnsvarig).save(failOnError:true)
-
-                def tk4 = new TjansteKomponent(
-                        hsaId: "SE2321000016-6SW1",
-                        namn: "L - Remittera",
-                        organisation: "someOrg",
-                        huvudAnsvarigNamn: "머리",
-                        huvudAnsvarigEpost: "meoli@meoli.com",
-                        huvudAnsvarigTelefon: "1234",
-                        tekniskKontaktEpost: "kontakten@lorumipsum.nu",
-                        tekniskKontaktNamn: "Tolvan Tolvansson",
-                        tekniskKontaktTelefon: "1234567890",
-                        funktionsBrevladaEpost: "funktionsbrevladan@lorumipsum.nu",
-                        funktionsBrevladaTelefon: "0987654321",
-                        ipadress: "",
-                        user: tkAnsvarig).save(failOnError:true)
-
-                new DriftMiljo(
-                        namn: 'Test'
+                        ipadress: "127.0.0.1",
+                        pingForConfigurationURL: "http://ping.for.configuration.org/",
+                        huvudansvarigKontakt: pk1,
+                        tekniskKontakt: pk1,
+                        tekniskSupportkontakt: fk1
                 ).save(failOnError: true)
 
-                new DriftMiljo(
-                        namn: 'QA'
-                ).save(failOnError: true)
+                //Roles
+                def adminRole = new Role(name: 'ADMINISTRATÖR')
+                adminRole.addToPermissions("Role:*")
+                adminRole.addToPermissions("User:*")
+                adminRole.addToPermissions("Bestallning:index")
+                adminRole.addToPermissions("Driftmiljo:index")
+                adminRole.addToPermissions("Funktionkontakt:index")
+                adminRole.addToPermissions("Konsumentanslutning:index")
+                adminRole.addToPermissions("Konsumentbestallning:index")
+                adminRole.addToPermissions("LogiskAdress:index")
+                adminRole.addToPermissions("Personkontakt:index")
+                adminRole.addToPermissions("Producentanslutning:index")
+                adminRole.addToPermissions("Producentbestallning:index")
+                adminRole.addToPermissions("Tjanstekomponent:index")
+                adminRole.addToPermissions("UppdateradKonsumentanslutning:index")
+                adminRole.addToPermissions("UppdateradProducentanslutning:index")
+                adminRole.save(failOnError: true)
 
-                new DriftMiljo(
-                        namn: 'Production'
-                ).save(failOnError: true)
-			}
-		}
-	}
-	
-	def destroy = {
-	}
+                //Admin user
+                def adminUser = new User(
+                        namn: "Agda Andersson",
+                        username: "admin",
+                        epost: "admin@lorumipsum.nu",
+                        datumSkapad: new Date(),
+                        passwordHash: new Sha256Hash("password").toHex())
+
+                adminUser.addToRoles(adminRole)
+                adminUser.save(failOnError: true)
+
+            }
+        }
+    }
+
+    def destroy = {
+    }
 }

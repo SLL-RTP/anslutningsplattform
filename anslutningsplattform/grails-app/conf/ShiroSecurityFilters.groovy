@@ -8,8 +8,6 @@ class ShiroSecurityFilters {
       signup: ['index','register'],
       auth: ['*'],
 	  assets: ['*'],
-	  producentBestallningApi: ['*'],
-      uppdateraProducentBestallningApi: ['*'],
 	  tjansteKomponentApi: ['*'],
 	  hsaApi: ['*'],
       driftMiljoApi: ['*'],
@@ -17,6 +15,7 @@ class ShiroSecurityFilters {
       tjansteKontraktApi: ['*'],
       logiskAdressApi: ['*'],
       adressApi: ['*'],
+      bestallningApi: ['*']
     ]
 
     private boolean findAction(controllerName, actionName){

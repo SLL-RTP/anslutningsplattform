@@ -11,6 +11,11 @@ class UrlMappings {
         //API
         group "/api", {
 
+            "/bestallning"(controller: 'bestallningApi') {
+                action = [POST: "createProducentBestallning"]
+                format = "json"
+            }
+
             "/serviceProducerConnectionOrders"(version: '1.0', namespace: 'v1', controller: 'producentBestallningApi') {
                 action = [POST: "save", GET: "list"]
                 format = "json"
@@ -57,7 +62,7 @@ class UrlMappings {
                 format = "json"
             }
 
-            "/environments"(version: '1.0', controller: 'driftMiljoApi') {
+            "/driftmiljos"(controller: 'driftMiljoApi') {
                 action = [GET: "list"]
                 format = "json"
             }
