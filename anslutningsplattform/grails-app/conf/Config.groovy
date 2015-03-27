@@ -281,3 +281,4 @@ environments {
 //grails.mail.default.from = 'hakan.dahl.demo1@gmail.com'
 //smtp.to.address = 'hakan.dahl.demo1@gmail.com'
 smtp.to.address = 'johanna.essen@callistaenterprise.se'
+smtp.from.address = ''

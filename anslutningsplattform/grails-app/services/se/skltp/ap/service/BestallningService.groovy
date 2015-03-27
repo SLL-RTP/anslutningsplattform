@@ -40,10 +40,8 @@ class BestallningService {
         // 3. fromAddress to be your own address for the gmail account you are using
         // 4. config in Config.groovy grails{ mail{: username/password
         //def fromAddress = "hakan.dahl.demo1@gmail.com"
-        def fromAddress = "martinsjunkbox@gmail.com"
+        //def fromAddress = "martinsjunkbox@gmail.com"
         def toAddress = bestallning.bestallare.epost
-        log.debug "Mailing with toaddress: $toAddress"
-
         def subjectField = "AP TEST subject"
         //def bodyPlainText = "AP TEST body"
         // TODO: prettify this!
@@ -54,7 +52,7 @@ class BestallningService {
 
         if (bestallning) {
             try {
-                mailingService.send(fromAddress, toAddress, subjectField, bestallning.toString())
+                mailingService.send(null, toAddress, subjectField, bestallning.toString())
                 success = true
                 log.info("Mail sent.")
             }
