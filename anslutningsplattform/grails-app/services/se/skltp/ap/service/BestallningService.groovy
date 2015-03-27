@@ -100,6 +100,8 @@ class BestallningService {
                     new UppdateradProducentanslutning(
                             rivtaProfil: it.rivtaProfil,
                             url: it.url,
+                            tidigareRivtaProfil: it.tidigareRivtaProfil,
+                            tidigareUrl: it.tidigareUrl,
                             tjanstekontraktNamnrymd: it.tjanstekontraktNamnrymd,
                             tjanstekontraktMajorVersion: it.tjanstekontraktMajorVersion,
                             tjanstekontraktMinorVersion: it.tjanstekontraktMinorVersion,
@@ -167,16 +169,6 @@ class BestallningService {
         }
         logiskAdress
     }
-
-//    private Driftmiljo upsertDriftmiljo(String driftMiljoNamn) {
-//        def driftmiljo = Driftmiljo.findByNamn(driftMiljoNamn)
-//        if (driftmiljo == null) {
-//            driftmiljo = new Driftmiljo(
-//                    namn: driftMiljoNamn
-//            ).save()
-//        }
-//        driftmiljo
-//    }
 
     private Driftmiljo upsert(DriftmiljoDTO dto) {
         def driftmiljo = Driftmiljo.findById(dto.id)

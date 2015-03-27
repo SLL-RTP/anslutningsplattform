@@ -9,6 +9,8 @@ import groovy.transform.ToString
 @Validateable
 @ToString
 class UppdateradProducentanslutningDTO extends ProducentanslutningDTO {
+    String tidigareRivtaProfil
+    String tidigareUrl
     List<String> befintligaLogiskaAdresser
     List<String> borttagnaLogiskaAdresser
 }

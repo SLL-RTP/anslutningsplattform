@@ -8,8 +8,8 @@ import groovy.transform.ToString
 @ToString(includeNames=true, includeFields = true, includeSuper = true)
 class UppdateradProducentanslutning extends Producentanslutning {
 
-    //String tidigareRivtaProfil
-    //String tidigareUrl
+    String tidigareRivtaProfil
+    String tidigareUrl
 
     static hasMany = [
             befintligaLogiskaAdresser: LogiskAdress,
@@ -17,6 +17,8 @@ class UppdateradProducentanslutning extends Producentanslutning {
     ]
 
     static constraints = {
+        tidigareRivtaProfil nullable: true
+        tidigareUrl nullable: true
         befintligaLogiskaAdresser nullable: true
         borttagnaLogiskaAdresser nullable: true
     }
