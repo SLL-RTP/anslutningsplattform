@@ -11,14 +11,7 @@ class TjansteKomponentApiController {
 
     def query() {
         log.debug params
-        //TODO: Hämta bara namn och hsaId
-		//TODO: hardwired takId ... until we get it in the request ...
-		def takId = "ntjp-test"
-		if ("production".equals(System.getProperty("grails.env", "dev"))) {
-			takId = "sll-qa"
-		}
-		
-        def serviceComponentDTOs = tjansteKomponentService.query(takId, params.query, params.hasProperty('limit') ? params.getInt('limit') : DEFAULT_FREE_TEXT_SEARCH_LIMIT)
+        def serviceComponentDTOs = tjansteKomponentService.query(params.takId, params.query, params.hasProperty('limit') ? params.getInt('limit') : DEFAULT_FREE_TEXT_SEARCH_LIMIT)
         respond serviceComponentDTOs.collect {
             it.properties.minus(it.properties.findAll { it.value == null }) //hack to get rid of null values in the api
         }
