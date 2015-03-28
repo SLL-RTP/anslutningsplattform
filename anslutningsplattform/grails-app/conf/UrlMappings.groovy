@@ -66,6 +66,11 @@ class UrlMappings {
                 action = [GET: "list"]
                 format = "json"
             }
+
+            "/currentUser"(controller: 'currentUserApi') {
+                action = [GET: "get"]
+                format = "json"
+            }
         }
 
         "/"(view: "/index")

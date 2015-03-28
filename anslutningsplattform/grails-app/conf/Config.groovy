@@ -255,6 +255,8 @@ environments {
 
         // Token used by client to invoke backend
         api.auth.token = 'secret-token'
+        x509.enabled = false
+        x509.cert.header = 'x-vp-auth-cert'
 	}
 
 	production{
@@ -273,10 +275,10 @@ environments {
 
         // Token used by client to invoke backend
         api.auth.token = 'secret-token'
+        x509.enabled = true
+        x509.cert.header = 'x-vp-auth-cert'
 	}
 }
-
-
 
 //grails.mail.default.from = 'hakan.dahl.demo1@gmail.com'
 //smtp.to.address = 'hakan.dahl.demo1@gmail.com'

@@ -15,7 +15,8 @@ class ShiroSecurityFilters {
       tjansteKontraktApi: ['*'],
       logiskAdressApi: ['*'],
       adressApi: ['*'],
-      bestallningApi: ['*']
+      bestallningApi: ['*'],
+      currentUserApi: ['*']
     ]
 
     private boolean findAction(controllerName, actionName){
