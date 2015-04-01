@@ -20,7 +20,7 @@ class TjanstekomponentDTO {
 
     static constraints = {
         hsaId nullable: false
-        //beskrivning TODO: ??
+        beskrivning nullable: true
         organisation nullable: false, blank: false
         ipadress nullable: false, blank: false
         pingForConfigurationURL nullable: false, blank: false
