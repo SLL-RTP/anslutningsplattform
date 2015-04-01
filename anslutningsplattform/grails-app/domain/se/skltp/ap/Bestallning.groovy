@@ -12,6 +12,7 @@ class Bestallning {
     Driftmiljo driftmiljo
     Personkontakt bestallare
     Producentbestallning producentbestallning
+    String otherInfo //TODO: document
 
     static hasMany = [
             konsumentbestallningar: Konsumentbestallning
@@ -24,5 +25,6 @@ class Bestallning {
         bestallare nullable: false
         producentbestallning nullable: true
         konsumentbestallningar nullable: true
+        otherInfo nullable: true
     }
 }

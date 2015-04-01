@@ -73,7 +73,8 @@ class BestallningService {
                 producentbestallning: insertProducentBestallning(bestallningDTO.producentbestallning, driftmiljo),
                 konsumentbestallningar: bestallningDTO.konsumentbestallningar.collect {
                     insertKonsumentBestallning(it, driftmiljo)
-                }
+                },
+                otherInfo: bestallningDTO.otherInfo
         ).save()
     }
 
