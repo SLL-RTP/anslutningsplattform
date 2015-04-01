@@ -225,9 +225,9 @@ class BestallningService {
             it.organisation = dto.organisation
             it.ipadress = dto.ipadress
             it.pingForConfigurationURL = dto.pingForConfigurationURL
-            it.huvudansvarigKontakt = upsert(dto.huvudansvarigKontakt)
-            it.tekniskKontakt = upsert(dto.tekniskKontakt)
-            it.tekniskSupportkontakt = upsert(dto.tekniskSupportKontakt)
+            it.huvudansvarigKontakt = dto.huvudansvarigKontakt != null ? upsert(dto.huvudansvarigKontakt) : null
+            it.tekniskKontakt = dto.tekniskKontakt != null ? upsert(dto.tekniskKontakt) : null
+            it.tekniskSupportkontakt = dto.tekniskSupportKontakt != null ? upsert(dto.tekniskSupportKontakt) : null
         }
         tjanstekomponent.save()
     }
