@@ -12,7 +12,7 @@ class KonsumentanslutningDTO {
     String tjanstekontraktNamnrymd
     int tjanstekontraktMajorVersion
     int tjanstekontraktMinorVersion
-    List<String> nyaLogiskaAdresser
+    List<LogiskAdressDTO> nyaLogiskaAdresser
 
     static constraints = {
         tjanstekontraktNamnrymd nullable: false, blank: false

@@ -1,7 +1,7 @@
 package se.skltp.ap.api
 
 import grails.rest.RestfulController
-import se.skltp.ap.services.dto.LogiskAdressDTO
+import se.skltp.ap.services.dto.domain.LogiskAdressDTO
 
 class LogiskAdressApiController extends RestfulController {
 

@@ -1,4 +1,4 @@
-package se.skltp.ap.services.dto
+package se.skltp.ap.services.dto.domain
 
 import groovy.transform.ToString
 

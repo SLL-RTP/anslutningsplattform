@@ -16,7 +16,7 @@ class ProducentanslutningDTO {
     int tjanstekontraktMinorVersion
     Date giltigFranTid
     Date giltigTillTid
-    List<String> nyaLogiskaAdresser
+    List<LogiskAdressDTO> nyaLogiskaAdresser
 
     static constraints = {
         rivtaProfil nullable: false, blank: false

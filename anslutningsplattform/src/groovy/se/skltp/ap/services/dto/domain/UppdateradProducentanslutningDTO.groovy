@@ -11,6 +11,6 @@ import groovy.transform.ToString
 class UppdateradProducentanslutningDTO extends ProducentanslutningDTO {
     String tidigareRivtaProfil
     String tidigareUrl
-    List<String> befintligaLogiskaAdresser
-    List<String> borttagnaLogiskaAdresser
+    List<LogiskAdressDTO> befintligaLogiskaAdresser
+    List<LogiskAdressDTO> borttagnaLogiskaAdresser
 }
