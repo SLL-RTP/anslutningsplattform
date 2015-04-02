@@ -8,6 +8,7 @@ import groovy.transform.ToString
 @ToString(includeNames=true, includeFields = true)
 class LogiskAdress {
     String hsaId
+    String namn
 
     static constraints = {
         hsaId nullable: false, blank: false, unique: true

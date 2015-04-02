@@ -2,7 +2,7 @@ package se.skltp.ap.service
 
 import grails.transaction.Transactional
 import se.skltp.ap.services.dto.HsaDTO;
-import se.skltp.ap.services.dto.LogiskAdressDTO
+import se.skltp.ap.services.dto.domain.LogiskAdressDTO
 
 @Transactional(readOnly = true)
 class LogiskAdressService {
@@ -42,6 +42,9 @@ class LogiskAdressService {
 
     private static final Random rnd = new Random()
     private static getLogiskAdressMockDTOs() {
+        if (rnd.nextInt(10) < 3) {
+            return new ArrayList<LogiskAdressDTO>()
+        }
         [
                 new LogiskAdressDTO(
                         hsaId: 'SE2321000065-7330028000014',

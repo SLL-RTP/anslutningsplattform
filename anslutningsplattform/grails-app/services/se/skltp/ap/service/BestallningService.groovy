@@ -17,6 +17,7 @@ import se.skltp.ap.services.dto.domain.BestallningDTO
 import se.skltp.ap.services.dto.domain.DriftmiljoDTO
 import se.skltp.ap.services.dto.domain.FunktionkontaktDTO
 import se.skltp.ap.services.dto.domain.KonsumentbestallningDTO
+import se.skltp.ap.services.dto.domain.LogiskAdressDTO
 import se.skltp.ap.services.dto.domain.PersonkontaktDTO
 import se.skltp.ap.services.dto.domain.ProducentbestallningDTO
 import se.skltp.ap.services.dto.domain.TjanstekomponentDTO
@@ -72,7 +73,8 @@ class BestallningService {
                 producentbestallning: insertProducentBestallning(bestallningDTO.producentbestallning, driftmiljo),
                 konsumentbestallningar: bestallningDTO.konsumentbestallningar.collect {
                     insertKonsumentBestallning(it, driftmiljo)
-                }
+                },
+                otherInfo: bestallningDTO.otherInfo
         ).save()
     }
 
@@ -92,7 +94,7 @@ class BestallningService {
                             giltigFranTid: new Date(),
                             giltigTillTid: new Date(),
                             nyaLogiskaAdresser: it.nyaLogiskaAdresser.collect { logiskAdress ->
-                                upsertLogiskAdress(logiskAdress)
+                                upsert(logiskAdress)
                             }
                     )
                 }.toSet(),
@@ -108,13 +110,13 @@ class BestallningService {
                             giltigFranTid: new Date(),
                             giltigTillTid: new Date(),
                             nyaLogiskaAdresser: it.nyaLogiskaAdresser.collect { logiskAdress ->
-                                upsertLogiskAdress(logiskAdress)
+                                upsert(logiskAdress)
                             },
                             befintligaLogiskaAdresser: it.befintligaLogiskaAdresser.collect { logiskAdress ->
-                                upsertLogiskAdress(logiskAdress)
+                                upsert(logiskAdress)
                             },
                             borttagnaLogiskaAdresser: it.borttagnaLogiskaAdresser.collect { logiskAdress ->
-                                upsertLogiskAdress(logiskAdress)
+                                upsert(logiskAdress)
                             }
                     )
                 }.toSet()
@@ -135,7 +137,7 @@ class BestallningService {
                             giltigFranTid: new Date(),
                             giltigTillTid: new Date(),
                             nyaLogiskaAdresser: it.nyaLogiskaAdresser.collect { logiskAdress ->
-                                upsertLogiskAdress(logiskAdress)
+                                upsert(logiskAdress)
                             }
                     )
                 }.toSet(),
@@ -147,24 +149,25 @@ class BestallningService {
                             giltigFranTid: new Date(),
                             giltigTillTid: new Date(),
                             nyaLogiskaAdresser: it.nyaLogiskaAdresser.collect { logiskAdress ->
-                                upsertLogiskAdress(logiskAdress)
+                                upsert(logiskAdress)
                             },
                             befintligaLogiskaAdresser: it.befintligaLogiskaAdresser.collect { logiskAdress ->
-                                upsertLogiskAdress(logiskAdress)
+                                upsert(logiskAdress)
                             },
                             borttagnaLogiskaAdresser: it.borttagnaLogiskaAdresser.collect { logiskAdress ->
-                                upsertLogiskAdress(logiskAdress)
+                                upsert(logiskAdress)
                             }
                     )
                 }.toSet()
         )
     }
 
-    private LogiskAdress upsertLogiskAdress(String hsaId) {
-        def logiskAdress = LogiskAdress.findByHsaId(hsaId)
+    private LogiskAdress upsert(LogiskAdressDTO dto) {
+        def logiskAdress = LogiskAdress.findByHsaId(dto.hsaId)
         if (logiskAdress == null) {
             logiskAdress = new LogiskAdress(
-                    hsaId: hsaId
+                    hsaId: dto.hsaId,
+                    namn: dto.namn
             ).save()
         }
         logiskAdress
@@ -222,9 +225,9 @@ class BestallningService {
             it.organisation = dto.organisation
             it.ipadress = dto.ipadress
             it.pingForConfigurationURL = dto.pingForConfigurationURL
-            it.huvudansvarigKontakt = upsert(dto.huvudansvarigKontakt)
-            it.tekniskKontakt = upsert(dto.tekniskKontakt)
-            it.tekniskSupportkontakt = upsert(dto.tekniskSupportKontakt)
+            it.huvudansvarigKontakt = dto.huvudansvarigKontakt != null ? upsert(dto.huvudansvarigKontakt) : null
+            it.tekniskKontakt = dto.tekniskKontakt != null ? upsert(dto.tekniskKontakt) : null
+            it.tekniskSupportkontakt = dto.tekniskSupportKontakt != null ? upsert(dto.tekniskSupportKontakt) : null
         }
         tjanstekomponent.save()
     }

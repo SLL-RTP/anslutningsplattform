@@ -1,6 +1,7 @@
 package se.skltp.ap.services.dto
 
 import groovy.transform.ToString
+import se.skltp.ap.services.dto.domain.LogiskAdressDTO
 
 @ToString(includeNames=true, includeFields = true)
 class TjansteKontraktDTO {

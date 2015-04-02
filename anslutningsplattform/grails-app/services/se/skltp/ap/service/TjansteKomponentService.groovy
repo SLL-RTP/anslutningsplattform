@@ -2,7 +2,9 @@ package se.skltp.ap.service
 
 import grails.transaction.Transactional
 import se.skltp.ap.Tjanstekomponent
-import se.skltp.ap.services.dto.TjansteKomponentDTO
+import se.skltp.ap.services.dto.domain.FunktionkontaktDTO
+import se.skltp.ap.services.dto.domain.PersonkontaktDTO
+import se.skltp.ap.services.dto.domain.TjanstekomponentDTO
 
 @Transactional
 class TjansteKomponentService {
@@ -18,21 +20,21 @@ class TjansteKomponentService {
     ]
 
     @Transactional(readOnly = true)
-    List<TjansteKomponentDTO> query(String takId, String queryString, int limit) {
+    List<TjanstekomponentDTO> query(String takId, String queryString, int limit) {
 		// search both TAK and AP data to support cases where
 		// 1. there is an order in AP to set up a new TjansteKomponent in TAK, but the order hasn't been processed yet
 		// 2. there is an existing TjansteKomponent in TAK that was registered before AP was live
 
 		// search AP
         def domainServiceComponents = Tjanstekomponent.findAllByHsaIdIlikeOrBeskrivningIlike("%$queryString%", "%$queryString%")
-        def tjansteKomponentDTOs = domainServiceComponents.collect {
-            new TjansteKomponentDTO(
+        def tjanstekomponentDTOs = domainServiceComponents.collect {
+            new TjanstekomponentDTO(
                     hsaId: it.hsaId,
-                    namn: it.beskrivning
+                    beskrivning: it.beskrivning
             )
         }
 		
-		if (tjansteKomponentDTOs.size() < limit) {
+		if (tjanstekomponentDTOs.size() < limit) {
 			// also search TAK
 			//List<TjansteKomponentDTO> takList = takService.freeTextSearchTjansteKomponent(takId, queryString, limit)
 			// add TAK data to result, prioritize AP data that is richer
@@ -43,69 +45,92 @@ class TjansteKomponentService {
 
 			def takList = new ArrayList()
 			fakeTakTjanstekomponents.each {
-				takList.add(new TjansteKomponentDTO(hsaId: it[0], namn: it[1]))
+				takList.add(new TjanstekomponentDTO(hsaId: it[0], beskrivning: it[1]))
 			}
 
-            tjansteKomponentDTOs.addAll(takList)
+            tjanstekomponentDTOs.addAll(takList)
 		}
 		
 		
 		// apply limit
-		if (tjansteKomponentDTOs.size() > limit) {
-            tjansteKomponentDTOs.take(limit)
+		if (tjanstekomponentDTOs.size() > limit) {
+            tjanstekomponentDTOs.take(limit)
 		}
 
-        tjansteKomponentDTOs
+        tjanstekomponentDTOs
     }
 
-    TjansteKomponentDTO findByHsaId(String hsaId) {
+    TjanstekomponentDTO findByHsaId(String hsaId) {
         def domainServiceComponent = Tjanstekomponent.findByHsaId(hsaId)
         if (!domainServiceComponent) {
             def tmp = fakeTakTjanstekomponents.find {
                 it[0] == hsaId
             }
-            return new TjansteKomponentDTO(hsaId: tmp[0], namn: tmp[1])
+            return new TjanstekomponentDTO(hsaId: tmp[0], beskrivning: tmp[1])
         }
-        new TjansteKomponentDTO(
+        new TjanstekomponentDTO(
                 hsaId: domainServiceComponent.hsaId,
-                namn: domainServiceComponent.beskrivning,
+                beskrivning: domainServiceComponent.beskrivning,
                 organisation: domainServiceComponent.organisation,
-                huvudAnsvarigNamn: domainServiceComponent.huvudansvarigKontakt.namn,
-                huvudAnsvarigEpost: domainServiceComponent.huvudansvarigKontakt.epost,
-                huvudAnsvarigTelefon: domainServiceComponent.huvudansvarigKontakt.telefon,
-                tekniskKontaktEpost: domainServiceComponent.tekniskKontakt.epost,
-                tekniskKontaktNamn: domainServiceComponent.tekniskKontakt.namn,
-                tekniskKontaktTelefon: domainServiceComponent.tekniskKontakt.telefon,
-                funktionsBrevladaEpost: domainServiceComponent.tekniskSupportkontakt.epost,
-                funktionsBrevladaTelefon: domainServiceComponent.tekniskSupportkontakt.telefon,
                 ipadress: domainServiceComponent.ipadress,
-                pingForConfiguration: domainServiceComponent.pingForConfigurationURL
+                pingForConfigurationURL: domainServiceComponent.pingForConfigurationURL,
+                huvudansvarigKontakt: new PersonkontaktDTO(
+                        hsaId: domainServiceComponent.huvudansvarigKontakt?.hsaId,
+                        namn: domainServiceComponent.huvudansvarigKontakt?.namn,
+                        epost: domainServiceComponent.huvudansvarigKontakt?.epost,
+                        telefon: domainServiceComponent.huvudansvarigKontakt?.telefon
+                ),
+                tekniskKontakt: new PersonkontaktDTO(
+                        hsaId: domainServiceComponent.tekniskKontakt?.hsaId,
+                        namn: domainServiceComponent.tekniskKontakt?.namn,
+                        epost:  domainServiceComponent.tekniskKontakt?.epost,
+                        telefon: domainServiceComponent.tekniskKontakt?.telefon
+                ),
+                tekniskSupportKontakt: new FunktionkontaktDTO(
+                        epost: domainServiceComponent.tekniskSupportkontakt?.epost,
+                        telefon: domainServiceComponent.tekniskSupportkontakt?.telefon
+                )
         )
+//        new TjansteKomponentDTO(
+//                hsaId: domainServiceComponent.hsaId,
+//                namn: domainServiceComponent.beskrivning,
+//                organisation: domainServiceComponent.organisation,
+//                huvudAnsvarigNamn: domainServiceComponent.huvudansvarigKontakt.namn,
+//                huvudAnsvarigEpost: domainServiceComponent.huvudansvarigKontakt.epost,
+//                huvudAnsvarigTelefon: domainServiceComponent.huvudansvarigKontakt.telefon,
+//                tekniskKontaktEpost: domainServiceComponent.tekniskKontakt.epost,
+//                tekniskKontaktNamn: domainServiceComponent.tekniskKontakt.namn,
+//                tekniskKontaktTelefon: domainServiceComponent.tekniskKontakt.telefon,
+//                funktionsBrevladaEpost: domainServiceComponent.tekniskSupportkontakt.epost,
+//                funktionsBrevladaTelefon: domainServiceComponent.tekniskSupportkontakt.telefon,
+//                ipadress: domainServiceComponent.ipadress,
+//                pingForConfiguration: domainServiceComponent.pingForConfigurationURL
+//        )
     }
 
-    boolean update(TjansteKomponentDTO dto) {
-        def tjanstekomponent = Tjanstekomponent.findByHsaId(dto.hsaId)
-        if (tjanstekomponent != null) {
-            tjanstekomponent.beskrivning = dto.namn
-            tjanstekomponent.organisation = dto.organisation
-            tjanstekomponent.ipadress = dto.ipadress
-            tjanstekomponent.pingForConfigurationURL = dto.pingForConfiguration
-
-            //TODO: need to handle changed contacts
-            tjanstekomponent.huvudansvarigKontakt.namn = dto.huvudAnsvarigNamn
-            tjanstekomponent.huvudansvarigKontakt.epost = dto.huvudAnsvarigEpost
-            tjanstekomponent.huvudansvarigKontakt.telefon = dto.huvudAnsvarigTelefon
-
-            tjanstekomponent.tekniskKontakt.namn = dto.tekniskKontaktNamn
-            tjanstekomponent.tekniskKontakt.epost = dto.tekniskKontaktEpost
-            tjanstekomponent.tekniskKontakt.telefon = dto.tekniskKontaktTelefon
-
-            tjanstekomponent.tekniskSupportkontakt.epost = dto.funktionsBrevladaEpost
-            tjanstekomponent.tekniskSupportkontakt.telefon = dto.funktionsBrevladaTelefon
-
-            tjanstekomponent.save()
-            return true
-        }
-        false
+    boolean update(TjanstekomponentDTO dto) {
+//        def tjanstekomponent = Tjanstekomponent.findByHsaId(dto.hsaId)
+//        if (tjanstekomponent != null) {
+//            tjanstekomponent.beskrivning = dto.namn
+//            tjanstekomponent.organisation = dto.organisation
+//            tjanstekomponent.ipadress = dto.ipadress
+//            tjanstekomponent.pingForConfigurationURL = dto.pingForConfiguration
+//
+//            //TODO: need to handle changed contacts
+//            tjanstekomponent.huvudansvarigKontakt.namn = dto.huvudAnsvarigNamn
+//            tjanstekomponent.huvudansvarigKontakt.epost = dto.huvudAnsvarigEpost
+//            tjanstekomponent.huvudansvarigKontakt.telefon = dto.huvudAnsvarigTelefon
+//
+//            tjanstekomponent.tekniskKontakt.namn = dto.tekniskKontaktNamn
+//            tjanstekomponent.tekniskKontakt.epost = dto.tekniskKontaktEpost
+//            tjanstekomponent.tekniskKontakt.telefon = dto.tekniskKontaktTelefon
+//
+//            tjanstekomponent.tekniskSupportkontakt.epost = dto.funktionsBrevladaEpost
+//            tjanstekomponent.tekniskSupportkontakt.telefon = dto.funktionsBrevladaTelefon
+//
+//            tjanstekomponent.save()
+//            return true
+//        }
+//        false
     }
 }

@@ -13,6 +13,7 @@ class BestallningDTO {
     String bestallareRoll
     ProducentbestallningDTO producentbestallning
     List<KonsumentbestallningDTO> konsumentbestallningar
+    String otherInfo
 
     static constraints = {
         driftmiljo nullable: false
@@ -25,5 +26,6 @@ class BestallningDTO {
             true
         }
         konsumentbestallningar nullable: true
+        otherInfo nullable: true, blank: true
     }
 }

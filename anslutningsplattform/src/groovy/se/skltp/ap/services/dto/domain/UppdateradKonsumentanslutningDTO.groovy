@@ -9,6 +9,6 @@ import groovy.transform.ToString
 @Validateable
 @ToString
 class UppdateradKonsumentanslutningDTO extends KonsumentanslutningDTO {
-    List<String> befintligaLogiskaAdresser
-    List<String> borttagnaLogiskaAdresser
+    List<LogiskAdressDTO> befintligaLogiskaAdresser
+    List<LogiskAdressDTO> borttagnaLogiskaAdresser
 }
