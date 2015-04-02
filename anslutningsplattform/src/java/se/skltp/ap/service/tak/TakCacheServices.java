@@ -4,8 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 import se.skltp.ap.service.tak.m.AnropsBehorighetDTO;
+import se.skltp.ap.service.tak.m.TjanstekomponentDTO;
 import se.skltp.ap.service.tak.m.TjanstekontraktDTO;
 import se.skltp.ap.service.tak.m.VirtualiseringDTO;
+import se.skltp.tak.vagvalsinfo.wsdl.v2.TjanstekomponentInfoType;
 /**
  * Slim face for read operations against TAK-cache.
  */
@@ -45,4 +47,7 @@ public interface TakCacheServices {
 	 * @return
 	 */
 	public List<VirtualiseringDTO> getAllVirtualiseringar();
+	
+	public List<TjanstekomponentInfoType> getAllTjanstekomponenter();
+	
 }

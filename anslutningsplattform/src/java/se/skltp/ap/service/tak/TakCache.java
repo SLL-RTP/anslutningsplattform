@@ -17,10 +17,12 @@ import org.slf4j.LoggerFactory;
 
 import se.skltp.ap.service.tak.m.AnropsBehorighetDTO;
 import se.skltp.ap.service.tak.m.PersistenceEntity;
+import se.skltp.ap.service.tak.m.TjanstekomponentDTO;
 import se.skltp.ap.service.tak.m.TjanstekontraktDTO;
 import se.skltp.ap.service.tak.m.VirtualiseringDTO;
 import se.skltp.tak.vagvalsinfo.wsdl.v2.AnropsBehorighetsInfoType;
 import se.skltp.tak.vagvalsinfo.wsdl.v2.SokVagvalsInfoInterface;
+import se.skltp.tak.vagvalsinfo.wsdl.v2.TjanstekomponentInfoType;
 import se.skltp.tak.vagvalsinfo.wsdl.v2.TjanstekontraktInfoType;
 import se.skltp.tak.vagvalsinfo.wsdl.v2.VirtualiseringsInfoType;
 
@@ -33,6 +35,7 @@ final class TakCache {
 	private static final ConcurrentHashMap<String, ConcurrentHashMap<String, AnropsBehorighetDTO>> behorighet;
 	private static final ConcurrentHashMap<String, ConcurrentHashMap<String, TjanstekontraktDTO>> tjanstekontrakt;
 	private static final ConcurrentHashMap<String, ConcurrentHashMap<String, VirtualiseringDTO>> virtualisering;
+	private static final ConcurrentHashMap<String, ConcurrentHashMap<String, TjanstekomponentDTO>> tjanstekomponent;
 
 	private static final ConcurrentHashMap<String, Date> endpointSync;
 
@@ -42,6 +45,7 @@ final class TakCache {
 		behorighet = new ConcurrentHashMap<String, ConcurrentHashMap<String, AnropsBehorighetDTO>>();
 		tjanstekontrakt = new ConcurrentHashMap<String, ConcurrentHashMap<String, TjanstekontraktDTO>>();
 		virtualisering = new ConcurrentHashMap<String, ConcurrentHashMap<String, VirtualiseringDTO>>();
+		tjanstekomponent = new ConcurrentHashMap<String, ConcurrentHashMap<String, TjanstekomponentDTO>>();
 
 		endpointSync = new ConcurrentHashMap<String, Date>();
 	}
@@ -141,6 +145,33 @@ final class TakCache {
 			}
 		}
 	}
+	
+	private synchronized static void cacheTjanstekomponenter(final String endpoint, final List<TjanstekomponentInfoType> tjanstekomponentInfos) {
+		if(endpoint != null) {
+			final Set<String> currentKeys = new HashSet<String>();
+			ConcurrentHashMap<String, TjanstekomponentDTO> cache;
+			if(!tjanstekomponent.contains(endpoint)) {
+				cache = new ConcurrentHashMap<String, TjanstekomponentDTO>();
+				tjanstekomponent.put(endpoint, cache);
+			} else {
+				cache = tjanstekomponent.get(endpoint);
+			}
+			for(final TjanstekomponentInfoType type : tjanstekomponentInfos) {
+				final TjanstekomponentDTO dto = TakCacheUtil.map(type);
+				currentKeys.add(dto.getId());
+				if(cache.putIfAbsent(dto.getId(), dto) != null) {
+					cache.replace(dto.getId(), dto);
+				}
+			}
+			final Iterator<String> it = cache.keySet().iterator();
+			while(it.hasNext()) {
+				final String key = it.next();
+				if(!currentKeys.contains(key)) {
+					tjanstekomponent.remove(key);
+				}
+			}
+		}
+	}
 
 	/**
 	 * Get all cached AnropsBehorigheter from provided endpoint.
@@ -182,6 +213,19 @@ final class TakCache {
 	}
 
 	/**
+	 * Get all cached Tjanstekomponent from provided endpoint.
+	 * @param endpoint URL
+	 * @return
+	 */
+	protected static List<TjanstekomponentInfoType> getTjanstekomponent(final String endpoint) {
+		final ConcurrentHashMap<String, TjanstekomponentDTO> cache = tjanstekomponent.get(endpoint);
+		if(cache != null) {
+			return Collections.unmodifiableList(new ArrayList<TjanstekomponentInfoType>(cache.values()));
+		}
+		return Collections.emptyList();
+	}
+
+	/**
 	 * Get date reference for when endpoint was latest synched.
 	 * @param endpoint
 	 * @return
@@ -213,10 +257,12 @@ final class TakCache {
 						final List<VirtualiseringsInfoType> vInfoTypes = client.hamtaAllaVirtualiseringar(null).getVirtualiseringsInfo();
 						final List<AnropsBehorighetsInfoType> aInfoTypes = client.hamtaAllaAnropsBehorigheter(null).getAnropsBehorighetsInfo();
 						final List<TjanstekontraktInfoType> tInfoTypes = client.hamtaAllaTjanstekontrakt(null).getTjanstekontraktInfo();
+						final List<TjanstekomponentInfoType> tkInfoTypes = client.hamtaAllaTjanstekomponenter(null).getTjanstekomponentInfo();
 
 						cacheVirtualiseringar(endpoint, vInfoTypes);
 						cacheTjanstecontract(endpoint, tInfoTypes);
 						cacheAnropsBehorighet(endpoint, aInfoTypes);
+						cacheTjanstekomponenter(endpoint, tkInfoTypes);
 
 						final Date synched = new Date();
 
@@ -224,7 +270,7 @@ final class TakCache {
 							endpointSync.replace(endpoint, synched);
 						}
 
-						persitencesEntitys.add(new PersistenceEntity(endpoint, synched, vInfoTypes, tInfoTypes, aInfoTypes));
+						persitencesEntitys.add(new PersistenceEntity(endpoint, synched, vInfoTypes, tInfoTypes, aInfoTypes, tkInfoTypes));
 
 						callback.onSyncSuccess(endpoint);
 					} catch (Exception err) {
@@ -249,6 +295,7 @@ final class TakCache {
 						cacheAnropsBehorighet(endpoint, entity.getAnropsbehorighet());
 						cacheTjanstecontract(endpoint, entity.getTjanstekontrakt());
 						cacheVirtualiseringar(endpoint, entity.getVirtualiseringar());
+						cacheTjanstekomponenter(endpoint, entity.getTjanstekomponent());
 						log.info("Loaded cache from persitence for endpoint: " + endpoint);
 					} catch (Exception err) {
 						log.error("Could not load persisted cache for endpont: " + endpoint, err);
@@ -270,6 +317,7 @@ final class TakCache {
 						cacheAnropsBehorighet(entity.getEndpoint(), entity.getAnropsbehorighet());
 						cacheTjanstecontract(entity.getEndpoint(), entity.getTjanstekontrakt());
 						cacheVirtualiseringar(entity.getEndpoint(), entity.getVirtualiseringar());
+						cacheTjanstekomponenter(entity.getEndpoint(), entity.getTjanstekomponent());
 						log.info("Loaded cache from persistence for endpoint: " + entity.getEndpoint());
 					} catch (Exception err) {
 						log.error("Could not load persisted cache for endpont: " + entity.getEndpoint(), err);

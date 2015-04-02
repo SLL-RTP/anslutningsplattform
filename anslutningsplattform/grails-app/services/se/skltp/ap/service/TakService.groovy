@@ -15,6 +15,7 @@ import se.skltp.ap.service.tak.persistence.TakCacheFilePersistenceImpl
 import se.skltp.ap.service.tak.persistence.TakCachePersistenceServices
 import se.skltp.ap.services.dto.TakRoutingEntryDTO
 import se.skltp.ap.services.dto.TjansteKomponentDTO
+import se.skltp.tak.vagvalsinfo.wsdl.v2.TjanstekomponentInfoType
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
@@ -201,24 +202,19 @@ class TakService {
 
 	List<TjansteKomponentDTO> freeTextSearchTjansteKomponent(String takId, String queryString, int limit) {
 		TakCacheServices tak = takCacheMap.get(takId)
-		// Note: TjansteKomponent is NOT exposed directly in TAK-services WSDL
-		// v1.5.1, only indirect so we have to go with that for now ...
-		// ... also means that we can only search for "hsaId", not "beskrivning"
-		// since it's not exposed
-		List<VirtualiseringDTO> virtualiseringar = tak.getAllVirtualiseringar();
 		// no search optimizations, just do a linear search for now ...
 		// NOTE: be careful to store/cache the TAK data locally - TAK data is locally
 		// owned by the cache which must be refreshed at repeated intervals
 		List<TjansteKomponentDTO> searchResult = new ArrayList<TjansteKomponentDTO>();
-		for (VirtualiseringDTO v : virtualiseringar) {
-			if (v.reciverId.toLowerCase().contains(queryString.toLowerCase())) {
-				searchResult.add(new TjansteKomponentDTO(hsaId: v.reciverId))
+		for (TjanstekomponentInfoType tki : tak.getAllTjanstekomponenter()) {
+			if (tki.hsaId.toLowerCase().contains(queryString.toLowerCase())
+					|| tki.beskrivning?.toLowerCase().contains(queryString.toLowerCase())) {
+				searchResult.add(new TjansteKomponentDTO(hsaId: tki.hsaId, namn: tki.beskrivning))
 				if (searchResult.size() == limit) {
 					break;
 				}
 			}
 		}
-
 		searchResult
 	}
 	

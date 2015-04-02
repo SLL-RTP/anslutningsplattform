@@ -16,7 +16,7 @@
     <description>anslutningsplattform</description>
 
     <properties>
-		<tak.version>1.5.1</tak.version>
+		<tak.version>1.5.2-RC2-SNAPSHOT</tak.version>
     	<vp.version>2.2.11</vp.version>
         <grails.version>2.4.3</grails.version>
     </properties>

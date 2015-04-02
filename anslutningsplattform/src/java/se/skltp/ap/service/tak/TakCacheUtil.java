@@ -5,10 +5,12 @@ import java.util.Date;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import se.skltp.ap.service.tak.m.AnropsBehorighetDTO;
+import se.skltp.ap.service.tak.m.TjanstekomponentDTO;
 import se.skltp.ap.service.tak.m.TjanstekontraktDTO;
 import se.skltp.ap.service.tak.m.VirtualiseringDTO;
 import se.skltp.tak.vagvalsinfo.wsdl.v2.AnropsBehorighetsInfoIdType;
 import se.skltp.tak.vagvalsinfo.wsdl.v2.AnropsBehorighetsInfoType;
+import se.skltp.tak.vagvalsinfo.wsdl.v2.TjanstekomponentInfoType;
 import se.skltp.tak.vagvalsinfo.wsdl.v2.TjanstekontraktInfoType;
 import se.skltp.tak.vagvalsinfo.wsdl.v2.VirtualiseringsInfoIdType;
 import se.skltp.tak.vagvalsinfo.wsdl.v2.VirtualiseringsInfoType;
@@ -84,7 +86,19 @@ public final class TakCacheUtil {
 		}
 		return new TjanstekontraktDTO(type.getBeskrivning(), type.getMajorVersion(),type.getMinorVersion(), type.getNamnrymd());
 	}
-	
+
+	/**
+	 * Transformation between JAXB and DTO
+	 * @param type
+	 * @return
+	 */
+	public static TjanstekomponentDTO map(final TjanstekomponentInfoType type) {
+		if(type == null) {
+			return null;
+		}
+		return new TjanstekomponentDTO(type);
+	}
+
 	/**
 	 * Transformation between java.Date and XMLGregorianCalendar
 	 * @param date

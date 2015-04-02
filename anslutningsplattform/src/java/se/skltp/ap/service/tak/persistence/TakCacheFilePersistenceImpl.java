@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import se.skltp.ap.service.tak.m.PersistenceEntity;
 import se.skltp.tak.vagvalsinfo.wsdl.v2.AnropsBehorighetsInfoType;
+import se.skltp.tak.vagvalsinfo.wsdl.v2.TjanstekomponentInfoType;
 import se.skltp.tak.vagvalsinfo.wsdl.v2.TjanstekontraktInfoType;
 import se.skltp.tak.vagvalsinfo.wsdl.v2.VirtualiseringsInfoType;
 
@@ -60,6 +61,7 @@ public class TakCacheFilePersistenceImpl implements TakCachePersistenceServices 
 					cachedEntries.setAnropsbehorigheter(p.getAnropsbehorighet());
 					cachedEntries.setTjanstekontrakt(p.getTjanstekontrakt());
 					cachedEntries.setVirtualiseringar(p.getVirtualiseringar());
+					cachedEntries.setTjanstekomponent(p.getTjanstekomponent());
 					cachedEndpoint.setEntries(cachedEntries);
 
 					final String fileName = UUID.randomUUID().toString() + ENDPOINT_FILE_ENDING;
@@ -169,7 +171,8 @@ public class TakCacheFilePersistenceImpl implements TakCachePersistenceServices 
 									cached.getSynched(),
 									cached.getEntries().getVirtualiseringar(),
 									cached.getEntries().getTjanstekontrakt(),
-									cached.getEntries().getAnropsbehorigheter()));
+									cached.getEntries().getAnropsbehorigheter(),
+									cached.getEntries().getTjanstekomponent()));
 						}
 					}
 				}
@@ -193,7 +196,8 @@ public class TakCacheFilePersistenceImpl implements TakCachePersistenceServices 
 										cached.getSynched(),
 										cached.getEntries().getVirtualiseringar(),
 										cached.getEntries().getTjanstekontrakt(),
-										cached.getEntries().getAnropsbehorigheter()
+										cached.getEntries().getAnropsbehorigheter(),
+										cached.getEntries().getTjanstekomponent()
 									);
 							}
 						}
@@ -285,24 +289,39 @@ class CachedEntries {
 	private List<VirtualiseringsInfoType> virtualiseringar;
 	private List<AnropsBehorighetsInfoType> anropsbehorigheter;
 	private List<TjanstekontraktInfoType> tjanstekontrakt;
+	private List<TjanstekomponentInfoType> tjanstekomponent;
 
 	public List<VirtualiseringsInfoType> getVirtualiseringar() {
 		return virtualiseringar;
 	}
+	
 	public void setVirtualiseringar(List<VirtualiseringsInfoType> virtualiseringar) {
 		this.virtualiseringar = virtualiseringar;
 	}
+
 	public List<AnropsBehorighetsInfoType> getAnropsbehorigheter() {
 		return anropsbehorigheter;
 	}
+	
 	public void setAnropsbehorigheter(
 			List<AnropsBehorighetsInfoType> anropsbehorigheter) {
 		this.anropsbehorigheter = anropsbehorigheter;
 	}
+	
 	public List<TjanstekontraktInfoType> getTjanstekontrakt() {
 		return tjanstekontrakt;
 	}
+	
 	public void setTjanstekontrakt(List<TjanstekontraktInfoType> tjanstekontrakt) {
 		this.tjanstekontrakt = tjanstekontrakt;
 	}
+	
+	public List<TjanstekomponentInfoType> getTjanstekomponent() {
+		return tjanstekomponent;
+	}
+	
+	public void setTjanstekomponent(List<TjanstekomponentInfoType> tjanstekomponent) {
+		this.tjanstekomponent = tjanstekomponent;
+	}
+
 }

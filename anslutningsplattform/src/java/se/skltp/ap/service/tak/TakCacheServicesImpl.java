@@ -7,8 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.skltp.ap.service.tak.m.AnropsBehorighetDTO;
+import se.skltp.ap.service.tak.m.TjanstekomponentDTO;
 import se.skltp.ap.service.tak.m.TjanstekontraktDTO;
 import se.skltp.ap.service.tak.m.VirtualiseringDTO;
+import se.skltp.tak.vagvalsinfo.wsdl.v2.TjanstekomponentInfoType;
 
 public class TakCacheServicesImpl implements TakCacheServices {
 	private static final Logger log = LoggerFactory.getLogger(TakCacheServicesImpl.class);
@@ -62,6 +64,10 @@ public class TakCacheServicesImpl implements TakCacheServices {
 	public List<VirtualiseringDTO> getAllVirtualiseringar() {
 		return TakCache.getVirtualisering(this.endpoint);
 	}
-	
+
+	@Override
+	public List<TjanstekomponentDTO> getAllTjanstekomponenter() {
+		return TakCache.getTjanstekomponent(this.endpoint);
+	}	
 
 }
