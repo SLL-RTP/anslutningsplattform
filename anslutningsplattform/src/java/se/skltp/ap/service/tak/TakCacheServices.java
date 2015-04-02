@@ -48,6 +48,6 @@ public interface TakCacheServices {
 	 */
 	public List<VirtualiseringDTO> getAllVirtualiseringar();
 	
-	public List<TjanstekomponentInfoType> getAllTjanstekomponenter();
+	public List<TjanstekomponentDTO> getAllTjanstekomponenter();
 	
 }

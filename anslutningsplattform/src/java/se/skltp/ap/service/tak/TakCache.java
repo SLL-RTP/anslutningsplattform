@@ -217,10 +217,10 @@ final class TakCache {
 	 * @param endpoint URL
 	 * @return
 	 */
-	protected static List<TjanstekomponentInfoType> getTjanstekomponent(final String endpoint) {
+	protected static List<TjanstekomponentDTO> getTjanstekomponent(final String endpoint) {
 		final ConcurrentHashMap<String, TjanstekomponentDTO> cache = tjanstekomponent.get(endpoint);
 		if(cache != null) {
-			return Collections.unmodifiableList(new ArrayList<TjanstekomponentInfoType>(cache.values()));
+			return Collections.unmodifiableList(new ArrayList<TjanstekomponentDTO>(cache.values()));
 		}
 		return Collections.emptyList();
 	}
