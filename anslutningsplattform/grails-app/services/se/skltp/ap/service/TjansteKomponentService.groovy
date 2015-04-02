@@ -2,6 +2,7 @@ package se.skltp.ap.service
 
 import grails.transaction.Transactional
 import se.skltp.ap.Tjanstekomponent
+import se.skltp.ap.services.dto.TjansteKomponentDTO
 import se.skltp.ap.services.dto.domain.FunktionkontaktDTO
 import se.skltp.ap.services.dto.domain.PersonkontaktDTO
 import se.skltp.ap.services.dto.domain.TjanstekomponentDTO
@@ -11,14 +12,6 @@ class TjansteKomponentService {
 	
 	def takService
 
-    def fakeTakTjanstekomponents = [
-            ["SE2321000016-A21S", "SLL - Prosang"],
-            ["SE2321000016-A22S", "HSF SLL - Remittera"],
-            ["SE2321000016-A1DB", "SLL - Obstetrix"],
-            ["SE2321000016-9119", "SLL - FlexLab"],
-            ["SE2321000016-6RK5", "SLL - TakeCare"]
-    ]
-
     @Transactional(readOnly = true)
     List<TjanstekomponentDTO> query(String takId, String queryString, int limit) {
 		// search both TAK and AP data to support cases where
@@ -26,47 +19,43 @@ class TjansteKomponentService {
 		// 2. there is an existing TjansteKomponent in TAK that was registered before AP was live
 
 		// search AP
-        def domainServiceComponents = Tjanstekomponent.findAllByHsaIdIlikeOrBeskrivningIlike("%$queryString%", "%$queryString%")
+        def domainServiceComponents = Tjanstekomponent.findAllByHsaIdIlikeOrBeskrivningIlike("%$queryString%", "%$queryString%", [max: limit])
         def tjanstekomponentDTOs = domainServiceComponents.collect {
             new TjanstekomponentDTO(
                     hsaId: it.hsaId,
                     beskrivning: it.beskrivning
             )
         }
-		
-		if (tjanstekomponentDTOs.size() < limit) {
-			// also search TAK
-			//List<TjansteKomponentDTO> takList = takService.freeTextSearchTjansteKomponent(takId, queryString, limit)
-			// add TAK data to result, prioritize AP data that is richer
-			
-			// TODO: do not add duplicates ...
-			
-			// TODO: tmp hardcoded ...
 
-			def takList = new ArrayList()
-			fakeTakTjanstekomponents.each {
-				takList.add(new TjanstekomponentDTO(hsaId: it[0], beskrivning: it[1]))
-			}
-
-            tjanstekomponentDTOs.addAll(takList)
-		}
-		
-		
-		// apply limit
-		if (tjanstekomponentDTOs.size() > limit) {
+        List<TjansteKomponentDTO> takList = takService.freeTextSearchTjansteKomponent(takId, queryString, limit)
+        takList.each {
+            def tjkDTO = tjanstekomponentDTOs.find { tjkDTO ->
+                tjkDTO.hsaId == it.hsaId
+            }
+            if (tjkDTO != null) { //found a match from DB
+                tjkDTO.beskrivning = it.namn
+            } else {
+                tjanstekomponentDTOs.add(new TjanstekomponentDTO(
+                        hsaId: it.hsaId,
+                        beskrivning: it.namn
+                ))
+            }
+        }
+        if (tjanstekomponentDTOs.size() > limit) {
             tjanstekomponentDTOs.take(limit)
-		}
-
+        }
         tjanstekomponentDTOs
     }
 
-    TjanstekomponentDTO findByHsaId(String hsaId) {
+    TjanstekomponentDTO findByHsaId(String hsaId, String takId) {
         def domainServiceComponent = Tjanstekomponent.findByHsaId(hsaId)
         if (!domainServiceComponent) {
-            def tmp = fakeTakTjanstekomponents.find {
-                it[0] == hsaId
+            def tjansteKomponents = takService.freeTextSearchTjansteKomponent(takId, hsaId, 1) //TODO: handle limit
+            if (tjansteKomponents != null && !tjansteKomponents.isEmpty()) {
+                return new TjanstekomponentDTO(hsaId: tjansteKomponents[0].hsaId, beskrivning: tjansteKomponents[0].namn)
+            } else {
+                return null
             }
-            return new TjanstekomponentDTO(hsaId: tmp[0], beskrivning: tmp[1])
         }
         new TjanstekomponentDTO(
                 hsaId: domainServiceComponent.hsaId,

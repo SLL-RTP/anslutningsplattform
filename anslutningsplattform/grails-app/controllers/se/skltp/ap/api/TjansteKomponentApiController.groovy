@@ -15,7 +15,7 @@ class TjansteKomponentApiController {
 
     def get(String id) {
         log.debug params
-        respond tjansteKomponentService.findByHsaId(id)
+        respond tjansteKomponentService.findByHsaId(id, params.takId)
     }
 
     def put(String id) {
