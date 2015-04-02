@@ -39,8 +39,8 @@ public class TakCacheFilePersistenceImpl implements TakCachePersistenceServices 
 
 	private static final Logger log = LoggerFactory.getLogger(TakCacheFilePersistenceImpl.class);
 
-	private static final String INDEX_FILE_NAME = "takCache.index";
-	private static final String ENDPOINT_FILE_ENDING = ".tec";
+	private static final String INDEX_FILE_NAME = "takcache.index.xml";
+	private static final String ENDPOINT_FILE_ENDING = ".takcache.xml";
 	final String path;
 
 
@@ -71,7 +71,7 @@ public class TakCacheFilePersistenceImpl implements TakCachePersistenceServices 
 					IndexEntry indexEntry = new IndexEntry();
 					indexEntry.setEndpoint(p.getEndpoint());;
 					indexEntry.setFileName(fileName);
-					indexEntry.setSynced(p.getSynched());
+					indexEntry.setSynched(p.getSynched());
 					index.getEntrys().add(indexEntry);
 
 					newEntrys.add(p.getEndpoint());
@@ -229,7 +229,7 @@ class Index {
 @XmlRootElement()
 class IndexEntry {
 	private String endpoint;
-	private Date synced;
+	private Date synched;
 	private String fileName;
 
 	public String getEndpoint() {
@@ -238,11 +238,11 @@ class IndexEntry {
 	public void setEndpoint(String endpoint) {
 		this.endpoint = endpoint;
 	}
-	public Date getSynced() {
-		return synced;
+	public Date getSynched() {
+		return synched;
 	}
-	public void setSynced(Date synced) {
-		this.synced = synced;
+	public void setSynched(Date synched) {
+		this.synched = synched;
 	}
 	public String getFileName() {
 		return fileName;

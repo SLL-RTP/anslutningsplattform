@@ -221,21 +221,27 @@ log4j.main = {
 // Tak config
 //tak.sokvagvalsinfo.url = 'http://localhost:8090/tp-vagval-admin-services/SokVagvalsInfo/v2?wsdl'
 // Note: the sequence number must be surrounded by quotes to be a valid groovy identifier
-tak.env.id.'1' = 'ntjp-prod'
-tak.env.name.'1' = 'NTjP PROD'
-tak.env.url.'1' = 'http://TODO-PROD'
 
-tak.env.id.'2' = 'ntjp-qa'
-tak.env.name.'2' = 'NTjP QA'
-tak.env.url.'2' = 'http://TODO-QA'
+tak.env.id.'1' = 'dev-demo-prod'
+tak.env.name.'1' = 'DEV DEMO PROD'
+tak.env.url.'1' = 'http://prod.host.configure.me:8081/tak-services/SokVagvalsInfo/v2'
 
-tak.env.id.'3' = 'ntjp-test'
-tak.env.name.'3' = 'NTjP TEST'
-tak.env.url.'3' = 'http://TODO-TEST'
+tak.env.id.'2' = 'dev-demo-qa'
+tak.env.name.'2' = 'DEV DEMO QA'
+tak.env.url.'2' = 'http://qa.host.configure.me:8081/tak-services/SokVagvalsInfo/v2'
+
+tak.env.id.'3' = 'dev-demo-test'
+tak.env.name.'3' = 'DEV DEMO TEST'
+//tak.env.url.'3' = 'http://localhost:8081/tak-services/SokVagvalsInfo/v2'
+tak.env.url.'3' = 'http://test.host.configure.me:8081/tak-services/SokVagvalsInfo/v2'
 
 //tak.env.id.'4' = 'hd-rivta-box'
 //tak.env.name.'4' = 'HD RIVTA BOX'
 //tak.env.url.'4' = 'http://33.33.33.33:8080/tak-services/SokVagvalsInfo/v2'
+//tak.env.id.'5' = 'hd-local-test'
+//tak.env.name.'5' = 'HD lOCAL TEST'
+//tak.env.url.'5' = 'http://localhost:8081/tak-services/SokVagvalsInfo/v2'
+
 
 
 environments {
