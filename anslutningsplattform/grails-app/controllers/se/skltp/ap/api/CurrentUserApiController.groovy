@@ -15,11 +15,13 @@ class CurrentUserApiController {
 
     def subjectDNHsaIdPattern = ~'OID.2.5.4.5=(.*?),'
     def grailsApplication
+    def kontaktService
 
     def get() {
         if (grailsApplication.config.x509.enabled) {
             respond getCurrentUser(request)
         } else {
+            log.warn("x509 disabled, returning empty PersonkontaktDTO   ")
             respond new PersonkontaktDTO()
         }
     }
@@ -32,9 +34,13 @@ class CurrentUserApiController {
         log.debug("subjectDN: $subjectDN")
         def matcher = subjectDNHsaIdPattern.matcher(subjectDN)
         if (matcher.hasGroup()) {
-            def personkontaktDTO = new PersonkontaktDTO(
-                    hsaId: matcher[0][1]
-            )
+            def hsaId = matcher[0][1]
+            def personkontaktDTO = kontaktService.findPersonkontaktDTOByHsaId(hsaId as String)
+            if (personkontaktDTO == null) {
+                personkontaktDTO = new PersonkontaktDTO(
+                        hsaId: hsaId
+                )
+            }
             log.debug("$personkontaktDTO")
             personkontaktDTO
         } else {
