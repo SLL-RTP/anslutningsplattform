@@ -1,5 +1,7 @@
 package se.skltp.ap.service
 
+import java.util.List;
+
 import se.skltp.ap.services.dto.AdressDTO
 
 import javax.annotation.PostConstruct;
@@ -8,6 +10,7 @@ import se.skltp.ap.service.tak.TakCacheServices
 import se.skltp.ap.service.tak.TakCacheServicesImpl
 import se.skltp.ap.service.tak.TakSyncCacheCallback
 import se.skltp.ap.service.tak.TakCache
+import se.skltp.ap.service.tak.m.TjanstekomponentDTO;
 import se.skltp.ap.service.tak.m.TjanstekontraktDTO
 import se.skltp.ap.service.tak.m.VirtualiseringDTO
 import se.skltp.ap.service.tak.m.PersistenceEntity
@@ -15,7 +18,9 @@ import se.skltp.ap.service.tak.persistence.TakCacheFilePersistenceImpl
 import se.skltp.ap.service.tak.persistence.TakCachePersistenceServices
 import se.skltp.ap.services.dto.TakRoutingEntryDTO
 import se.skltp.ap.services.dto.TjansteKomponentDTO
+import se.skltp.tak.vagvalsinfo.wsdl.v2.AnropsAdressInfoType;
 import se.skltp.tak.vagvalsinfo.wsdl.v2.TjanstekomponentInfoType
+import se.skltp.tak.vagvalsinfo.wsdl.v2.VagvalsInfoType;
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
@@ -180,23 +185,36 @@ class TakService {
 	 
 	List<TjanstekontraktDTO> getTjanstekontraktByHsaId(String takId, String hsaId) {
 		TakCacheServices tak = takCacheMap.get(takId)
-		// create lookup-map for service contracts
-		Map<String, TjanstekontraktDTO> contractsMap = new HashMap()
-		getAllTjanstekontrakt(takId).each {
-			contractsMap.put(it.namnrymd, it)
-		}
-		// find virtualizations for hsaId
-		List<TjanstekontraktDTO> contracts = new ArrayList<TjanstekontraktDTO>()
-		List<VirtualiseringDTO> virtualiseringar = tak.getAllVirtualiseringar()
-		virtualiseringar.each {
-			if (it.reciverId.equalsIgnoreCase(hsaId)) {
-				// lookup contract
-				TjanstekontraktDTO contract = contractsMap.get(it.tjanstekontrakt)
-				if (contract) {
-					contracts.add(contract)
+				
+		// find all tjanstekontraktNamnrymder for hsaId
+		Set<String> tjanstekontraktNamnrymder = new HashSet<String>()
+		List<TjanstekomponentDTO> tks = tak.getAllTjanstekomponenter()
+		tks.each { tk ->
+			if (tk.hsaId.equals(hsaId)) {
+				List<AnropsAdressInfoType> aaits = tk.getAnropsAdressInfo()
+				aaits.each { aait ->
+					List<VagvalsInfoType> vits = aait.getVagvalsInfo()
+					vits.each { vit ->
+						tjanstekontraktNamnrymder.add(vit.getTjanstekontraktNamnrymd()) 
+					}
 				}
 			}
 		}
+		
+		// build response
+		List<TjanstekontraktDTO> contracts = new ArrayList<TjanstekontraktDTO>()
+		tjanstekontraktNamnrymder.each {			
+			// Note: tjanstekontraktNamnrymd looks like:
+			//   urn:riv:crm:scheduling:GetAvailableDatesResponder:1
+			String beskrivning = ""
+			String majorVersion = it.substring(it.lastIndexOf(":") + 1)
+			String minorVersion
+			String namnrymd = it
+			TjanstekontraktDTO dto = new TjanstekontraktDTO(beskrivning, majorVersion, minorVersion, namnrymd)
+			println "####### majorVersion: " + majorVersion
+			contracts.add(dto) 
+		}
+		
 		contracts
 	}
 
