@@ -35,7 +35,7 @@ class CurrentUserApiController {
         def matcher = subjectDNHsaIdPattern.matcher(subjectDN)
         if (matcher.hasGroup()) {
             def hsaId = matcher[0][1]
-            def personkontaktDTO = kontaktService.findPersonkontaktDTOByHsaId(hsaId as String)
+            def personkontaktDTO = kontaktService.findPersonkontaktDTOByHsaId(hsaId)
             if (personkontaktDTO == null) {
                 personkontaktDTO = new PersonkontaktDTO(
                         hsaId: hsaId
