@@ -16,6 +16,7 @@ class KontaktService {
         if (personkontakt != null) {
             return new PersonkontaktDTO(
                     hsaId: personkontakt.hsaId,
+                    namn: personkontakt.namn,
                     epost: personkontakt.epost,
                     telefon: personkontakt.telefon)
         }
