@@ -18,6 +18,8 @@ import se.skltp.ap.service.tak.persistence.TakCacheFilePersistenceImpl
 import se.skltp.ap.service.tak.persistence.TakCachePersistenceServices
 import se.skltp.ap.services.dto.TakRoutingEntryDTO
 import se.skltp.ap.services.dto.TjansteKomponentDTO
+import se.skltp.ap.services.dto.domain.LogiskAdressDTO;
+import se.skltp.ap.util.TjanstekontraktUtil
 import se.skltp.tak.vagvalsinfo.wsdl.v2.AnropsAdressInfoType;
 import se.skltp.tak.vagvalsinfo.wsdl.v2.TjanstekomponentInfoType
 import se.skltp.tak.vagvalsinfo.wsdl.v2.VagvalsInfoType;
@@ -207,11 +209,10 @@ class TakService {
 			// Note: tjanstekontraktNamnrymd looks like:
 			//   urn:riv:crm:scheduling:GetAvailableDatesResponder:1
 			String beskrivning = ""
-			String majorVersion = it.substring(it.lastIndexOf(":") + 1)
+			String majorVersion = TjanstekontraktUtil.extractMajorVersionFromTakNamnrymd(it)
 			String minorVersion
 			String namnrymd = it
 			TjanstekontraktDTO dto = new TjanstekontraktDTO(beskrivning, majorVersion, minorVersion, namnrymd)
-			println "####### majorVersion: " + majorVersion
 			contracts.add(dto) 
 		}
 		
@@ -234,6 +235,30 @@ class TakService {
 			}
 		}
 		searchResult
+	}
+	
+	// serviceContractNamespace (from RIV TA), example: crm:scheduling:GetSubjectOfCareSchedule
+	List<LogiskAdressDTO> getForServiceContract(String serviceComponentId, String environmentId, String serviceContractNamespace, int majorVersion) {
+		TakCacheServices tak = takCacheMap.get(environmentId)
+		
+		List<LogiskAdressDTO> logiskAdressList = new ArrayList<LogiskAdressDTO>()		
+		List<TjanstekomponentDTO> tks = tak.getAllTjanstekomponenter()
+		tks.each { tk ->
+			if (tk.hsaId.equals(serviceComponentId)) {
+				List<AnropsAdressInfoType> aaits = tk.getAnropsAdressInfo()
+				aaits.each { aait ->
+					List<VagvalsInfoType> vits = aait.getVagvalsInfo()
+					vits.each { vit ->
+						if (TjanstekontraktUtil.isNamnrymdEqual(serviceContractNamespace,
+								majorVersion.toString(), vit.getTjanstekontraktNamnrymd())) {
+							logiskAdressList.add(new LogiskAdressDTO(
+								hsaId: vit.getLogiskAdressHsaId(),namn: vit.getLogiskAdressBeskrivning()))
+						}
+					}
+				}
+			}
+		}
+		logiskAdressList
 	}
 	
     AdressDTO getAdressByTjanstekontractAndHsaId(String takId, String namnrymd, String majorVersion, String minorVersion, String hsaId) {
