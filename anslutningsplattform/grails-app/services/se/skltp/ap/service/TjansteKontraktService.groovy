@@ -2,6 +2,7 @@ package se.skltp.ap.service
 
 import grails.transaction.Transactional
 import se.skltp.ap.services.dto.TjansteKontraktDTO
+import se.skltp.ap.util.TjanstekontraktUtil;
 
 
 @Transactional(readOnly = true)
@@ -59,15 +60,11 @@ class TjansteKontraktService {
 		}
 	}
 	
-	// match RIV-TA info against TAK-info where (example):
-	// RIV-TA: namnrymd: crm:scheduling:GetSubjectOfCareSchedule
-	// RIV-TA: majorVersion: 1
-	// TAK: namnrymd: urn:riv:crm:scheduling:GetSubjectOfCareSchedule:1:rivtabp21
-	// TAK: majorVersion: 1
 	boolean namespaceEqual(TjansteKontraktDTO rivTaDTO,
 			se.skltp.ap.service.tak.m.TjanstekontraktDTO takDTO) {
 
-		takDTO.namnrymd.contains(rivTaDTO.namnrymd) && takDTO.majorVersion == rivTaDTO?.majorVersion?.toString()
+		TjanstekontraktUtil.isNamnrymdEqual(rivTaDTO.namnrymd, rivTaDTO.majorVersion.toString(),
+			takDTO.namnrymd)
 	}
 
 }
