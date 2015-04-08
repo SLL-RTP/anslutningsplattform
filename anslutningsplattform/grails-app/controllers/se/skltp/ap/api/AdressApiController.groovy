@@ -12,7 +12,8 @@ class AdressApiController extends RestfulController {
     }
 
     def getAddress(String serviceComponentId, String environmentId, String serviceContractNamespace, String majorVersion, String minorVersion) {
-        def adressDTO = takService.getAdressByTjanstekontractAndHsaId(environmentId, serviceContractNamespace, majorVersion, minorVersion, serviceComponentId)
+		// TODO: minorVersion is not needed here! 
+        def adressDTO = takService.getAdressByTjanstekontraktAndHsaId(environmentId, serviceContractNamespace, majorVersion, serviceComponentId)
         respond adressDTO.properties.minus(adressDTO.properties.findAll { it.value == null })
     }
 }

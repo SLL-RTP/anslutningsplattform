@@ -238,7 +238,7 @@ class TakService {
 	}
 	
 	// serviceContractNamespace (from RIV TA), example: crm:scheduling:GetSubjectOfCareSchedule
-	List<LogiskAdressDTO> getForServiceContract(String serviceComponentId, String environmentId, String serviceContractNamespace, int majorVersion) {
+	List<LogiskAdressDTO> getForServiceContract(String serviceComponentId, String environmentId, String rivTaNamnrymd, int majorVersion) {
 		TakCacheServices tak = takCacheMap.get(environmentId)
 		
 		List<LogiskAdressDTO> logiskAdressList = new ArrayList<LogiskAdressDTO>()		
@@ -249,7 +249,7 @@ class TakService {
 				aaits.each { aait ->
 					List<VagvalsInfoType> vits = aait.getVagvalsInfo()
 					vits.each { vit ->
-						if (TjanstekontraktUtil.isNamnrymdEqual(serviceContractNamespace,
+						if (TjanstekontraktUtil.isNamnrymdEqual(rivTaNamnrymd,
 								majorVersion.toString(), vit.getTjanstekontraktNamnrymd())) {
 							logiskAdressList.add(new LogiskAdressDTO(
 								hsaId: vit.getLogiskAdressHsaId(),namn: vit.getLogiskAdressBeskrivning()))
@@ -261,11 +261,26 @@ class TakService {
 		logiskAdressList
 	}
 	
-    AdressDTO getAdressByTjanstekontractAndHsaId(String takId, String namnrymd, String majorVersion, String minorVersion, String hsaId) {
-        new AdressDTO(
-                url: 'http://dummy.com/',
-                rivProfil: 'RIVTABP21'
-        )
+    AdressDTO getAdressByTjanstekontraktAndHsaId(String environmentId, String rivTaNamnrymd, String majorVersion, String hsaId) {		
+		TakCacheServices tak = takCacheMap.get(environmentId)
+		List<TjanstekomponentDTO> tks = tak.getAllTjanstekomponenter()
+		AdressDTO result = new AdressDTO(url: "Ej konfigurerad", rivProfil: 'RIVTABP21')
+		boolean found = false		
+		tks.each { tk ->
+			if (tk.hsaId.equals(hsaId)) {
+				List<AnropsAdressInfoType> aaits = tk.getAnropsAdressInfo()
+				aaits.each { aait ->
+					List<VagvalsInfoType> vits = aait.getVagvalsInfo()
+					vits.each { vit ->
+						if (TjanstekontraktUtil.isNamnrymdEqual(rivTaNamnrymd,
+								majorVersion.toString(), vit.getTjanstekontraktNamnrymd())) {
+							result = new AdressDTO(url: aait.adress, rivProfil: aait.rivtaProfilNamn)
+						}
+					}
+				}
+			}
+		}
+		result
     }
 
 // END: PUBLIC METHODS
