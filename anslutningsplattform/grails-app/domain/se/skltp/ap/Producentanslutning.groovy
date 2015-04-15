@@ -26,4 +26,10 @@ class Producentanslutning {
         nyaLogiskaAdresser nullable: true
     }
 
+    static mapping = {
+        nyaLogiskaAdresser joinTable: [name: 'producentanslutning_logisk_adress', column: 'ny_logisk_adress_id', key: 'producentanslutning_id']
+        tablePerConcreteClass true
+        id generator: 'hilo' //https://jira.grails.org/browse/GRAILS-10849?focusedCommentId=80548&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-80548
+    }
+
 }

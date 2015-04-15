@@ -21,8 +21,8 @@ class CurrentUserApiController {
         if (grailsApplication.config.x509.enabled) {
             respond getCurrentUser(request)
         } else {
-            log.warn("x509 disabled, returning empty PersonkontaktDTO   ")
-            respond new PersonkontaktDTO()
+            log.warn("x509 disabled, returning empty PersonkontaktDTO")
+            respond new PersonkontaktDTO(hsaId: "HSA-SUNESUS-PEKT")
         }
     }
 

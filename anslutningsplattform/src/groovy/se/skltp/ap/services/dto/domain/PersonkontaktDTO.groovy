@@ -15,7 +15,6 @@ class PersonkontaktDTO {
     String telefon
 
     static constraints = {
-        hsaId nullable: true, blank: false
         namn nullable: false, blank: false
         epost nullable: false, email: true, blank: false
         telefon nullable: false, blank: false

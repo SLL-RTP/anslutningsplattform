@@ -27,6 +27,8 @@ class BestallningService {
 
     def mailingService
 
+    def freemarkerConfiguration
+
     def handleBestallning(BestallningDTO bestallningDTO) {
         def bestallning = insertBestallning(bestallningDTO)
         emailBestallning(bestallning)
@@ -47,13 +49,13 @@ class BestallningService {
         //def bodyPlainText = "AP TEST body"
         // TODO: prettify this!
         //def bodyPlainText = request.JSON.toString()
-
+        def bestallningMailContent = createBestallningMailContent(bestallning)
         def success = false
-        log.info("Sending mail ... with body:\n${bestallning}")
+        log.info("Sending mail ... with body:\n${bestallningMailContent}")
 
         if (bestallning) {
             try {
-                mailingService.send(null, toAddress, subjectField, bestallning.toString())
+                mailingService.send(null, toAddress, subjectField, bestallningMailContent)
                 success = true
                 log.info("Mail sent.")
             }
@@ -63,19 +65,35 @@ class BestallningService {
         }
     }
 
+    private String createBestallningMailContent(Bestallning bestallning) {
+        def template = freemarkerConfiguration.getTemplate("mail.ftl")
+        def writer = new StringWriter()
+        Map<String, Object> templateParams = new HashMap<>()
+        templateParams.put('bestallning', bestallning)
+        template.process(templateParams, writer)
+        writer.toString()
+    }
     private insertBestallning(BestallningDTO bestallningDTO) {
         def driftmiljo = upsert(bestallningDTO.driftmiljo)
-        new Bestallning(
+        def bestallning = new Bestallning(
                 status: 'NY', //TODO: handle status
                 driftmiljo: driftmiljo,
                 bestallare: upsert(bestallningDTO.bestallare),
                 bestallareRoll: bestallningDTO.bestallareRoll,
-                producentbestallning: insertProducentBestallning(bestallningDTO.producentbestallning, driftmiljo),
-                konsumentbestallningar: bestallningDTO.konsumentbestallningar.collect {
-                    insertKonsumentBestallning(it, driftmiljo)
-                },
                 otherInfo: bestallningDTO.otherInfo
-        ).save()
+        )
+
+        if (bestallningDTO.producentbestallning) {
+            bestallning.producentbestallning = insertProducentBestallning(bestallningDTO.producentbestallning, driftmiljo);
+        }
+
+        bestallningDTO.konsumentbestallningar?.each {
+            bestallning.addToKonsumentbestallningar(insertKonsumentBestallning(it, driftmiljo))
+        }
+
+        bestallning.save()
+
+
     }
 
     private insertProducentBestallning(ProducentbestallningDTO producentbestallningDTO, Driftmiljo driftmiljo) {
