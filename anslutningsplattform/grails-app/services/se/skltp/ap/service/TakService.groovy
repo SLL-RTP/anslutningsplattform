@@ -192,7 +192,7 @@ class TakService {
 		Set<String> tjanstekontraktNamnrymder = new HashSet<String>()
 		List<TjanstekomponentDTO> tks = tak.getAllTjanstekomponenter()
 		tks.each { tk ->
-			if (tk.hsaId.equals(hsaId)) {
+			if (tk.hsaId.toLowerCase().equals(hsaId.toLowerCase())) {
 				List<AnropsAdressInfoType> aaits = tk.getAnropsAdressInfo()
 				aaits.each { aait ->
 					List<VagvalsInfoType> vits = aait.getVagvalsInfo()
