@@ -114,7 +114,7 @@ Konsumentbeställningar
 <#list bestallning.konsumentbestallningar as konsumentbestallning>
 [${konsumentbestallning_index+1}]
     tjänstekonsument:
-        <#assign tjanstekonsument = producentbestallning.tjanstekomponent>
+        <#assign tjanstekonsument = konsumentbestallning.tjanstekomponent>
         hsaId: ${tjanstekonsument.hsaId}
         beskrivning: ${tjanstekonsument.beskrivning}
         huvudansvarig:
