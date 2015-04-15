@@ -18,7 +18,7 @@ class BestallningDTO {
     static constraints = {
         driftmiljo nullable: false
         bestallare nullable: false
-        bestallareRoll nullable: false, blank: false
+        bestallareRoll nullable: true
         producentbestallning nullable: true, validator: { val, obj ->
             if (val == null && (obj.konsumentbestallningar == null || obj.konsumentbestallningar.empty)) {
                 return false

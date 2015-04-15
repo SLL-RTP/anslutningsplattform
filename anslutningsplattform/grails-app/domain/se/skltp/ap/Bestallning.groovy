@@ -19,7 +19,7 @@ class Bestallning {
     ]
 
     static constraints = {
-        bestallareRoll nullable: false, blank: false
+        bestallareRoll nullable: true
         status nullable: false, blank: false
         driftmiljo nullable: false
         bestallare nullable: false
