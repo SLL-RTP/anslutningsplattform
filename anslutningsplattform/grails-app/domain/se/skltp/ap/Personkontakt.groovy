@@ -25,5 +25,6 @@ class Personkontakt {
 
     static constraints = {
         epost unique: true, blank: false
+        hsaId nullable: true
     }
 }

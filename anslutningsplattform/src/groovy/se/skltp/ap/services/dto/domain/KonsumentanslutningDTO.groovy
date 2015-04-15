@@ -12,6 +12,8 @@ class KonsumentanslutningDTO {
     String tjanstekontraktNamnrymd
     int tjanstekontraktMajorVersion
     int tjanstekontraktMinorVersion
+    Date giltigFranTid
+    Date giltigTillTid
     List<LogiskAdressDTO> nyaLogiskaAdresser
 
     static constraints = {
