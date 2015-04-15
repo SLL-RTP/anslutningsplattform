@@ -13,6 +13,6 @@ beans = {
     }
 
     freemarkerConfiguration(FreeMarkerConfigurationFactoryBean) {
-        templateLoaderPaths = ["classpath:grails-app/conf/templates"]
+        templateLoaderPaths = ["classpath:templates"]
     }
 }

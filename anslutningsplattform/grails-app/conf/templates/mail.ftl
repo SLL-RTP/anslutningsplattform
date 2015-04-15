@@ -2,7 +2,7 @@
 Nytt case till SDE10
 /[1060]\
 §
-RTjP Beställning via anslutningsplattformen
+RTjP Beställning via anslutningsplattformen för driftmiljö ${bestallning.driftmiljo.namn} (${bestallning.driftmiljo.id})
 Beställt av ${bestallning.bestallare.namn} ${.now?iso_local}
 Beställarens telefon: ${bestallning.bestallare.telefon}
 Bäställarens e-post: ${bestallning.bestallare.epost}
