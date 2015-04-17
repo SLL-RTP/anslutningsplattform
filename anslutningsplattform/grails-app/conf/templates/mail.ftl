@@ -208,3 +208,4 @@ Konsumentbeställningar
 användare: ¤${(bestallning.bestallare.hsaId)?keep_after_last("-")}¤
 anmält av: #${(bestallning.bestallare.hsaId)?keep_after_last("-")}#
 </#if>
+§2${bestallning.bestallare.epost}§2
