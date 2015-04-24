@@ -21,19 +21,19 @@ class BootStrap {
                         namn: "Kapo Kapo",
                         epost: "kapo@kapo.com",
                         telefon: "031170920"
-                ).save(failOnError: true)
+                )
 
                 def pk2 = new Personkontakt(
                         hsaId: "pk-hsa-2",
                         namn: "Hlava Hlava",
                         epost: "hlava@hlava.com",
                         telefon: "031170920"
-                ).save(failOnError: true)
+                )
 
                 def fk1 = new Funktionkontakt(
                         epost: "info@help.org",
                         telefon: "031170920"
-                ).save(failOnError: true)
+                )
 
                 def tk1 = new Tjanstekomponent(
                         hsaId: "SE165565594230-0016",
@@ -42,7 +42,7 @@ class BootStrap {
                         ipadress: "127.0.0.1",
                         pingForConfigurationURL: "http://ping.for.configuration.org/",
                         huvudansvarigKontakt: pk1,
-                        tekniskKontakt: pk1,
+                        tekniskKontakt: pk2,
                         tekniskSupportkontakt: fk1
                 ).save(failOnError: true)
 

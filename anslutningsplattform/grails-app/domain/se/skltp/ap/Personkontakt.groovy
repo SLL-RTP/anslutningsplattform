@@ -13,18 +13,11 @@ class Personkontakt {
     String telefon
 
     static hasMany = [
-            bestallningar                         : Bestallning,
-            tekniskKontaktTjanstekomponenter      : Tjanstekomponent,
-            huvudansvarigKontaktTjanstekomponenter: Tjanstekomponent
-    ]
-
-    static mappedBy = [
-            huvudansvarigKontaktTjanstekomponenter: 'huvudansvarigKontakt',
-            tekniskKontaktTjanstekomponenter      : 'tekniskKontakt'
+            bestallningar: Bestallning
     ]
 
     static constraints = {
-        epost unique: true, blank: false
+        epost blank: false //should also be unique but not possible since we also use this entity embedded in Tjanstekomponent
         hsaId nullable: true
     }
 }

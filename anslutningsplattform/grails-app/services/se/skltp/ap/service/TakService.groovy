@@ -220,17 +220,28 @@ class TakService {
 	}
 
 	List<TjansteKomponentDTO> freeTextSearchTjansteKomponent(String takId, String queryString, int limit) {
-		TakCacheServices tak = takCacheMap.get(takId)
+		List<TakCacheServices> taks
+		log.debug "freeTextSearchTjansteKomponent takId: $takId"
+		if (takId != null) {
+			taks = [takCacheMap.get(takId)] as List<TakCacheServices>
+		} else {
+			log.debug "no takId, will search all TAKs"
+			taks = new ArrayList<>(takCacheMap.values())
+		}
+		//TakCacheServices tak = takCacheMap.get(takId)
 		// no search optimizations, just do a linear search for now ...
 		// NOTE: be careful to store/cache the TAK data locally - TAK data is locally
 		// owned by the cache which must be refreshed at repeated intervals
 		List<TjansteKomponentDTO> searchResult = new ArrayList<TjansteKomponentDTO>();
-		for (TjanstekomponentInfoType tki : tak.getAllTjanstekomponenter()) {
-			if (tki.hsaId.toLowerCase().contains(queryString.toLowerCase())
-					|| tki.beskrivning?.toLowerCase().contains(queryString.toLowerCase())) {
-				searchResult.add(new TjansteKomponentDTO(hsaId: tki.hsaId, namn: tki.beskrivning))
-				if (searchResult.size() == limit) {
-					break;
+		taks.each {
+			println "searching for $queryString in ${it.getId()}"
+			for (TjanstekomponentInfoType tki : it.getAllTjanstekomponenter()) {
+				if (tki.hsaId.toLowerCase().contains(queryString.toLowerCase())
+						|| tki.beskrivning?.toLowerCase()?.contains(queryString.toLowerCase())) {
+					searchResult.add(new TjansteKomponentDTO(hsaId: tki.hsaId, namn: tki.beskrivning))
+					if (searchResult.size() == limit) {
+						break;
+					}
 				}
 			}
 		}

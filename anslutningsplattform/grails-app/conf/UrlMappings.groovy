@@ -29,7 +29,7 @@ class UrlMappings {
             "/hsa"(version: '1.0', namespace: 'v1', controller: 'hsaApi')
 
             "/serviceComponents"(version: '1.0', controller: 'tjansteKomponentApi') {
-                action = [GET: "query"]
+                action = [GET: "query", POST: "post"]
                 format = "json"
                 "/serviceComponents/$id"(version: '1.0', controller: 'tjansteKomponentApi') {
                     action = [GET: "get", PUT: "put"]

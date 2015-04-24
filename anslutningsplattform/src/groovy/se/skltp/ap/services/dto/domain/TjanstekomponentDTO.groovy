@@ -9,6 +9,7 @@ import groovy.transform.ToString
 @Validateable
 @ToString
 class TjanstekomponentDTO {
+    Long id
     String hsaId
     String beskrivning
     String organisation

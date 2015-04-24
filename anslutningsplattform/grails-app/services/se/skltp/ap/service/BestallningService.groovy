@@ -74,7 +74,7 @@ class BestallningService {
         writer.toString()
     }
     private insertBestallning(BestallningDTO bestallningDTO) {
-        def driftmiljo = upsert(bestallningDTO.driftmiljo)
+        def driftmiljo = getOrCreate(bestallningDTO.driftmiljo)
         def bestallning = new Bestallning(
                 status: 'NY', //TODO: handle status
                 driftmiljo: driftmiljo,
@@ -101,7 +101,7 @@ class BestallningService {
             return null
         }
         new Producentbestallning(
-                tjanstekomponent: upsert(producentbestallningDTO.tjanstekomponent).addToDriftmiljoer(driftmiljo),
+                tjanstekomponent: getOrCreate(producentbestallningDTO.tjanstekomponent).addToDriftmiljoer(driftmiljo),
                 producentanslutningar: producentbestallningDTO.producentanslutningar.collect {
                     new Producentanslutning(
                             rivtaProfil: it.rivtaProfil,
@@ -112,7 +112,7 @@ class BestallningService {
                             giltigFranTid: new Date(),
                             giltigTillTid: new Date(),
                             nyaLogiskaAdresser: it.nyaLogiskaAdresser.collect { logiskAdress ->
-                                upsert(logiskAdress)
+                                getOrCreate(logiskAdress)
                             }
                     )
                 }.toSet(),
@@ -128,13 +128,13 @@ class BestallningService {
                             giltigFranTid: new Date(),
                             giltigTillTid: new Date(),
                             nyaLogiskaAdresser: it.nyaLogiskaAdresser.collect { logiskAdress ->
-                                upsert(logiskAdress)
+                                getOrCreate(logiskAdress)
                             },
                             befintligaLogiskaAdresser: it.befintligaLogiskaAdresser.collect { logiskAdress ->
-                                upsert(logiskAdress)
+                                getOrCreate(logiskAdress)
                             },
                             borttagnaLogiskaAdresser: it.borttagnaLogiskaAdresser.collect { logiskAdress ->
-                                upsert(logiskAdress)
+                                getOrCreate(logiskAdress)
                             }
                     )
                 }.toSet()
@@ -146,7 +146,7 @@ class BestallningService {
             return null
         }
         new Konsumentbestallning(
-                tjanstekomponent: upsert(konsumentbestallningDTO.tjanstekomponent).addToDriftmiljoer(driftmiljo),
+                tjanstekomponent: getOrCreate(konsumentbestallningDTO.tjanstekomponent).addToDriftmiljoer(driftmiljo),
                 konsumentanslutningar: konsumentbestallningDTO.konsumentanslutningar.collect {
                     new Konsumentanslutning(
                             tjanstekontraktNamnrymd: it.tjanstekontraktNamnrymd,
@@ -155,7 +155,7 @@ class BestallningService {
                             giltigFranTid: new Date(),
                             giltigTillTid: new Date(),
                             nyaLogiskaAdresser: it.nyaLogiskaAdresser.collect { logiskAdress ->
-                                upsert(logiskAdress)
+                                getOrCreate(logiskAdress)
                             }
                     )
                 }.toSet(),
@@ -167,20 +167,20 @@ class BestallningService {
                             giltigFranTid: new Date(),
                             giltigTillTid: new Date(),
                             nyaLogiskaAdresser: it.nyaLogiskaAdresser.collect { logiskAdress ->
-                                upsert(logiskAdress)
+                                getOrCreate(logiskAdress)
                             },
                             befintligaLogiskaAdresser: it.befintligaLogiskaAdresser.collect { logiskAdress ->
-                                upsert(logiskAdress)
+                                getOrCreate(logiskAdress)
                             },
                             borttagnaLogiskaAdresser: it.borttagnaLogiskaAdresser.collect { logiskAdress ->
-                                upsert(logiskAdress)
+                                getOrCreate(logiskAdress)
                             }
                     )
                 }.toSet()
         )
     }
 
-    private LogiskAdress upsert(LogiskAdressDTO dto) {
+    private LogiskAdress getOrCreate(LogiskAdressDTO dto) {
         def logiskAdress = LogiskAdress.findByHsaId(dto.hsaId)
         if (logiskAdress == null) {
             logiskAdress = new LogiskAdress(
@@ -191,7 +191,7 @@ class BestallningService {
         logiskAdress
     }
 
-    private Driftmiljo upsert(DriftmiljoDTO dto) {
+    private Driftmiljo getOrCreate(DriftmiljoDTO dto) {
         def driftmiljo = Driftmiljo.findById(dto.id)
         if (driftmiljo == null) {
             driftmiljo = new Driftmiljo(
@@ -204,50 +204,48 @@ class BestallningService {
     }
 
     private Personkontakt upsert(PersonkontaktDTO dto) {
-        def personkontakt = Personkontakt.findByEpost(dto.epost)
-        if (personkontakt == null) {
-            personkontakt = new Personkontakt(
-                    epost: dto.epost
-            )
-        }
-        personkontakt.with {
-            it.hsaId = dto.hsaId
-            it.namn = dto.namn
-            it.telefon = dto.telefon
+        def personkontakt = fromDTO(dto)
+        def dbPersonkontakt = Personkontakt.findByEpost(dto.epost)
+        if (dbPersonkontakt != null) {
+            personkontakt.id = dbPersonkontakt.id
         }
         personkontakt.save()
     }
 
-    private Funktionkontakt upsert(FunktionkontaktDTO dto) {
-        def funktionkontakt = Funktionkontakt.findByEpost(dto.epost)
-        if (funktionkontakt == null) {
-            funktionkontakt = new Funktionkontakt(
-                    epost: dto.epost
-            )
-        }
-        funktionkontakt.with {
-            it.telefon = dto.telefon
-        }
-        funktionkontakt.save()
+    private Personkontakt fromDTO(PersonkontaktDTO dto) {
+        return new Personkontakt(
+                epost: dto.epost,
+                namn: dto.namn,
+                hsaId: dto.hsaId,
+                telefon: dto.telefon
+        )
     }
 
-    private Tjanstekomponent upsert(TjanstekomponentDTO dto) {
+    private Funktionkontakt fromDTO(FunktionkontaktDTO dto) {
+        return new Funktionkontakt(
+                epost: dto.epost,
+                telefon: dto.telefon
+        )
+    }
+
+    private Tjanstekomponent getOrCreate(TjanstekomponentDTO dto) {
         def tjanstekomponent = Tjanstekomponent.findByHsaId(dto.hsaId)
         if (tjanstekomponent == null) {
             tjanstekomponent = new Tjanstekomponent(
                     hsaId: dto.hsaId
             )
+            tjanstekomponent.with {
+                it.beskrivning = dto.beskrivning
+                it.organisation = dto.organisation
+                it.ipadress = dto.ipadress
+                it.pingForConfigurationURL = dto.pingForConfigurationURL
+                it.huvudansvarigKontakt = dto.huvudansvarigKontakt != null ? fromDTO(dto.huvudansvarigKontakt) : null
+                it.tekniskKontakt = dto.tekniskKontakt != null ? fromDTO(dto.tekniskKontakt) : null
+                it.tekniskSupportkontakt = dto.tekniskSupportKontakt != null ? fromDTO(dto.tekniskSupportKontakt) : null
+            }
+            tjanstekomponent.save()
         }
-        tjanstekomponent.with {
-            it.beskrivning = dto.beskrivning
-            it.organisation = dto.organisation
-            it.ipadress = dto.ipadress
-            it.pingForConfigurationURL = dto.pingForConfigurationURL
-            it.huvudansvarigKontakt = dto.huvudansvarigKontakt != null ? upsert(dto.huvudansvarigKontakt) : null
-            it.tekniskKontakt = dto.tekniskKontakt != null ? upsert(dto.tekniskKontakt) : null
-            it.tekniskSupportkontakt = dto.tekniskSupportKontakt != null ? upsert(dto.tekniskSupportKontakt) : null
-        }
-        tjanstekomponent.save()
+        tjanstekomponent
     }
 
 }

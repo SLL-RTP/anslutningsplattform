@@ -17,6 +17,7 @@ class Tjanstekomponent {
     Funktionkontakt tekniskSupportkontakt
 
     static hasMany = [driftmiljoer: Driftmiljo]
+    static embedded = ['huvudansvarigKontakt', 'tekniskKontakt', 'tekniskSupportkontakt']
 
     static constraints = {
         hsaId blank: false, unique: true
