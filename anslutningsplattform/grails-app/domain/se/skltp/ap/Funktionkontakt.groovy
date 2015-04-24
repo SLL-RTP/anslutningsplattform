@@ -9,8 +9,4 @@ import groovy.transform.ToString
 class Funktionkontakt {
     String epost
     String telefon
-
-    static hasMany = [
-            tekniskSupportkontaktTjanstekomponenter: Tjanstekomponent
-    ]
 }
