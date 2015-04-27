@@ -35,9 +35,7 @@ class TjansteKomponentService {
             def tjkDTO = tjanstekomponentDTOs.find { tjkDTO ->
                 tjkDTO.hsaId.equalsIgnoreCase(it.hsaId)
             }
-            if (tjkDTO != null) { //found a match from DB
-                tjkDTO.beskrivning = it.namn
-            } else {
+            if (tjkDTO == null) { //not found in DB, just add
                 tjanstekomponentDTOs.add(new TjanstekomponentDTO(
                         hsaId: it.hsaId.toUpperCase(),
                         beskrivning: it.namn
