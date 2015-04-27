@@ -1,29 +1,25 @@
 package se.skltp.ap.service
 
-import java.util.List;
-
-import se.skltp.ap.services.dto.AdressDTO
-
-import javax.annotation.PostConstruct;
-
+import grails.transaction.Transactional
+import se.skltp.ap.service.tak.TakCache
 import se.skltp.ap.service.tak.TakCacheServices
 import se.skltp.ap.service.tak.TakCacheServicesImpl
 import se.skltp.ap.service.tak.TakSyncCacheCallback
-import se.skltp.ap.service.tak.TakCache
-import se.skltp.ap.service.tak.m.TjanstekomponentDTO;
+import se.skltp.ap.service.tak.m.PersistenceEntity
 import se.skltp.ap.service.tak.m.TjanstekontraktDTO
 import se.skltp.ap.service.tak.m.VirtualiseringDTO
-import se.skltp.ap.service.tak.m.PersistenceEntity
 import se.skltp.ap.service.tak.persistence.TakCacheFilePersistenceImpl
 import se.skltp.ap.service.tak.persistence.TakCachePersistenceServices
+import se.skltp.ap.services.dto.AdressDTO
 import se.skltp.ap.services.dto.TakRoutingEntryDTO
-import se.skltp.ap.services.dto.TjansteKomponentDTO
-import se.skltp.ap.services.dto.domain.LogiskAdressDTO;
+import se.skltp.ap.services.dto.domain.LogiskAdressDTO
+import se.skltp.ap.services.dto.domain.TjanstekomponentDTO
 import se.skltp.ap.util.TjanstekontraktUtil
-import se.skltp.tak.vagvalsinfo.wsdl.v2.AnropsAdressInfoType;
+import se.skltp.tak.vagvalsinfo.wsdl.v2.AnropsAdressInfoType
 import se.skltp.tak.vagvalsinfo.wsdl.v2.TjanstekomponentInfoType
-import se.skltp.tak.vagvalsinfo.wsdl.v2.VagvalsInfoType;
-import grails.transaction.Transactional
+import se.skltp.tak.vagvalsinfo.wsdl.v2.VagvalsInfoType
+
+import javax.annotation.PostConstruct
 
 @Transactional(readOnly = true)
 class TakService {
@@ -190,7 +186,7 @@ class TakService {
 				
 		// find all tjanstekontraktNamnrymder for hsaId
 		Set<String> tjanstekontraktNamnrymder = new HashSet<String>()
-		List<TjanstekomponentDTO> tks = tak.getAllTjanstekomponenter()
+		List<se.skltp.ap.service.tak.m.TjanstekomponentDTO> tks = tak.getAllTjanstekomponenter()
 		tks.each { tk ->
 			if (tk.hsaId.toLowerCase().equals(hsaId.toLowerCase())) {
 				List<AnropsAdressInfoType> aaits = tk.getAnropsAdressInfo()
@@ -219,7 +215,7 @@ class TakService {
 		contracts
 	}
 
-	List<TjansteKomponentDTO> freeTextSearchTjansteKomponent(String takId, String queryString, int limit) {
+	List<TjanstekomponentDTO> freeTextSearchTjansteKomponent(String takId, String queryString, int limit) {
 		List<TakCacheServices> taks
 		log.debug "freeTextSearchTjansteKomponent takId: $takId"
 		if (takId != null) {
@@ -232,13 +228,19 @@ class TakService {
 		// no search optimizations, just do a linear search for now ...
 		// NOTE: be careful to store/cache the TAK data locally - TAK data is locally
 		// owned by the cache which must be refreshed at repeated intervals
-		List<TjansteKomponentDTO> searchResult = new ArrayList<TjansteKomponentDTO>();
+		List<TjanstekomponentDTO> searchResult = new ArrayList<TjanstekomponentDTO>();
 		taks.each {
 			println "searching for $queryString in ${it.getId()}"
 			for (TjanstekomponentInfoType tki : it.getAllTjanstekomponenter()) {
 				if (tki.hsaId.toLowerCase().contains(queryString.toLowerCase())
 						|| tki.beskrivning?.toLowerCase()?.contains(queryString.toLowerCase())) {
-					searchResult.add(new TjansteKomponentDTO(hsaId: tki.hsaId, namn: tki.beskrivning))
+					def beskrivning = tki.beskrivning
+					def organisation = null
+					if (beskrivning.indexOf(' - ') > -1) {
+						organisation = beskrivning.substring(0, beskrivning.indexOf(' - '))
+						beskrivning = beskrivning.substring(beskrivning.indexOf(' - ') + 3)
+					}
+					searchResult.add(new TjanstekomponentDTO(hsaId: tki.hsaId, beskrivning: beskrivning, organisation: organisation))
 					if (searchResult.size() == limit) {
 						break;
 					}

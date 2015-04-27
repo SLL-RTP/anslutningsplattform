@@ -4,7 +4,6 @@ import grails.transaction.Transactional
 import se.skltp.ap.Funktionkontakt
 import se.skltp.ap.Personkontakt
 import se.skltp.ap.Tjanstekomponent
-import se.skltp.ap.services.dto.TjansteKomponentDTO
 import se.skltp.ap.services.dto.domain.FunktionkontaktDTO
 import se.skltp.ap.services.dto.domain.PersonkontaktDTO
 import se.skltp.ap.services.dto.domain.TjanstekomponentDTO
@@ -21,16 +20,26 @@ class TjansteKomponentService {
 		// 2. there is an existing TjansteKomponent in TAK that was registered before AP was live
 
 		// search AP
-        def domainServiceComponents = Tjanstekomponent.findAllByHsaIdIlikeOrBeskrivningIlike("%$queryString%", "%$queryString%", [max: limit])
+
+        def criteria = Tjanstekomponent.createCriteria()
+        def domainServiceComponents = criteria {
+            or {
+                ilike "hsaId", "%$queryString%"
+                ilike "beskrivning", "%$queryString%"
+                ilike "organisation", "%$queryString%"
+            }
+            maxResults limit
+        }
         def tjanstekomponentDTOs = domainServiceComponents.collect {
             new TjanstekomponentDTO(
                     id: it.id,
                     hsaId: it.hsaId,
-                    beskrivning: it.beskrivning
+                    beskrivning: it.beskrivning,
+                    organisation: it.organisation
             )
         }
 
-        List<TjansteKomponentDTO> takList = takService.freeTextSearchTjansteKomponent(takId, queryString, limit)
+        List<TjanstekomponentDTO> takList = takService.freeTextSearchTjansteKomponent(takId, queryString, limit)
         takList.each {
             def tjkDTO = tjanstekomponentDTOs.find { tjkDTO ->
                 tjkDTO.hsaId.equalsIgnoreCase(it.hsaId)
@@ -38,7 +47,8 @@ class TjansteKomponentService {
             if (tjkDTO == null) { //not found in DB, just add
                 tjanstekomponentDTOs.add(new TjanstekomponentDTO(
                         hsaId: it.hsaId.toUpperCase(),
-                        beskrivning: it.namn
+                        beskrivning: it.beskrivning,
+                        organisation: it.organisation
                 ))
             }
         }
@@ -53,7 +63,7 @@ class TjansteKomponentService {
         if (!domainServiceComponent) {
             def tjansteKomponents = takService.freeTextSearchTjansteKomponent(takId, hsaId, 1) //TODO: handle limit
             if (tjansteKomponents != null && !tjansteKomponents.isEmpty()) {
-                return new TjanstekomponentDTO(hsaId: tjansteKomponents[0].hsaId.toUpperCase(), beskrivning: tjansteKomponents[0].namn)
+                return new TjanstekomponentDTO(hsaId: tjansteKomponents[0].hsaId.toUpperCase(), beskrivning: tjansteKomponents[0].beskrivning, organisation: tjansteKomponents[0].organisation)
             } else {
                 return null
             }
