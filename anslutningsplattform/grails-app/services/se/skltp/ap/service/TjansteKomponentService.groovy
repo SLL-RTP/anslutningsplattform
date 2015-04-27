@@ -126,7 +126,7 @@ class TjansteKomponentService {
                 namn: dto.namn,
                 hsaId: dto.hsaId,
                 epost: dto.epost,
-                telefon: dto.hsaId
+                telefon: dto.telefon
         )
     }
 

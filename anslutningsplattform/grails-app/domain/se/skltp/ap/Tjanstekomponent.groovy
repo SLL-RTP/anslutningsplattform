@@ -21,10 +21,10 @@ class Tjanstekomponent {
 
     static constraints = {
         hsaId blank: false, unique: true
-        beskrivning nullable: true, blank: false
-        organisation nullable: true, blank: false
-        ipadress nullable: true, blank: false
-        pingForConfigurationURL nullable: true, blank: false
+        beskrivning nullable: false, blank: false
+        organisation nullable: true, blank: true
+        ipadress nullable: true, blank: true
+        pingForConfigurationURL nullable: true, blank: true
         huvudansvarigKontakt nullable: true
         tekniskKontakt nullable: true
         tekniskSupportkontakt nullable: true

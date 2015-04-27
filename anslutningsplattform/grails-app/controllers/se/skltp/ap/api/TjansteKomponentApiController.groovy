@@ -21,14 +21,23 @@ class TjansteKomponentApiController {
     def put(String id) {
         def dto = new TjanstekomponentDTO(JSON.parse(request))
         log.debug dto
-        def success = tjansteKomponentService.update(dto)
-        render(status: success ? 204 : 400)
+        if (dto.hasErrors()) {
+            response.status = 400
+            render dto.errors as JSON
+        } else {
+            def success = tjansteKomponentService.update(dto)
+            render(status: success ? 204 : 400)
+        }
     }
 
-    def post() {
-        def tjanstekomponentDTO = new TjanstekomponentDTO(JSON.parse(request))
+    def post(TjanstekomponentDTO tjanstekomponentDTO) {
         log.debug tjanstekomponentDTO
-        def success = tjansteKomponentService.create(tjanstekomponentDTO)
-        render(status : success ? 201 : 400)
+        if (tjanstekomponentDTO.hasErrors()) {
+            response.status = 400
+            render tjanstekomponentDTO.errors as JSON
+        } else {
+            def success = tjansteKomponentService.create(tjanstekomponentDTO)
+            render(status : success ? 201 : 400)
+        }
     }
 }
