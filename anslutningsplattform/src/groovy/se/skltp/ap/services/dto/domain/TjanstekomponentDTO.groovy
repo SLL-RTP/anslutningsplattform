@@ -24,10 +24,10 @@ class TjanstekomponentDTO {
         hsaId nullable: false
         beskrivning nullable: false
         organisation nullable: true, blank: true
-        ipadress nullable: true, blank: true
+        ipadress nullable: false, blank: false
         pingForConfigurationURL nullable: true, blank: true
         huvudansvarigKontakt nullable: false
-        tekniskKontakt nullable: false
-        tekniskSupportKontakt nullable: false
+        tekniskKontakt nullable: true
+        tekniskSupportKontakt nullable: true
     }
 }
