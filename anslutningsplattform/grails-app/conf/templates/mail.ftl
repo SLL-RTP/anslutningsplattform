@@ -22,28 +22,28 @@ tjänsteproducent:
     huvudansvarig:
     <#if tjansteproducent.huvudansvarigKontakt??>
         <#assign huvudansvarig = tjansteproducent.huvudansvarigKontakt>
-        namn: ${huvudansvarig.namn}
-        hsaId: ${huvudansvarig.hsaId}
-        telefon: ${huvudansvarig.telefon}
-        e-post: ${huvudansvarig.epost}
+        namn: ${huvudansvarig.namn!"-"}
+        hsaId: ${huvudansvarig.hsaId!"-"}
+        telefon: ${huvudansvarig.telefon!"-"}
+        e-post: ${huvudansvarig.epost!"-"}
     <#else>
         (ej angiven)
     </#if>
     teknisk kontakt:
     <#if tjansteproducent.tekniskKontakt??>
         <#assign tekniskkontakt = tjansteproducent.tekniskKontakt>
-        namn: ${tekniskkontakt.namn}
-        hsaId: ${tekniskkontakt.hsaId}
-        telefon: ${tekniskkontakt.telefon}
-        e-post: ${tekniskkontakt.epost}
+        namn: ${tekniskkontakt.namn!"-"}
+        hsaId: ${tekniskkontakt.hsaId!"-"}
+        telefon: ${tekniskkontakt.telefon!"-"}
+        e-post: ${tekniskkontakt.epost!"-"}
     <#else>
         (ej angiven)
     </#if>
     funktionsbrevlåda:
     <#if tjansteproducent.tekniskSupportkontakt??>
         <#assign funktionsbrevlada = tjansteproducent.tekniskSupportkontakt>
-        telefon: ${funktionsbrevlada.telefon}
-        e-post: ${funktionsbrevlada.epost}
+        telefon: ${funktionsbrevlada.telefon!"-"}
+        e-post: ${funktionsbrevlada.epost!"-"}
     <#else>
         (ej angiven)
     </#if>
@@ -120,30 +120,28 @@ Konsumentbeställningar
         huvudansvarig:
         <#if tjanstekonsument.huvudansvarigKontakt??>
             <#assign huvudansvarig = tjanstekonsument.huvudansvarigKontakt>
-            namn: ${huvudansvarig.namn}
-            hsaId: ${huvudansvarig.hsaId}
-            telefon: ${huvudansvarig.telefon}
-            e-post: ${huvudansvarig.epost}
+            namn: ${huvudansvarig.namn!"-"}
+            hsaId: ${huvudansvarig.hsaId!"-"}
+            telefon: ${huvudansvarig.telefon!"-"}
+            e-post: ${huvudansvarig.epost!"-"}
         <#else>
             (ej angiven)
         </#if>
         teknisk kontakt:
         <#if tjanstekonsument.tekniskKontakt??>
             <#assign tekniskkontakt = tjanstekonsument.tekniskKontakt>
-            namn: ${tekniskkontakt.namn}
-            hsaId: ${tekniskkontakt.hsaId}
-            telefon: ${tekniskkontakt.telefon}
-            e-post: ${tekniskkontakt.epost}
+            namn: ${tekniskkontakt.namn!"-"}
+            hsaId: ${tekniskkontakt.hsaId!"-"}
+            telefon: ${tekniskkontakt.telefon!"-"}
+            e-post: ${tekniskkontakt.epost!"-"}
         <#else>
             (ej angiven)
         </#if>
         funktionsbrevlåda:
-        <#if tjanstekonsument.tekniskKontakt??>
-            <#assign tekniskkontakt = tjanstekonsument.tekniskKontakt>
-            namn: ${tekniskkontakt.namn}
-            hsaId: ${tekniskkontakt.hsaId}
-            telefon: ${tekniskkontakt.telefon}
-            e-post: ${tekniskkontakt.epost}
+        <#if tjanstekonsument.tekniskSupportKontakt??>
+            <#assign funktionsbrevlada = tjanstekonsument.tekniskSupportKontakt>
+            telefon: ${funktionsbrevlada.telefon!"-"}
+            e-post: ${funktionsbrevlada.epost!"-"}
         <#else>
             (ej angiven)
         </#if>
