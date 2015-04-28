@@ -24,9 +24,9 @@ class TjanstekomponentDTO {
         hsaId nullable: false
         beskrivning nullable: false
         organisation nullable: true, blank: true
-        ipadress nullable: false, blank: false
+        ipadress nullable: true, blank: true
         pingForConfigurationURL nullable: true, blank: true
-        huvudansvarigKontakt nullable: false
+        huvudansvarigKontakt nullable: true
         tekniskKontakt nullable: true
         tekniskSupportKontakt nullable: true
     }

@@ -232,18 +232,15 @@ class BestallningService {
         def tjanstekomponent = Tjanstekomponent.findByHsaId(dto.hsaId)
         if (tjanstekomponent == null) {
             tjanstekomponent = new Tjanstekomponent(
-                    hsaId: dto.hsaId
-            )
-            tjanstekomponent.with {
-                it.beskrivning = dto.beskrivning
-                it.organisation = dto.organisation
-                it.ipadress = dto.ipadress
-                it.pingForConfigurationURL = dto.pingForConfigurationURL
-                it.huvudansvarigKontakt = dto.huvudansvarigKontakt != null ? fromDTO(dto.huvudansvarigKontakt) : null
-                it.tekniskKontakt = dto.tekniskKontakt != null ? fromDTO(dto.tekniskKontakt) : null
-                it.tekniskSupportkontakt = dto.tekniskSupportKontakt != null ? fromDTO(dto.tekniskSupportKontakt) : null
-            }
-            tjanstekomponent.save()
+                    hsaId: dto.hsaId,
+                    beskrivning: dto.beskrivning,
+                    organisation: dto.organisation,
+                    ipadress: dto.ipadress,
+                    pingForConfigurationURL: dto.pingForConfigurationURL,
+                    huvudansvarigKontakt: dto.huvudansvarigKontakt != null ? fromDTO(dto.huvudansvarigKontakt) : null,
+                    tekniskKontakt: dto.tekniskKontakt != null ? fromDTO(dto.tekniskKontakt) : null,
+                    tekniskSupportkontakt: dto.tekniskSupportKontakt != null ? fromDTO(dto.tekniskSupportKontakt) : null
+            ).save()
         }
         tjanstekomponent
     }

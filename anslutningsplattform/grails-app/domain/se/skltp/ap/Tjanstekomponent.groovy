@@ -23,7 +23,7 @@ class Tjanstekomponent {
         hsaId blank: false, unique: true
         beskrivning nullable: false, blank: false
         organisation nullable: true, blank: true
-        ipadress nullable: false, blank: false
+        ipadress nullable: true, blank: true
         pingForConfigurationURL nullable: true, blank: true
         huvudansvarigKontakt nullable: true
         tekniskKontakt nullable: true
