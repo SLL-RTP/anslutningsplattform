@@ -5,7 +5,7 @@ import static groovy.json.JsonOutput.toJson
 
 class RivTaCacheInMemoryImpl implements RivTaCache {
 
-    private Map<String, List<RivTaTjansteKontrakt>> cache;
+    private Map<String, RivTaTjansteDoman> cache;
     String cacheFile
 
     @Override
@@ -13,11 +13,7 @@ class RivTaCacheInMemoryImpl implements RivTaCache {
         if (cache == null || cache.isEmpty()) {
             init(cacheFile)
         }
-        cache.keySet().collect {
-            new RivTaTjansteDoman(
-                    id: it
-            )
-        }
+        return new ArrayList<RivTaTjansteDoman>(cache.values())
     }
 
     @Override
@@ -25,12 +21,13 @@ class RivTaCacheInMemoryImpl implements RivTaCache {
         if (cache == null || cache.isEmpty()) {
             init(cacheFile)
         }
-        cache[domanId]
+        cache[domanId].tjanstekontrakt
     }
 
     private void init(String filePath) {
         def domainsNode = new XmlSlurper().parse(new FileInputStream(filePath))
         cache = domainsNode.domain.collectEntries { domain ->
+            String domainId = domain.@name.text()
             def serviceContracts = domain.release.depthFirst().collect { it }.flatten().findResults {
                 it.name() == 'serviceContract' ? it : null
             }.collect { serviceContract ->
@@ -50,12 +47,19 @@ class RivTaCacheInMemoryImpl implements RivTaCache {
                 }
                 new RivTaTjansteKontrakt(
                         namn: serviceContract.text(),
-                        namnrymd: "${domain.@name}:${serviceContract.text()}", //TODO: how to get namnrymd?
+                        namnrymd: "$domainId:${serviceContract.text()}", //TODO: how to get namnrymd?
                         majorVersion: majorVersion,
                         minorVersion: minorVersion
                 )
             }.unique(false)
-            [(domain.@name.text()): serviceContracts]
+
+            def rivTaTjansteDoman = new RivTaTjansteDoman(
+                    id: domainId,
+                    svensktNamn: domain.@swedish_name.text().trim(),
+                    svensktKortNamn: domain.@swedish_nickname.text().trim(),
+                    tjanstekontrakt: serviceContracts
+            )
+            [(domainId): rivTaTjansteDoman]
         }
         logCache()
     }

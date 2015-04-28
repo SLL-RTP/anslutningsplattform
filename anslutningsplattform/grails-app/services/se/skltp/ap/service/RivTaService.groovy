@@ -25,6 +25,8 @@ class RivTaService {
         rivTaCache.getDomaner().collect {
             new TjansteDomanDTO(
                     tjansteDomanId: it.id,
+                    svensktNamn: it.svensktNamn,
+                    svensktKortNamn: it.svensktKortNamn
             )
         }
     }
