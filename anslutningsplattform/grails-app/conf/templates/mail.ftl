@@ -1,8 +1,8 @@
 <#-- @ftlvariable name="bestallning" type="se.skltp.ap.Bestallning" -->
 Nytt case till SDE10
-/[1060]\
+/1060\
 §
-RTjP Beställning via anslutningsplattformen för driftmiljö ${bestallning.driftmiljo.namn} (${bestallning.driftmiljo.id})
+RTP Beställning via anslutningsplattformen för driftmiljö ${bestallning.driftmiljo.namn} (${bestallning.driftmiljo.id})
 Beställt av ${bestallning.bestallare.namn} ${.now?iso_local}
 Beställarens telefon: ${bestallning.bestallare.telefon}
 Bäställarens e-post: ${bestallning.bestallare.epost}
@@ -202,8 +202,8 @@ Konsumentbeställningar
 </#list>
 </#if>
 §
-<#if bestallning.bestallare.hsaId??>
 användare: ¤${(bestallning.bestallare.hsaId)?keep_after_last("-")}¤
-anmält av: #${(bestallning.bestallare.hsaId)?keep_after_last("-")}#
-</#if>
-§2${bestallning.bestallare.epost}§2
+£RTP£
+ñ${bestallning.bestallare.epost}ñ
+ÿsupport@callistaenterprise.seÿ
+æRTPæ
