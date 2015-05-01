@@ -205,9 +205,21 @@ class BestallningService {
 
     private Personkontakt upsert(PersonkontaktDTO dto) {
         def personkontakt = fromDTO(dto)
-        def dbPersonkontakt = Personkontakt.findByEpost(dto.epost)
-        if (dbPersonkontakt != null) {
-            personkontakt.id = dbPersonkontakt.id
+        def dbPersonkontakt = null;
+        if (personkontakt.hsaId?.trim()) { //lookup by hsaId
+            dbPersonkontakt = Personkontakt.findByHsaId(personkontakt.hsaId)
+        }
+        if (dbPersonkontakt == null) { //not found by hsaId, try epost
+            dbPersonkontakt = Personkontakt.findByEpost(personkontakt.epost);
+        }
+        if (dbPersonkontakt != null) { //if found, merge values from personkontakt
+            dbPersonkontakt.with {
+                it.epost = personkontakt.epost
+                it.hsaId = personkontakt.hsaId
+                it.namn = personkontakt.namn
+                it.telefon = personkontakt.telefon
+            }
+            personkontakt = dbPersonkontakt
         }
         personkontakt.save()
     }

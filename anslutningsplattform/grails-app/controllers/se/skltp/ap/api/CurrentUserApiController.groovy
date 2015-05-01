@@ -21,8 +21,8 @@ class CurrentUserApiController {
         if (grailsApplication.config.x509.enabled) {
             respond getCurrentUser(request)
         } else {
-            log.warn("x509 disabled, returning empty PersonkontaktDTO")
-            respond new PersonkontaktDTO(hsaId: "HSA-SUNESUS-PEKT")
+            log.warn("x509 disabled, using dummy hsaId")
+            respond getPersonkontaktDTO("HSA-SUNESUS-PEKT")
         }
     }
 
@@ -34,19 +34,23 @@ class CurrentUserApiController {
         log.debug("subjectDN: $subjectDN")
         def matcher = subjectDNHsaIdPattern.matcher(subjectDN)
         if (matcher.hasGroup()) {
-            def hsaId = matcher[0][1]
-            def personkontaktDTO = kontaktService.findPersonkontaktDTOByHsaId(hsaId)
-            if (personkontaktDTO == null) {
-                personkontaktDTO = new PersonkontaktDTO(
-                        hsaId: hsaId
-                )
-            }
-            log.debug("$personkontaktDTO")
-            personkontaktDTO
+            String hsaId = matcher[0][1]
+            getPersonkontaktDTO(hsaId)
         } else {
             log.error("could not extract hsaId from subjectDN")
             new PersonkontaktDTO()
         }
+    }
+
+    def getPersonkontaktDTO(String hsaId) {
+        def personkontaktDTO = kontaktService.findPersonkontaktDTOByHsaId(hsaId)
+        if (personkontaktDTO == null) {
+            personkontaktDTO = new PersonkontaktDTO(
+                    hsaId: hsaId
+            )
+        }
+        log.debug("$personkontaktDTO")
+        personkontaktDTO
     }
 
     private X509Certificate createX509Certificate(String x509pem) {
