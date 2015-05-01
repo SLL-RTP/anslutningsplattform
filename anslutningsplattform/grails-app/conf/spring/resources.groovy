@@ -15,4 +15,10 @@ beans = {
     freemarkerConfiguration(FreeMarkerConfigurationFactoryBean) {
         templateLoaderPaths = ["classpath:templates"]
     }
+
+    if (grailsApplication.config.freemarker?.templates?.location) {
+        freemarkerConfiguration(FreeMarkerConfigurationFactoryBean) {
+            templateLoaderPaths = [grailsApplication.config.freemarker.templates.location]
+        }
+    }
 }
