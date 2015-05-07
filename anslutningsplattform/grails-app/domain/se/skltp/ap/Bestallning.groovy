@@ -15,7 +15,8 @@ class Bestallning {
     String otherInfo //TODO: document
 
     static hasMany = [
-            konsumentbestallningar: Konsumentbestallning
+            konsumentbestallningar: Konsumentbestallning,
+            nat: Nat
     ]
 
     static constraints = {
@@ -25,6 +26,7 @@ class Bestallning {
         bestallare nullable: false
         producentbestallning nullable: true
         konsumentbestallningar nullable: true
+        nat nullable: false
         otherInfo nullable: true
     }
 }
