@@ -7,6 +7,7 @@ import se.skltp.ap.Funktionkontakt
 import se.skltp.ap.Konsumentanslutning
 import se.skltp.ap.Konsumentbestallning
 import se.skltp.ap.LogiskAdress
+import se.skltp.ap.Nat
 import se.skltp.ap.Personkontakt
 import se.skltp.ap.Producentanslutning
 import se.skltp.ap.Producentbestallning
@@ -18,6 +19,7 @@ import se.skltp.ap.services.dto.domain.DriftmiljoDTO
 import se.skltp.ap.services.dto.domain.FunktionkontaktDTO
 import se.skltp.ap.services.dto.domain.KonsumentbestallningDTO
 import se.skltp.ap.services.dto.domain.LogiskAdressDTO
+import se.skltp.ap.services.dto.domain.NatDTO
 import se.skltp.ap.services.dto.domain.PersonkontaktDTO
 import se.skltp.ap.services.dto.domain.ProducentbestallningDTO
 import se.skltp.ap.services.dto.domain.TjanstekomponentDTO
@@ -83,12 +85,18 @@ class BestallningService {
                 otherInfo: bestallningDTO.otherInfo
         )
 
+
+
         if (bestallningDTO.producentbestallning) {
             bestallning.producentbestallning = insertProducentBestallning(bestallningDTO.producentbestallning, driftmiljo);
         }
 
         bestallningDTO.konsumentbestallningar?.each {
             bestallning.addToKonsumentbestallningar(insertKonsumentBestallning(it, driftmiljo))
+        }
+
+        bestallningDTO.nat?.each {
+            bestallning.addToNat(getOrCreate(it))
         }
 
         bestallning.save()
@@ -201,6 +209,16 @@ class BestallningService {
             driftmiljo.save()
         }
         driftmiljo
+    }
+
+    private Nat getOrCreate(NatDTO dto) {
+        def nat = Nat.findById(dto.id)
+        if (nat == null) {
+            nat = new Nat(namn: dto.namn)
+            nat.id = dto.id
+            nat.save()
+        }
+        nat
     }
 
     private Personkontakt upsert(PersonkontaktDTO dto) {

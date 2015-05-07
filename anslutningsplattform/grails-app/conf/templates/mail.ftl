@@ -9,6 +9,11 @@ Bäställarens e-post: ${bestallning.bestallare.epost}
 Beställarens HSA-ID: <#if bestallning.bestallare.hsaId??>${bestallning.bestallare.hsaId}<#else>(okänt)</#if>
 Beställarens roll: <#if bestallning.bestallareRoll??>${bestallning.bestallareRoll}<#else>(ej ifylld)</#if>
 Övrig information från beställaren: <#if bestallning.otherInfo??>${bestallning.otherInfo}<#else>(ej ifylld)</#if>
+
+Nät:
+<#list bestallning.nat as nat>
+    ${nat.namn}
+</#list>
 <#if bestallning.producentbestallning??>
 <#assign producentbestallning = bestallning.producentbestallning>
 
