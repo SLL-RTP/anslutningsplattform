@@ -67,6 +67,11 @@ class UrlMappings {
                 format = "json"
             }
 
+            "/nat"(controller: 'natApi') {
+                action = [GET: "list"]
+                format = "json"
+            }
+
             "/currentUser"(controller: 'currentUserApi') {
                 action = [GET: "get"]
                 format = "json"
