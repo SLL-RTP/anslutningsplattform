@@ -263,6 +263,12 @@ environments {
         api.auth.token = 'secret-token'
         x509.enabled = false
         x509.cert.header = 'x-vp-auth-cert'
+
+        nat = [
+                "xxx-net":"XXX-net",
+                "sjunet":"Sjunet",
+                "internet":"Internet"
+        ]
 	}
 
 	production{
