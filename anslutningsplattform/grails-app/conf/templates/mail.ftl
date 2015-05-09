@@ -1,5 +1,5 @@
 <#-- @ftlvariable name="bestallning" type="se.skltp.ap.Bestallning" -->
-Nytt case till SDE10
+WebMailForm
 /1060\
 §
 RTP Beställning via anslutningsplattformen för driftmiljö ${bestallning.driftmiljo.namn} (${bestallning.driftmiljo.id})
