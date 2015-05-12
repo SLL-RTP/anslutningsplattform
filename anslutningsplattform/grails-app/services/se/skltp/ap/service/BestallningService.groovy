@@ -31,38 +31,36 @@ class BestallningService {
 
     def freemarkerConfiguration
 
+    def grailsApplication
+
     def handleBestallning(BestallningDTO bestallningDTO) {
         def bestallning = insertBestallning(bestallningDTO)
         emailBestallning(bestallning)
     }
 
     def emailBestallning(Bestallning bestallning) {
-        //NOT: testing with gmail requires:
-        // 1. a non google-apps/enterprise mail account (see pt 2)
-        // 2. allowing "less secure apps" using:
-        //   https://www.google.com/settings/security/lesssecureapps
-        //   logged in to your gmail account
-        // 3. fromAddress to be your own address for the gmail account you are using
-        // 4. config in Config.groovy grails{ mail{: username/password
-        //def fromAddress = "hakan.dahl.demo1@gmail.com"
-        //def fromAddress = "martinsjunkbox@gmail.com"
-        def toAddress = bestallning.bestallare.epost
-        def subjectField = "AP TEST subject"
-        //def bodyPlainText = "AP TEST body"
-        // TODO: prettify this!
-        //def bodyPlainText = request.JSON.toString()
+        def confirmationToAddress = bestallning.bestallare.epost
+        def confirmationSubject = grailsApplication.config.order.confirmation.email.subject
+        def orderToAddress = grailsApplication.config.order.email.address
+        def orderSubject = grailsApplication.config.order.email.subject
+
         def bestallningMailContent = createBestallningMailContent(bestallning)
-        def success = false
         log.info("Sending mail ... with body:\n${bestallningMailContent}")
 
         if (bestallning) {
-            try {
-                mailingService.send(null, toAddress, subjectField, bestallningMailContent)
-                success = true
-                log.info("Mail sent.")
+            try { //order email
+                mailingService.send(null, orderToAddress, orderSubject, bestallningMailContent)
+                log.info("order mail sent.")
             }
             catch (Exception e) {
-                log.error("Failed to send mail", e)
+                log.error("Failed to send order mail", e)
+            }
+            try { //confirmation email
+                mailingService.send(null, confirmationToAddress, confirmationSubject, bestallningMailContent)
+                log.info("confirmation mail sent.")
+            }
+            catch (Exception e) {
+                log.error("Failed to send confirmation mail", e)
             }
         }
     }

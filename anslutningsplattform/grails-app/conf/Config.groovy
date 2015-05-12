@@ -267,6 +267,14 @@ environments {
         //tak.env.id.'5' = 'hd-local-test'
         //tak.env.name.'5' = 'HD lOCAL TEST'
         //tak.env.url.'5' = 'http://localhost:8081/tak-services/SokVagvalsInfo/v2'
+
+        order {
+            email {
+                address = 'martinsjunkbox@gmail.com'
+                subject = 'Beställning från Anslutningsplattformen'
+            }
+            confirmation.email.subject = 'Beställning från Anslutningsplattformen'
+        }
 	}
 
 	production{
@@ -289,8 +297,3 @@ environments {
         x509.cert.header = 'x-vp-auth-cert'
 	}
 }
-
-//grails.mail.default.from = 'hakan.dahl.demo1@gmail.com'
-//smtp.to.address = 'hakan.dahl.demo1@gmail.com'
-smtp.to.address = 'johanna.essen@callistaenterprise.se'
-smtp.from.address = ''
