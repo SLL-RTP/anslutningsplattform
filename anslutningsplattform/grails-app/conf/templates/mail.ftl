@@ -2,7 +2,7 @@
 WebMailForm
 /1060\
 §
-RTP Beställning via anslutningsplattformen för driftmiljö ${bestallning.driftmiljo.namn} (${bestallning.driftmiljo.id})
+RTP Beställning för driftmiljö ${bestallning.driftmiljo.namn} (${bestallning.driftmiljo.id})
 Beställt av ${bestallning.bestallare.namn} ${.now?iso_local}
 Beställarens telefon: ${bestallning.bestallare.telefon}
 Bäställarens e-post: ${bestallning.bestallare.epost}

@@ -270,7 +270,7 @@ environments {
 
         order {
             email {
-                address = 'martinsjunkbox@gmail.com'
+                address = 'johanna.essen@callistaenterprise.se'
                 subject = 'Beställning från Anslutningsplattformen'
             }
             confirmation.email.subject = 'Beställning från Anslutningsplattformen'
