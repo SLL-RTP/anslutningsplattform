@@ -1,17 +1,4 @@
 <domains>
-  <domain name="clinicalprocess:activity:actions" swedish_name="Vård och omsorg, kärnprocess:hantera aktiviteter:aktiviteter" swedish_nickname="aktivitetshantering">
-
-    <release version="1.0_RC1">
-      <serviceContract version="1.0" lastUpdated="2013-12-19">DeleteActivity</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-12-19">GetActivity</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-12-19">ProcessActivity</serviceContract>
-    </release>
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2013-12-19">DeleteActivity</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-12-19">GetActivity</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-12-19">ProcessActivity</serviceContract>
-    </release>
-  </domain>
   <domain name="clinicalprocess:activity:request" swedish_name="vård- och omsorg kärnprocess:hantera aktiviteter:remisshantering" swedish_nickname="remisshantering">
 
     <release version="1.0_RC3">
@@ -31,104 +18,37 @@
   </domain>
   <domain name="clinicalprocess:activityprescription:actoutcome" swedish_name="-" swedish_nickname="-">
 
-    <release version="1.0.0"></release>
     <release version="2.0_RC1">
       <serviceContract version="2.0" lastUpdated="2014-06-09">GetMedicationHistory</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-06-09">GetVaccinationHistory</serviceContract>
     </release>
     <release version="trunk">
       <serviceContract version="2.0" lastUpdated="2014-06-09">GetMedicationHistory</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-06-09">GetVaccinationHistory</serviceContract>
-    </release>
-  </domain>
-  <domain name="clinicalprocess:activityprescription:logistics" swedish_name="-" swedish_nickname="-">
-
-    <release version="1.0.0_beta_r2037"></release>
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2014-05-19">GetDispensedDrugs</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-05-19">PrintListOfDispensedDrugs</serviceContract>
-    </release>
-  </domain>
-  <domain name="clinicalprocess:activityprescription:prescribe" swedish_name="-" swedish_nickname="-">
-
-    <release version="1.0.0_beta_r2037"></release>
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2014-05-19">ChangePrescription</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-05-19">ConfirmPrescription</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-05-19">DiscontinuePrescription</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-05-19">GetActivePrescriptions</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-05-19">GetInactivePrescriptions</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-05-19">GetPrescriptionHistory</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-05-19">GetUnconfirmedPrescriptions</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-05-19">RegisterPrescription</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-05-19">StopPrescriptionDispensation</serviceContract>
     </release>
   </domain>
   <domain name="clinicalprocess:healthcond:actoutcome" swedish_name="Hantera hälsorelaterade tillstånd, utfall av aktiviteter" swedish_nickname="Utfall av aktiviteter">
 
     <release version="3.0_RC1">
       <serviceContract version="1.0" lastUpdated="2014-04-11">GetECGOutcome</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-04-11">GetImagingOutcome</serviceContract>
-      <serviceContract version="3.0" lastUpdated="2014-04-11">GetLaboratoryOrderOutcome</serviceContract>
-      <serviceContract version="3.0" lastUpdated="2014-04-11">GetMaternityMedicalHistory</serviceContract>
-      <serviceContract version="3.0" lastUpdated="2014-04-11">GetReferralOutcome</serviceContract>
+      <serviceContract version="2.0" lastUpdated="2014-04-11">GetMaternityMedicalHistory</serviceContract>
+      <serviceContract version="2.0" lastUpdated="2014-04-11">GetReferralOutcome</serviceContract>
     </release>
     <release version="trunk">
       <serviceContract version="1.0" lastUpdated="2014-04-11">GetECGOutcome</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-04-11">GetImagingOutcome</serviceContract>
-      <serviceContract version="3.0" lastUpdated="2014-04-11">GetLaboratoryOrderOutcome</serviceContract>
-      <serviceContract version="3.0" lastUpdated="2014-04-11">GetMaternityMedicalHistory</serviceContract>
-      <serviceContract version="3.0" lastUpdated="2014-04-11">GetReferralOutcome</serviceContract>
-    </release>
-  </domain>
-  <domain name="clinicalprocess:healthcond:basic" swedish_name="Hantera hälsorelaterade tillstånd, basuppgifter" swedish_nickname="basuppgifter tillstånd">
-
-    <release version="1.0_RC1">
-      <serviceContract version="1.0" lastUpdated="2013-12-16">DeleteMeasurement</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-12-16">DeleteObservation</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-12-17">GetMeasurement</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-12-16">GetObservation</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-12-16">ProcessMeasurement</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-12-16">ProcessObservation</serviceContract>
-    </release>
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2013-12-16">DeleteMeasurement</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-12-16">DeleteObservation</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-12-17">GetMeasurement</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-12-16">GetObservation</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-12-16">ProcessMeasurement</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-12-16">ProcessObservation</serviceContract>
-    </release>
-  </domain>
-  <domain name="clinicalprocess:healthcond:certificate" swedish_name="vård- och omsorg kärnprocess:hälsorelaterade tillstånd:intygshantering" swedish_nickname="Intygshantering">
-
-    <release version="1.0_RC1">
-      <serviceContract version="1.0" lastUpdated="2014-10-06">GetCertificateForCare</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-10-06">ListCertificatesForCare</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-10-06">ListCertificatesForCitizen</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-10-06">RegisterCertificate</serviceContract>
-    </release>
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2014-10-06">GetCertificateForCare</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-10-06">ListCertificatesForCare</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-10-06">ListCertificatesForCitizen</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-10-06">RegisterCertificate</serviceContract>
+      <serviceContract version="2.0" lastUpdated="2014-04-11">GetMaternityMedicalHistory</serviceContract>
+      <serviceContract version="2.0" lastUpdated="2014-04-11">GetReferralOutcome</serviceContract>
     </release>
   </domain>
   <domain name="clinicalprocess:healthcond:description" swedish_name="Vård- och omsorg kärnprocess:hantera hälsorelaterade tillstånd:tillståndsbeskrivning" swedish_nickname="Tillståndsbeskrivning">
 
-    <release version="2.0"></release>
     <release version="2.1_RC6">
       <serviceContract version="2.0" lastUpdated="2014-09-16">GetAlertInformation</serviceContract>
       <serviceContract version="2.1" lastUpdated="2014-08-25">GetCareDocumentation</serviceContract>
       <serviceContract version="2.0" lastUpdated="2014-09-16">GetDiagnosis</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-09-15">GetFunctionalStatus</serviceContract>
     </release>
     <release version="trunk">
       <serviceContract version="2.0" lastUpdated="2014-09-16">GetAlertInformation</serviceContract>
       <serviceContract version="2.1" lastUpdated="2014-08-25">GetCareDocumentation</serviceContract>
       <serviceContract version="2.0" lastUpdated="2014-09-16">GetDiagnosis</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-09-15">GetFunctionalStatus</serviceContract>
     </release>
   </domain>
   <domain name="clinicalprocess:healthcond:rheuma" swedish_name="-" swedish_nickname="-">
@@ -142,22 +62,21 @@
   </domain>
   <domain name="clinicalprocess:logistics:logistics" swedish_name="operativt processtöd:samordna  resurser över verksamhetsstrukturer: logistik" swedish_nickname="resurssamordning">
 
-    <release version="2.0"></release>
-    <release version="3.0_RC1">
-      <serviceContract version="3.0" lastUpdated="2014-09-11">GetCareContacts</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-09-17">GetCarePlans</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-09-17">GetCareServices</serviceContract>
+    <release version="2.0_RC7">
+      <serviceContract version="2.0" lastUpdated="2014-09-11">GetCareContacts</serviceContract>
     </release>
     <release version="trunk">
-      <serviceContract version="3.0" lastUpdated="2014-09-11">GetCareContacts</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-09-17">GetCarePlans</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-09-17">GetCareServices</serviceContract>
+      <serviceContract version="2.0" lastUpdated="2014-09-11">GetCareContacts</serviceContract>
     </release>
   </domain>
-  <domain name="crm:carelisting" swedish_name="-" swedish_nickname="-">
-
-    <release version="1.0"></release>
-    <release version="trunk"></release>
+  <domain name="crm:carelisting" swedish_name="-" swedish_nickname="Listning">
+    <release version="1.0">
+        <serviceContract version="1.0" lastUpdated="2011-12-28">CreateListing</serviceContract>
+        <serviceContract version="1.0" lastUpdated="2012-01-15">GetAvailableFacilities</serviceContract>
+        <serviceContract version="1.0" lastUpdated="2012-01-15">GetListing</serviceContract>
+        <serviceContract version="1.0" lastUpdated="2012-01-15">GetListingTypes</serviceContract>
+        <serviceContract version="1.0" lastUpdated="2012-01-14">GetPersonQueueStatus</serviceContract>
+    </release>
   </domain>
   <domain name="crm:requeststatus" swedish_name="vård- och omsorg kärnprocess:hantera aktiviteter:remisstatus" swedish_nickname="remisstatus">
 
@@ -183,344 +102,30 @@
       <serviceContract version="1.1" lastUpdated="2012-01-15">UpdateBooking</serviceContract>
     </release>
   </domain>
-  <domain name="druglogistics:dosedispensing" swedish_name="-" swedish_nickname="-">
-
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2011-08-09">AvbestallOrginalforpackning</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-08-09">BestallOrginalforpackning</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-08-09">HamtaLokaltProduktsortiment</serviceContract>
-      <serviceContract version="1.1" lastUpdated="2013-09-12">HamtaLokaltProduktsortiment</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-08-09">HamtaMeddelanden</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-08-09">HamtaOrginalforpackning</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-08-09">HamtaVardtagareinformation</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-08-09">SkapaVardtagare</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-08-09">SkickaMeddelanden</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-11-01">SokVardandeEnhet</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-09-13">UppdateraMeddelandeStatus</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-08-09">UppdateraVardtagareinformation</serviceContract>
-    </release>
-  </domain>
-  <domain name="ehr:accesscontrol" swedish_name="infrastruktur:säkerhetstjänster:patientrelation" swedish_nickname="tillgänglig patient (TGP)">
-
-    <release version="1.0.3">
-      <serviceContract version="1.0" lastUpdated="2011-10-11">AssertCareEngagement</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-05-04">AssertCareEngagement</serviceContract>
-    </release>
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2011-10-11">AssertCareEngagement</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-05-04">AssertCareEngagement</serviceContract>
-    </release>
-  </domain>
-  <domain name="ehr:blocking" swedish_name="infrastruktur:säkerhetstjänster:spärrhantering" swedish_nickname="spärrhantering">
+  <domain name="ehr:blocking:accesscontrol" swedish_name="infrastruktur:säkerhetstjänster:spärrhantering" swedish_nickname="spärrhantering">
 
     <release version="3.2_RC1">
       <serviceContract version="3.0" lastUpdated="2013-06-18">CheckBlocks</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">CancelTemporaryExtendedRevoke</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">DeleteExtendedBlock</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">GetExtendedBlocksForPatient</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">GetPatientIds</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">RegisterExtendedBlock</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">RegisterTemporaryExtendedRevoke</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">RevokeExtendedBlock</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">GetAllBlocksForPatient</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">GetAllBlocks</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">GetBlocksForPatient</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">GetBlocks</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">RegisterBlock</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">RegisterTemporaryRevoke</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">UnregisterBlock</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">UnregisterTemporaryRevoke</serviceContract>
-    </release>
-    <release version="trunk">
-      <serviceContract version="3.0" lastUpdated="2013-06-18">CheckBlocks</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">CancelTemporaryExtendedRevoke</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">DeleteExtendedBlock</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">GetExtendedBlocksForPatient</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">GetPatientIds</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">RegisterExtendedBlock</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">RegisterTemporaryExtendedRevoke</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">RevokeExtendedBlock</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">GetAllBlocksForPatient</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">GetAllBlocks</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">GetBlocksForPatient</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">GetBlocks</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">RegisterBlock</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">RegisterTemporaryRevoke</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">UnregisterBlock</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2012-10-22">UnregisterTemporaryRevoke</serviceContract>
     </release>
   </domain>
-  <domain name="ehr:commission" swedish_name="-" swedish_nickname="-">
+  <domain name="ehr:blocking:administration" swedish_name="infrastruktur:säkerhetstjänster:spärrhantering" swedish_nickname="spärrhantering">
 
-    <release version="1.0"></release>
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2013-11-19">GetCommissionsForPerson</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-11-19">SetSelectedCommissionForPerson</serviceContract>
+    <release version="3.2_RC1">
+      <serviceContract version="2.0" lastUpdated="2012-10-22">DeleteExtendedBlock</serviceContract>
+      <serviceContract version="2.0" lastUpdated="2012-10-22">RegisterExtendedBlock</serviceContract>
     </release>
   </domain>
-  <domain name="ehr:log" swedish_name="infrastruktur:säkerhetstjänster:logghantering" swedish_nickname="logghantering ">
+  <domain name="ehr:log:store" swedish_name="infrastruktur:säkerhetstjänster:logghantering" swedish_nickname="logghantering ">
 
-    <release version="1.1_RC3">
-      <serviceContract version="1.0" lastUpdated="2012-11-05">GetAccessLogsForPatient</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-11-05">GetInfoLogsForCareProvider</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-11-05">GetInfoLogsForPatient</serviceContract>
-      <serviceContract version="1.1" lastUpdated="2014-03-20">GetLogsForCareProvider</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-11-05">GetLogsForPatient</serviceContract>
-      <serviceContract version="1.1" lastUpdated="2014-03-20">GetLogsForUser</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-11-05">StoreLog</serviceContract>
-    </release>
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2012-11-05">GetAccessLogsForPatient</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-11-05">GetInfoLogsForCareProvider</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-11-05">GetInfoLogsForPatient</serviceContract>
-      <serviceContract version="1.1" lastUpdated="2014-03-20">GetLogsForCareProvider</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-11-05">GetLogsForPatient</serviceContract>
-      <serviceContract version="1.1" lastUpdated="2014-03-20">GetLogsForUser</serviceContract>
+    <release version="1.2_RC2">
       <serviceContract version="1.0" lastUpdated="2012-11-05">StoreLog</serviceContract>
     </release>
   </domain>
-  <domain name="ehr:patientconsent" swedish_name="infrastruktur:säkerhetstjänster:samtyckeshantering" swedish_nickname="samtyckeshantering">
-
-    <release version="1.0.1"></release>
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2012-10-22">CheckConsent</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-10-22">CancelExtendedConsent</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-10-22">DeleteExtendedConsent</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-10-22">GetExtendedConsentsForPatient</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-10-22">RegisterExtendedConsent</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-10-22">GetConsentsForCareProvider</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-10-22">GetConsentsForPatient</serviceContract>
-    </release>
-  </domain>
-  <domain name="ehr:patientrelationship" swedish_name="infrastruktur:säkerhetstjänster:patientrelationshantering" swedish_nickname="patientrelationshantering">
-
-    <release version="1.0.1"></release>
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2012-10-22">CheckPatientRelation</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-10-22">CancelExtendedPatientRelation</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-10-22">DeleteExtendedPatientRelation</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-10-22">GetExtendedPatientRelationsForPatient</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-10-22">RegisterExtendedPatientRelation</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-10-22">GetPatientRelationsForCareProvider</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-10-22">GetPatientRelationsForPatient</serviceContract>
-    </release>
-  </domain>
-  <domain name="ehr:patientsummary" swedish_name="-" swedish_nickname="-">
-
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2012-09-02">DeleteEhrExtract</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-06-18">GetEhrExtract</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-08-23">ReceiveEhrExtract</serviceContract>
-    </release>
-  </domain>
-  <domain name="eservicesupply:eoffering" swedish_name="-" swedish_nickname="-">
-
-    <release version="1.0.0"></release>
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2011-05-22">GetAvailableEServices</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-22">GetAvailableEServices</serviceContract>
-    </release>
-  </domain>
-  <domain name="followup:groupoutcomes:qualityreporting" swedish_name="uppföljning kärnprocess:hantera utfall för grupper:kvalitetsrapportering" swedish_nickname="kvalitetsrapportering">
-
-    <release version="1.0.1_RC2">
-      <serviceContract version="1.0" lastUpdated="2014-06-26">GetQualityIndicators</serviceContract>
-    </release>
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2014-06-26">GetQualityIndicators</serviceContract>
-    </release>
-  </domain>
-  <domain name="followup:processdevelopment:infections" swedish_name="uppföljning kärnprocess:hantera utfall för individer:infektioner" swedish_nickname="infektionsuppföljning">
-
-    <release version="1.0.2_RC1">
-      <serviceContract version="1.0" lastUpdated="2014-03-26">DeleteLaboratoryReport</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-03-26">DeletePrescription</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-03-26">DeletePrescriptionReason</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-03-26">ProcessLaboratoryReport</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-03-26">ProcessPrescriptionReason</serviceContract>
-    </release>
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2013-12-16">DeleteLaboratoryReport</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-12-16">DeletePrescription</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-12-16">DeletePrescriptionReason</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-12-16">ProcessLaboratoryReport</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-12-16">ProcessPrescriptionReason</serviceContract>
-    </release>
-  </domain>
-  <domain name="followup:qualityregistry:nkrr" swedish_name="uppföljning kärnprocess: kvalitetsregister:nkrr" swedish_nickname="kvalitetsregister, nkrr">
-
-    <release version="1.0.3">
-      <serviceContract version="1.0" lastUpdated="2013-07-08">GetFormData</serviceContract>
-    </release>
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2013-07-08">GetFormData</serviceContract>
-    </release>
-  </domain>
-  <domain name="healthcertificate:lifeline" swedish_name="-" swedish_nickname="-">
-
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2012-04-18">BirthRegistration</serviceContract>
-    </release>
-  </domain>
-  <domain name="informatics:terminology" swedish_name="-" swedish_nickname="-">
-
-    <release version="1.0.0"></release>
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2011-06-14">GetTerminologySubset</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-02-11">GetTerminologySubsetVersion</serviceContract>
-    </release>
-  </domain>
-  <domain name="infrastructure:directory:authorizationmanagement" swedish_name="infrastruktur:katalogtjänster:behörighetshantering" swedish_nickname="behörighetshantering">
-
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2014-10-14">GetCredentialsForPersonIncludingProtectedPerson</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-10-14">GetCredentialsForPerson</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-10-14">GetPersonAuthorizedToSystemIncludingProtectedPerson</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-10-14">GetPersonAuthorizedToSystem</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-08-19">PingForConfiguration</serviceContract>
-    </release>
-  </domain>
-  <domain name="infrastructure:directory:employee" swedish_name="infrastruktur:katalogtjänster:medarbetare" swedish_nickname="medarbetare">
-
-    <release version="1.0_RC4">
-      <serviceContract version="1.0" lastUpdated="2014-03-25">GetEmployeeIncludingProtectedPerson</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-03-25">GetEmployee</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-10-31">PingForConfiguration</serviceContract>
-    </release>
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2014-10-14">GetEmployeeIncludingProtectedPerson</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-10-14">GetEmployee</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-10-31">PingForConfiguration</serviceContract>
-    </release>
-  </domain>
-  <domain name="infrastructure:directory:organization" swedish_name="infrastruktur:katalogtjänster:organisation" swedish_nickname="organisation">
-
-    <release version="1.0_RC4">
-      <serviceContract version="1.0" lastUpdated="2014-03-25">GetHealthCareUnit</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-03-25">GetHealthCareUnitList</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-03-25">GetHealthCareUnitMembers</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-03-25">GetUnit</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-10-10">PingForConfiguration</serviceContract>
-    </release>
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2014-10-14">GetHealthCareUnit</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-10-14">GetHealthCareUnitList</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-10-14">GetHealthCareUnitMembers</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-10-14">GetUnit</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-10-10">PingForConfiguration</serviceContract>
-    </release>
-  </domain>
-  <domain name="infrastructure:eservicesupply:forminteraction" swedish_name="infrastruktur:etjänsteförsörjning:formulärhantering" swedish_nickname="Formulärhantering">
-
-    <release version="2.0_RC7">
-      <serviceContract version="2.0" lastUpdated="2014-06-24">CancelForm</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-06-24">CreateForm</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-06-24">CreateFormRequest</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-06-24">GetForm</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-06-24">GetFormQuestionPage</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-06-24">GetFormTemplate</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-06-24">GetFormTemplates</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-06-24">GetForms</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-06-24">SaveForm</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-06-24">SaveFormPage</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-06-24">SaveFormTemplate</serviceContract>
-    </release>
-    <release version="trunk">
-      <serviceContract version="2.0" lastUpdated="2014-06-24">CancelForm</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-06-24">CreateForm</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-06-24">CreateFormRequest</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-06-24">GetForm</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-06-24">GetFormQuestionPage</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-06-24">GetFormTemplate</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-06-24">GetFormTemplates</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-06-24">GetForms</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-06-24">SaveForm</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-06-24">SaveFormPage</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-06-24">SaveFormTemplate</serviceContract>
-    </release>
-  </domain>
-  <domain name="infrastructure:eservicesupply:patientportal" swedish_name="-" swedish_nickname="-">
-
-    <release version="1.0_RC5">
-      <serviceContract version="1.0" lastUpdated="2014-07-12">AddMessageToPatientPortalInbox</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-07-12">IsActiveUser</serviceContract>
-    </release>
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2014-07-11">AddMessageToPatientPortalInbox</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2014-07-11">IsActiveUser</serviceContract>
-    </release>
-  </domain>
-  <domain name="infrastructure:informationstructureservice:terminology" swedish_name="-" swedish_nickname="-">
-
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2013-10-31">GetConcepts</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-10-31">GetTerminologySubsetInformation</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-10-31">GetTerminologySubset</serviceContract>
-    </release>
-  </domain>
-  <domain name="infrastructure:itintegration:messagebox" swedish_name="-" swedish_nickname="-">
+  <domain name="itintegration:registry" swedish_name="infrastruktur:tjänsteförmedlingstjänster:förmedlingsinformation" swedish_nickname="tjänsteadressering">
 
     <release version="1.0">
-      <serviceContract version="1.0" lastUpdated="2013-11-04">DeleteMessages</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-11-04">GetMessages</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-11-04">ListMessages</serviceContract>
-    </release>
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2013-11-04">DeleteMessages</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-11-04">GetMessages</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-11-04">ListMessages</serviceContract>
-    </release>
-  </domain>
-  <domain name="infrastructure:itintegration:registry" swedish_name="infrastruktur:tjänsteförmedlingstjänster:förmedlingsinformation" swedish_nickname="tjänsteadressering">
-
-    <release version="2.0_RC8">
-      <serviceContract version="1.0" lastUpdated="2012-02-02">GetLogicalAddresseesByServiceContract</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2013-11-07">GetLogicalAddresseesByServiceContract</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-02-02">GetSupportedServiceContracts</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2013-11-07">GetSupportedServiceContracts</serviceContract>
-    </release>
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2012-02-02">GetLogicalAddresseesByServiceContract</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2013-11-07">GetLogicalAddresseesByServiceContract</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-02-02">GetSupportedServiceContracts</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2013-11-07">GetSupportedServiceContracts</serviceContract>
-    </release>
-  </domain>
-  <domain name="infrastructure:supportservices:forminteraction" swedish_name="-" swedish_nickname="-">
-
-    <release version="1.0"></release>
-    <release version="trunk">
-      <serviceContract version="2.0" lastUpdated="2014-02-28">CancelForm</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-04-11">CreateForm</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-02-28">CreateFormRequest</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-02-28">GetForm</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-02-28">GetFormQuestionPage</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-02-28">GetFormTemplate</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-02-28">GetFormTemplates</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-02-28">GetForms</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-02-28">SaveForm</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-02-28">SaveFormPage</serviceContract>
-      <serviceContract version="2.0" lastUpdated="2014-02-28">SaveFormTemplate</serviceContract>
-    </release>
-  </domain>
-  <domain name="insuranceprocess:healthreporting" swedish_name="Vård- och omsorg kärnprocess:hälsorelaterade tillstånd:intygshantering" swedish_nickname="Intygshantering">
-
-    <release version="3.1.0"></release>
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2010-11-26">DeleteAnswers</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2010-11-26">DeleteQuestions</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2010-11-26">FindAllAnswers</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2010-11-26">FindAllQuestions</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-03-05">GetCertificate</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-03-05">ListCertificates</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2010-11-26">ReceiveMedicalCertificateAnswer</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2010-11-26">ReceiveMedicalCertificateQuestion</serviceContract>
-      <serviceContract version="3.1" lastUpdated="2013-06-04">RegisterMedicalCertificate</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-03-05">RevokeMedicalCertificate</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2010-11-26">SendMedicalCertificateAnswer</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-03-05">SendMedicalCertificate</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2010-11-26">SendMedicalCertificateQuestion</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-03-05">SetCertificateStatus</serviceContract>
+      <serviceContract version="1.0" lastUpdated="2013-11-07">GetLogicalAddresseesByServiceContract</serviceContract>
+      <serviceContract version="1.0" lastUpdated="2013-11-07">GetSupportedServiceContracts</serviceContract>
     </release>
   </domain>
   <domain name="itintegration:engagementindex" swedish_name="infrastruktur:tjänsteförmedlingstjänster:engagemangsindex " swedish_nickname="Engagemangsindex">
@@ -528,27 +133,8 @@
     <release version="1.0"></release>
     <release version="trunk">
       <serviceContract version="1.0" lastUpdated="2011-11-22">FindContent</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2012-05-09">GetUpdates</serviceContract>
       <serviceContract version="1.0" lastUpdated="2011-11-22">ProcessNotification</serviceContract>
       <serviceContract version="1.0" lastUpdated="2011-11-22">Update</serviceContract>
-    </release>
-  </domain>
-  <domain name="itintegration:monitoring" swedish_name="infrastruktur:tjänsteförmedlingstjänster:tjänsteövervakning" swedish_nickname="tjänsteövervakning">
-
-    <release version="1.0.0"></release>
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2011-12-29">PingForConfiguration</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-12-29">PingForConfiguration</serviceContract>
-    </release>
-  </domain>
-  <domain name="orgmaster:hsa" swedish_name="-" swedish_nickname="-">
-
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2013-04-09">GetHsaPerson</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-04-09">GetHsaUnit</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-04-09">GetHsaUnitList</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-04-09">GetMiuForPerson</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-04-09">GetPersonsWithCommissionAtHealthCareUnit</serviceContract>
     </release>
   </domain>
   <domain name="population:residentmaster" swedish_name="-" swedish_nickname="-">
@@ -556,31 +142,16 @@
     <release version="1.0.0"></release>
     <release version="1.1_RC4"></release>
     <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2011-12-09">LookupResidentForFullProfile</serviceContract>
       <serviceContract version="1.1" lastUpdated="2013-09-26">LookupResidentForFullProfile</serviceContract>
     </release>
   </domain>
-  <domain name="processdevelopment:infections" swedish_name="-" swedish_nickname="-">
+  <domain name="processdevelopment:infections" swedish_name="-" swedish_nickname="Infektionsverktyget">
 
     <release version="1.0.1">
       <serviceContract version="1.0" lastUpdated="2011-08-17">DeleteActivity</serviceContract>
       <serviceContract version="1.0" lastUpdated="2011-08-17">DeleteCareEncounter</serviceContract>
       <serviceContract version="1.0" lastUpdated="2011-08-17">DeleteCondition</serviceContract>
       <serviceContract version="1.0" lastUpdated="2011-08-17">DeleteLaboratoryReport</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-02-11">DeletePrescription</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-08-17">DeletePrescriptionReason</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-08-17">ProcessActivity</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-08-17">ProcessCareEncounter</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-08-17">ProcessCondition</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-08-17">ProcessLaboratoryReport</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-08-17">ProcessPrescriptionReason</serviceContract>
-    </release>
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2011-08-17">DeleteActivity</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-08-17">DeleteCareEncounter</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-08-17">DeleteCondition</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-08-17">DeleteLaboratoryReport</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-02-11">DeletePrescription</serviceContract>
       <serviceContract version="1.0" lastUpdated="2011-08-17">DeletePrescriptionReason</serviceContract>
       <serviceContract version="1.0" lastUpdated="2011-08-17">ProcessActivity</serviceContract>
       <serviceContract version="1.0" lastUpdated="2011-08-17">ProcessCareEncounter</serviceContract>
@@ -589,196 +160,41 @@
       <serviceContract version="1.0" lastUpdated="2011-08-17">ProcessPrescriptionReason</serviceContract>
     </release>
   </domain>
-  <domain name="qualityregistry:nkrr" swedish_name="-" swedish_nickname="-">
+  <domain name="se.apotekensservice:lf" swedish_name="-" swedish_nickname="Apoteket - LF">
 
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2013-02-21">GetFormData</serviceContract>
-    </release>
-  </domain>
-  <domain name="se_apotekensservice:arko" swedish_name="-" swedish_nickname="-">
-
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2011-09-06">HamtaArbetsplatsinformation</serviceContract>
-    </release>
-  </domain>
-  <domain name="se_apotekensservice:axs" swedish_name="-" swedish_nickname="-">
-
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2011-09-05">HamtaExpeditionsId</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-09-05">HamtaFolkInfo</serviceContract>
-      <serviceContract version="4.0" lastUpdated="2013-09-30">HamtaKundInfo</serviceContract>
-      <serviceContract version="4.0" lastUpdated="2013-09-30">HamtaPatientInfo</serviceContract>
-      <serviceContract version="4.0" lastUpdated="2013-09-30">UppdateraSamtycke</serviceContract>
-    </release>
-  </domain>
-  <domain name="se_apotekensservice:ees" swedish_name="-" swedish_nickname="-">
-
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2011-09-05">HamtaEesStatus</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-09-05">HamtaFdbMonografi</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-09-05">HamtaSignal</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-09-05">HamtaSignalStangningsKategori</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-09-05">HanteraKund</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-09-05">KontrolleraInteraktion</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-09-05">StangSignal</serviceContract>
-    </release>
-  </domain>
-  <domain name="se_apotekensservice:expo" swedish_name="-" swedish_nickname="-">
-
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaApoteksInfo</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaApoteksinfoEget</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">KontaktuppgifterHamta</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">KontaktuppgifterUppdatera</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">SkapaApotek</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">SkapaDosmottagare</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">SokDosmottagare</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">TaBortDosmottagare</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">UppdateraDosmottagare</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">UppdateraExpoMedApotek</serviceContract>
-    </release>
-  </domain>
-  <domain name="se_apotekensservice:folk" swedish_name="-" swedish_nickname="-">
-
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2011-05-23">AvslutaFullmakt</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaArbetsstalle</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaFolkbokforingsinformation</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaFullmakt</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaSparInformation</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaVardenhet</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">KontrolleraFullmakt</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">RegistreraFullmakt</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">RegistreraVardenhetAnstalld</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">RegistreraVardenhet</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">TabortDosTillhorighet</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">UppdateraDosTillhorighet</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">UppdateraVardenhetAnstalld</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">UppdateraVardenhet</serviceContract>
-    </release>
-  </domain>
-  <domain name="se_apotekensservice:fors" swedish_name="-" swedish_nickname="-">
-
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaForskrivarInfoDjur</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaForskrivarinformation</serviceContract>
-    </release>
-  </domain>
-  <domain name="se_apotekensservice:fota" swedish_name="-" swedish_nickname="-">
-
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaDagAvstamning</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaDagSammanstallning</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">UppdateraForsaljningEgenvard</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">UppdateraForsaljningOppenvardForskrivning</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">UppdateraForsaljningOppenvardRekvisition</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">UppdateraForsaljningSlutenvard</serviceContract>
-    </release>
-  </domain>
-  <domain name="se_apotekensservice:gt" swedish_name="-" swedish_nickname="-">
-
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2011-05-23">SkapaSessionId</serviceContract>
-    </release>
-  </domain>
-  <domain name="se_apotekensservice:lf" swedish_name="-" swedish_nickname="-">
-
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2011-05-23">AterkallaSamtyckeVardsystem</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">AterkallaSamtyckeWebb</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">KontrolleraForskrivarbehorighet</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">KontrolleraSamtycke</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">KontrolleraSamtyckeVardsystem</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">LFUtskrift</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">LasLFForskrivare</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">LasLFPrivatperson</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">LasLFPrivatpersonPDF</serviceContract>
+    <release version="1.0.0">
       <serviceContract version="1.0" lastUpdated="2011-05-23">LasLFVardsystem</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">RapporteraBorttagLF</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">RapporteraExpeditionLF</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">RegistreraSamtyckeVardsystem</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">RegistreraSamtyckeWebb</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">SkrivUtLakemedelsforteckning</serviceContract>
     </release>
   </domain>
-  <domain name="se_apotekensservice:or" swedish_name="-" swedish_nickname="-">
+  <domain name="service:catalogue" swedish_name="-" swedish_nickname="Utbud">
 
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2011-05-23">AvregistreraDosunderlag</serviceContract>
-      <serviceContract version="4.0" lastUpdated="2013-09-30">AvregistreraEpsosSamtycke</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">BackaKrediteraUttag</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-11-01">ForlangOrdinationVard</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">GodkannDosunderlag</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">GodkannUttag</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaAktuellaOrdinationerFoddatum</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaAktuellaOrdinationer</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaEjGodkandaDosunderlag</serviceContract>
-      <serviceContract version="4.0" lastUpdated="2013-09-30">HamtaEpsosSamtycke</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaGallandeOrdinationsversion</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaIckeAktuellaOrdinationerFoddatum</serviceContract>
-      <serviceContract version="4.0" lastUpdated="2013-09-30">HamtaIckeAktuellaOrdinationer</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaOrdinationFoddatum</serviceContract>
-      <serviceContract version="4.0" lastUpdated="2013-09-30">HamtaOrdinationerPrivatperson</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaOrdinationshistorik</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaProduktionsunderlag</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">KontrolleraUttag</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">KorrigeraOrdinationApotek</serviceContract>
-      <serviceContract version="4.0" lastUpdated="2013-09-30">KorrigeraOrdinationVard</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">MakuleraOrdinationApotek</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">MakuleraOrdinationVard</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">NotifieringsTest</serviceContract>
-      <serviceContract version="4.0" lastUpdated="2013-09-30">RegistreraEpsosSamtycke</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">SattUtOrdinationApotek</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">SattUtOrdinationVard</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">SkapaDosunderlagApotek</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">SkapaDosunderlagVard</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">SkapaOrdinationApotek</serviceContract>
-      <serviceContract version="4.0" lastUpdated="2013-09-30">SkapaOrdinationVard</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">SkrivUtDosRecept</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2013-09-09">SkrivUtMinaSparadeRecept</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">UppdateraDostillhorighet</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">UppdateraDosunderlagAvliden</serviceContract>
+    <release version="1.0.0">
+      <serviceContract version="1.0" lastUpdated="2013-09-26">FindOffers</serviceContract>
+      <serviceContract version="1.0" lastUpdated="2013-09-26">PullOffers</serviceContract>
+      <serviceContract version="1.0" lastUpdated="2013-09-26">GetCapacities</serviceContract>
+      <serviceContract version="1.0" lastUpdated="2013-09-26">GetProductCatalogue</serviceContract>
     </release>
   </domain>
-  <domain name="se_apotekensservice:pris" swedish_name="-" swedish_nickname="-">
+  <domain name="sll:clinicalprocess:healthcond:actoutcome" swedish_name="-" swedish_nickname="SRQ">
 
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaBarn</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaHkdbKonto</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaHkdbTransaktioner</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaHkdbTransaktionerWebb</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">KontrolleraForman</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">KopplaBarnKonto</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">Prisfraga</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">RegistreraHkdbTransaktion</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">SkapaHkdbKonto</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">TaBortHkdbKonto</serviceContract>
+    <release version="1.0.0">
+      <serviceContract version="1.0" lastUpdated="2013-09-26">GetClinicalChemistryLabOrderOutcome</serviceContract>
     </release>
   </domain>
-  <domain name="se_apotekensservice:rrd" swedish_name="-" swedish_nickname="-">
+  <domain name="sll:invoicedata" swedish_name="-" swedish_nickname="Ersättningsunderlag">
 
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2011-05-23">AktuellaIdnFodDatDjur</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">FinnsReceptDjur</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">GodkannExpeditionDjur</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaAdresseradeReceptDjur</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaAktuellaReceptDjur</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaHistorikDjur</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaIckeAktuellaReceptDjur</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">HamtaReceptFodDatDjur</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">IckeAktuellaIdnFodDatDjur</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">KontrolleraExpeditionDjur</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">KorrigeraReceptDjur</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">MakuleraReceptDjur</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">NyttReceptDjur</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">SkrivUtReceptOriginalDjur</serviceContract>
-      <serviceContract version="1.0" lastUpdated="2011-05-23">TaBortUttagDjur</serviceContract>
+    <release version="1.0.0">
+      <serviceContract version="1.0" lastUpdated="2013-09-26">CreateInvoiceData</serviceContract>
+      <serviceContract version="1.0" lastUpdated="2013-09-26">GetInvoiceData</serviceContract>
+      <serviceContract version="1.0" lastUpdated="2013-09-26">ListInvoiceData</serviceContract>
+      <serviceContract version="1.0" lastUpdated="2013-09-26">RegisterInvoiceData</serviceContract>
+      <serviceContract version="1.0" lastUpdated="2013-09-26">ViewInvoiceData</serviceContract>
     </release>
   </domain>
-  <domain name="se_apotekensservice:vara" swedish_name="-" swedish_nickname="-">
+  <domain name="sll:paymentresponsible" swedish_name="-" swedish_nickname="Betalningsansvarig">
 
-    <release version="trunk">
-      <serviceContract version="1.0" lastUpdated="2011-05-23">SokSubstitution</serviceContract>
+    <release version="1.0.0">
+      <serviceContract version="1.0" lastUpdated="2013-09-26">ListPaymentResponsibleData</serviceContract>
     </release>
   </domain>
 </domains>
