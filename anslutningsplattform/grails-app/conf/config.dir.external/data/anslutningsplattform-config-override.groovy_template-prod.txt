@@ -6,6 +6,11 @@ tak.env.id.'1' = 'sll-prod'
 tak.env.name.'1' = 'SLL PROD'
 tak.env.url.'1' = 'http://localhost:8080/tak-services/SokVagvalsInfo/v2'
 
+tak.env.id.'2' = 'sll-qa'
+tak.env.name.'2' = 'SLL QA'
+tak.env.url.'2' = 'http://TODO_CHANGE_ME:8080/tak-services/SokVagvalsInfo/v2'
+
+
 nat = [
         "sll-net":"SLL-net",
         "sjunet":"Sjunet",
