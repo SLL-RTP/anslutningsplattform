@@ -1,5 +1,5 @@
 <domains>
-  <domain name="clinicalprocess:activity:request" swedish_name="vård- och omsorg kärnprocess:hantera aktiviteter:remisshantering" swedish_nickname="remisshantering">
+  <domain name="clinicalprocess:activity:request" swedish_name="vård- och omsorg kärnprocess:hantera aktiviteter:remisshantering" swedish_nickname="Remisshantering">
 
     <release version="1.0_RC3">
       <serviceContract version="1.0" lastUpdated="2013-03-20">GetRequestInstruction</serviceContract>
@@ -51,7 +51,7 @@
       <serviceContract version="2.0" lastUpdated="2014-09-16">GetDiagnosis</serviceContract>
     </release>
   </domain>
-  <domain name="clinicalprocess:healthcond:rheuma" swedish_name="-" swedish_nickname="-">
+  <domain name="clinicalprocess:healthcond:rheuma" swedish_name="-" swedish_nickname="Rheuma">
 
     <release version="1.0_RC3">
       <serviceContract version="1.0" lastUpdated="2014-02-05">GetRheumatoidArthritisData</serviceContract>
@@ -60,7 +60,7 @@
       <serviceContract version="1.0" lastUpdated="2014-02-05">GetRheumatoidArthritisData</serviceContract>
     </release>
   </domain>
-  <domain name="clinicalprocess:logistics:logistics" swedish_name="operativt processtöd:samordna  resurser över verksamhetsstrukturer: logistik" swedish_nickname="resurssamordning">
+  <domain name="clinicalprocess:logistics:logistics" swedish_name="operativt processtöd:samordna  resurser över verksamhetsstrukturer: logistik" swedish_nickname="Resurssamordning">
 
     <release version="2.0_RC7">
       <serviceContract version="2.0" lastUpdated="2014-09-11">GetCareContacts</serviceContract>
@@ -78,7 +78,7 @@
         <serviceContract version="1.0" lastUpdated="2012-01-14">GetPersonQueueStatus</serviceContract>
     </release>
   </domain>
-  <domain name="crm:requeststatus" swedish_name="vård- och omsorg kärnprocess:hantera aktiviteter:remisstatus" swedish_nickname="remisstatus">
+  <domain name="crm:requeststatus" swedish_name="vård- och omsorg kärnprocess:hantera aktiviteter:remisstatus" swedish_nickname="Remisstatus">
 
     <release version="1.0.1"></release>
     <release version="trunk">
@@ -102,26 +102,26 @@
       <serviceContract version="1.1" lastUpdated="2012-01-15">UpdateBooking</serviceContract>
     </release>
   </domain>
-  <domain name="ehr:blocking:accesscontrol" swedish_name="infrastruktur:säkerhetstjänster:spärrhantering" swedish_nickname="spärrhantering">
+  <domain name="ehr:blocking:accesscontrol" swedish_name="infrastruktur:säkerhetstjänster:spärrhantering" swedish_nickname="Spärrhantering">
 
     <release version="3.2_RC1">
       <serviceContract version="3.0" lastUpdated="2013-06-18">CheckBlocks</serviceContract>
     </release>
   </domain>
-  <domain name="ehr:blocking:administration" swedish_name="infrastruktur:säkerhetstjänster:spärrhantering" swedish_nickname="spärrhantering">
+  <domain name="ehr:blocking:administration" swedish_name="infrastruktur:säkerhetstjänster:spärrhantering" swedish_nickname="Spärrhantering">
 
     <release version="3.2_RC1">
       <serviceContract version="2.0" lastUpdated="2012-10-22">DeleteExtendedBlock</serviceContract>
       <serviceContract version="2.0" lastUpdated="2012-10-22">RegisterExtendedBlock</serviceContract>
     </release>
   </domain>
-  <domain name="ehr:log:store" swedish_name="infrastruktur:säkerhetstjänster:logghantering" swedish_nickname="logghantering ">
+  <domain name="ehr:log:store" swedish_name="infrastruktur:säkerhetstjänster:logghantering" swedish_nickname="Logghantering ">
 
     <release version="1.2_RC2">
       <serviceContract version="1.0" lastUpdated="2012-11-05">StoreLog</serviceContract>
     </release>
   </domain>
-  <domain name="itintegration:registry" swedish_name="infrastruktur:tjänsteförmedlingstjänster:förmedlingsinformation" swedish_nickname="tjänsteadressering">
+  <domain name="itintegration:registry" swedish_name="infrastruktur:tjänsteförmedlingstjänster:förmedlingsinformation" swedish_nickname="Tjänsteadressering">
 
     <release version="1.0">
       <serviceContract version="1.0" lastUpdated="2013-11-07">GetLogicalAddresseesByServiceContract</serviceContract>
@@ -137,7 +137,7 @@
       <serviceContract version="1.0" lastUpdated="2011-11-22">Update</serviceContract>
     </release>
   </domain>
-  <domain name="population:residentmaster" swedish_name="-" swedish_nickname="-">
+  <domain name="population:residentmaster" swedish_name="-" swedish_nickname="Personuppgiftshantering">
 
     <release version="1.0.0"></release>
     <release version="1.1_RC4"></release>
