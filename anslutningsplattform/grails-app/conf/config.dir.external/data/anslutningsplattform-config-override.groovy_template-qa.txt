@@ -1,0 +1,73 @@
+// AP datasource
+
+// Tak config
+// Note: the sequence number must be surrounded by quotes to be a valid groovy identifier
+tak.env.id.'1' = 'sll-qa'
+tak.env.name.'1' = 'SLL QA'
+tak.env.url.'1' = 'http://localhost:8080/tak-services/SokVagvalsInfo/v2'
+
+nat = [
+        "sll-net":"SLL-net",
+        "sjunet":"Sjunet",
+        "internet":"Internet"
+]
+
+
+
+environments {
+    production {
+        grails.dbconsole.enabled = true
+        dataSource {
+            // MySQL
+            //
+            // Ref: http://grails.github.io/grails-doc/2.4.3/ref/Plug-ins/dataSource.html
+            // Ref: http://grails.github.io/grails-doc/2.4.3/guide/single.html#dataSource
+            //
+            pooled = true
+            username = "ap_user"
+            password = "TODO_CHANGEME"
+            url = "jdbc:mysql://TODO_CHANGEME:3306/anslutningsplattform?autoReconnect=true"
+            dbCreate = "" // one of 'create', 'create-drop', 'update', 'validate', ''
+            driverClassName = "com.mysql.jdbc.Driver"
+            dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
+            properties {
+                maxActive = 50
+                minIdle = 10
+                maxIdle = 25
+                maxWait = 10000
+                validationQuery = "SELECT 1"
+                //validationQueryTimeout = 5000
+                validationInterval = 60000
+                testOnBorrow = true
+                testWhileIdle = false
+                testOnReturn = false
+            }
+        }
+    }
+}
+
+smtp {
+    from.address  = 'no-reply.qa.bestallningsstod.rtp@sll.se'
+}
+
+grails {
+   mail {
+     disabled = false
+     host = "TODO_CHANGEME"
+     port = 25
+   }
+}
+
+order {
+   email {
+      //address = 'sllit-servicedesk@sll.se'
+      address = 'ntjp.statistik@callistaenterprise.se'
+       subject = 'RTP-Beställning'
+   }
+   confirmation.email.activated = false
+   confirmation.email.subject = 'RTP-Beställning'
+}
+
+log4j = {
+            debug 'grails.app'
+}

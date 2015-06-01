@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<index>
+    <entrys>
+        <endpoint>http://prod.host.configure.me:8081/tak-services/SokVagvalsInfo/v2</endpoint>
+        <fileName>dev-demo-prod.takcache.xml</fileName>
+        <synched>2015-04-02T11:36:27.070+02:00</synched>
+    </entrys>
+    <entrys>
+        <endpoint>http://qa.host.configure.me:8081/tak-services/SokVagvalsInfo/v2</endpoint>
+        <fileName>dev-demo-qa.takcache.xml</fileName>
+        <synched>2015-04-02T11:36:27.070+02:00</synched>
+    </entrys>
+    <entrys>
+        <endpoint>http://test.host.configure.me:8081/tak-services/SokVagvalsInfo/v2</endpoint>
+        <fileName>dev-demo-test.takcache.xml</fileName>
+        <synched>2015-04-02T11:36:27.070+02:00</synched>
+    </entrys>
+</index>
