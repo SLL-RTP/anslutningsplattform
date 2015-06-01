@@ -257,15 +257,14 @@ environments {
 
         tak.env.id.'3' = 'dev-demo-test'
         tak.env.name.'3' = 'DEV DEMO TEST'
-        //tak.env.url.'3' = 'http://localhost:8081/tak-services/SokVagvalsInfo/v2'
         tak.env.url.'3' = 'http://test.host.configure.me:8081/tak-services/SokVagvalsInfo/v2'
 
-        //tak.env.id.'4' = 'hd-rivta-box'
-        //tak.env.name.'4' = 'HD RIVTA BOX'
+        //tak.env.id.'4' = 'local-tak-rivta-box'
+        //tak.env.name.'4' = 'LOCAL TAK RIVTA BOX'
         //tak.env.url.'4' = 'http://33.33.33.33:8080/tak-services/SokVagvalsInfo/v2'
 
-        //tak.env.id.'5' = 'hd-local-test'
-        //tak.env.name.'5' = 'HD lOCAL TEST'
+        //tak.env.id.'5' = 'local-tak-test'
+        //tak.env.name.'5' = 'LOCAL TAK TEST'
         //tak.env.url.'5' = 'http://localhost:8081/tak-services/SokVagvalsInfo/v2'
 
         order {

@@ -76,7 +76,7 @@ class TakService {
 				}
 
 				public void onSyncError(java.lang.String endpoint, java.lang.Exception error) {
-					log.error("Failed to sync: " + endpoint);
+					log.error("Failed to sync: " + endpoint, error);
 					TakCache.loadPersistedCache(fileCache.getEndpoint(endpoint))
 				}
 			}

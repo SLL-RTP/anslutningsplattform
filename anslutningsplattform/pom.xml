@@ -16,7 +16,7 @@
     <description>anslutningsplattform</description>
 
     <properties>
-		<tak.version>1.5.2-RC2-SNAPSHOT</tak.version>
+		<tak.version>1.5.4</tak.version>
     	<vp.version>2.2.11</vp.version>
         <grails.version>2.4.3</grails.version>
     </properties>
@@ -282,20 +282,22 @@
             <name>grails-plugins</name>
             <url>http://repo.grails.org/grails/plugins</url>
         </repository>
+        <!-- Note: Mulesoft repos shouldn't be needed for this app - but the dependency
+
+            se.skltp.vp:vp-hsa-cache:1.5.4
+
+            has lots of dependencies to Mule - which also drags in dependencies to CXF
+            that we actually need ...
+        -->
         <repository>
-            <id>muleforge</id>
-            <name>muleforge</name>
-            <url>http://repository.muleforge.org/</url>
-        </repository>
-        <repository>
-            <id>mulesoft</id>
+            <id>mulesoft-releases</id>
             <name>mulesoft</name>
             <url>https://repository.mulesoft.org/nexus/content/repositories/releases/</url>
         </repository>
         <repository>
-            <id>codehaus</id>
-            <name>codehaus</name>
-            <url>http://dist.codehaus.org/mule/dependencies/maven2/</url>
+            <id>mulesoft-public</id>
+            <name>mulesoft</name>
+            <url>https://repository.mulesoft.org/nexus/content/repositories/public/</url>
         </repository>
     </repositories>
 
