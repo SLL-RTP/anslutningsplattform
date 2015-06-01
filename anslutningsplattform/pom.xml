@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
       <groupId>se.sll.rtp.ap</groupId>
       <artifactId>anslutningsplattform-parent</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
+      <version>1.0.0</version>
     </parent>
 
     <artifactId>anslutningsplattform</artifactId>
@@ -222,7 +220,7 @@
     </dependencies>
 
     <build>
-        <pluginManagement/>
+        <pluginManagement />
 
         <plugins>
             <!-- Disables the Maven surefire plugin for Grails applications, as we have our own test runner -->
@@ -290,8 +288,8 @@
                   </goals>
                   <configuration>
                     <tasks>
-                      <delete file="plugin.xml"/>
-                      <echo file="plugin.xml" message="&lt;plugin name='test'/&gt;"/>
+                      <delete file="plugin.xml" />
+                      <echo file="plugin.xml" message="&lt;plugin name='test'/&gt;" />
                     </tasks>
                   </configuration>
                 </execution>
