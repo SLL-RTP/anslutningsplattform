@@ -64,6 +64,7 @@ order {
       address = 'ntjp.statistik@callistaenterprise.se'
        subject = 'RTP-Beställning'
    }
+   confirmation.email.activated = false
    confirmation.email.subject = 'RTP-Beställning'
 }
 

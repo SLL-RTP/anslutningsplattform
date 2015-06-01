@@ -65,10 +65,11 @@ grails {
 
 order {
    email {
-      //address = 'sllit-servicedesk@sll.se'
-      address = 'ntjp.statistik@callistaenterprise.se'
+      address = 'sllit-servicedesk@sll.se'
+      //address = 'ntjp.statistik@callistaenterprise.se'
        subject = 'RTP-Beställning'
    }
+   confirmation.email.activated = false
    confirmation.email.subject = 'RTP-Beställning'
 }
 

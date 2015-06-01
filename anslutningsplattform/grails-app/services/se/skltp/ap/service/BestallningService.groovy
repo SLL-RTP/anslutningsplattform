@@ -39,6 +39,7 @@ class BestallningService {
     }
 
     def emailBestallning(Bestallning bestallning) {
+		def confirmationEmailActivated = grailsApplication.config.order.confirmation.email.activated
         def confirmationToAddress = bestallning.bestallare.epost
         def confirmationSubject = grailsApplication.config.order.confirmation.email.subject
         def orderToAddress = grailsApplication.config.order.email.address
@@ -55,13 +56,16 @@ class BestallningService {
             catch (Exception e) {
                 log.error("Failed to send order mail", e)
             }
-            try { //confirmation email
-                mailingService.send(null, confirmationToAddress, confirmationSubject, bestallningMailContent)
-                log.info("confirmation mail sent.")
-            }
-            catch (Exception e) {
-                log.error("Failed to send confirmation mail", e)
-            }
+			
+			if (confirmationEmailActivated) {
+	            try { //confirmation email
+	                mailingService.send(null, confirmationToAddress, confirmationSubject, bestallningMailContent)
+	                log.info("confirmation mail sent.")
+	            }
+	            catch (Exception e) {
+	                log.error("Failed to send confirmation mail", e)
+	            }
+			}
         }
     }
 
