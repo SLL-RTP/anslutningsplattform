@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-      <groupId>se.skltp.ap</groupId>
+      <groupId>se.sll.rtp.ap</groupId>
       <artifactId>anslutningsplattform-parent</artifactId>
       <version>1.0.0-SNAPSHOT</version>
     </parent>
