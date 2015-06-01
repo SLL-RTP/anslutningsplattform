@@ -19,7 +19,37 @@
 		<tak.version>1.5.4</tak.version>
     	<vp.version>2.2.11</vp.version>
         <grails.version>2.4.3</grails.version>
+        <spring.version>4.0.6.RELEASE</spring.version>
     </properties>
+
+    <dependencyManagement>
+        <!-- Need to manage dependencies when building using Maven, the below
+            lib-versions otherwise differs when building using "grails war" vs
+            "mvn install" (for Grails 2.4.3)
+        -->
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-expression</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-orm</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
