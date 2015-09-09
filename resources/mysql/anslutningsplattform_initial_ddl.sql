@@ -29,7 +29,7 @@ CREATE TABLE `bestallning` (
   `bestallare_id` bigint(20) NOT NULL,
   `bestallare_roll` varchar(255) DEFAULT NULL,
   `driftmiljo_id` varchar(255) NOT NULL,
-  `other_info` varchar(255) DEFAULT NULL,
+  `other_info` MEDIUMTEXT DEFAULT NULL,
   `producentbestallning_id` bigint(20) DEFAULT NULL,
   `status` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
