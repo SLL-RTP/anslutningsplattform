@@ -13,7 +13,6 @@ class BestallningDTO {
     String bestallareRoll
     ProducentbestallningDTO producentbestallning
     List<KonsumentbestallningDTO> konsumentbestallningar
-    List<NatDTO> nat
     String otherInfo
 
     static constraints = {
@@ -27,7 +26,6 @@ class BestallningDTO {
             true
         }
         konsumentbestallningar nullable: true
-        nat nullable: false
         otherInfo nullable: true, blank: true
     }
 }

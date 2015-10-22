@@ -18,8 +18,7 @@ class TjansteKomponentApiController {
         respond tjansteKomponentService.findByHsaId(id, params.takId)
     }
 
-    def put(String id) {
-        def dto = new TjanstekomponentDTO(JSON.parse(request))
+    def put(String id, TjanstekomponentDTO dto) {
         log.debug dto
         if (dto.hasErrors()) {
             response.status = 400

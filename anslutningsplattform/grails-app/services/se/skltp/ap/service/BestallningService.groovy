@@ -97,10 +97,6 @@ class BestallningService {
             bestallning.addToKonsumentbestallningar(insertKonsumentBestallning(it, driftmiljo))
         }
 
-        bestallningDTO.nat?.each {
-            bestallning.addToNat(getOrCreate(it))
-        }
-
         bestallning.save()
 
 
@@ -271,7 +267,10 @@ class BestallningService {
                     pingForConfigurationURL: dto.pingForConfigurationURL,
                     huvudansvarigKontakt: dto.huvudansvarigKontakt != null ? fromDTO(dto.huvudansvarigKontakt) : null,
                     tekniskKontakt: dto.tekniskKontakt != null ? fromDTO(dto.tekniskKontakt) : null,
-                    tekniskSupportkontakt: dto.tekniskSupportKontakt != null ? fromDTO(dto.tekniskSupportKontakt) : null
+                    tekniskSupportkontakt: dto.tekniskSupportKontakt != null ? fromDTO(dto.tekniskSupportKontakt) : null,
+                    nat: dto.nat != null ? dto.nat.collect { natDto ->
+                        getOrCreate(natDto)
+                    } : new ArrayList<Nat>()
             ).save()
         }
         tjanstekomponent

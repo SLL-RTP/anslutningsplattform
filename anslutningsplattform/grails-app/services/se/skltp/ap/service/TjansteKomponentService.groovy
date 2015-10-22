@@ -2,9 +2,11 @@ package se.skltp.ap.service
 
 import grails.transaction.Transactional
 import se.skltp.ap.Funktionkontakt
+import se.skltp.ap.Nat
 import se.skltp.ap.Personkontakt
 import se.skltp.ap.Tjanstekomponent
 import se.skltp.ap.services.dto.domain.FunktionkontaktDTO
+import se.skltp.ap.services.dto.domain.NatDTO
 import se.skltp.ap.services.dto.domain.PersonkontaktDTO
 import se.skltp.ap.services.dto.domain.TjanstekomponentDTO
 
@@ -63,7 +65,11 @@ class TjansteKomponentService {
         if (!domainServiceComponent) {
             def tjansteKomponents = takService.freeTextSearchTjansteKomponent(takId, hsaId, 1) //TODO: handle limit
             if (tjansteKomponents != null && !tjansteKomponents.isEmpty()) {
-                return new TjanstekomponentDTO(hsaId: tjansteKomponents[0].hsaId.toUpperCase(), beskrivning: tjansteKomponents[0].beskrivning, organisation: tjansteKomponents[0].organisation)
+                return new TjanstekomponentDTO(
+                        hsaId: tjansteKomponents[0].hsaId,
+                        beskrivning: tjansteKomponents[0].beskrivning,
+                        organisation: tjansteKomponents[0].organisation,
+                        nat: [])
             } else {
                 return null
             }
@@ -90,7 +96,10 @@ class TjansteKomponentService {
                 tekniskSupportKontakt: new FunktionkontaktDTO(
                         epost: domainServiceComponent.tekniskSupportkontakt?.epost,
                         telefon: domainServiceComponent.tekniskSupportkontakt?.telefon
-                )
+                ),
+                nat: domainServiceComponent.nat?.collect { domainNat ->
+                    new NatDTO(id: domainNat.id, namn: domainNat.namn)
+                }
         )
     }
 
@@ -105,6 +114,9 @@ class TjansteKomponentService {
             tjanstekomponent.huvudansvarigKontakt = fromDTO(dto.huvudansvarigKontakt)
             tjanstekomponent.tekniskKontakt = fromDTO(dto.tekniskKontakt)
             tjanstekomponent.tekniskSupportkontakt = fromDTO(dto.tekniskSupportKontakt)
+            tjanstekomponent.nat = dto.nat?.collect { dtoNat ->
+                getOrCreate(dtoNat)
+            }
             tjanstekomponent.save()
             return true
         }
@@ -124,7 +136,10 @@ class TjansteKomponentService {
                 pingForConfigurationURL: dto.pingForConfigurationURL,
                 huvudansvarigKontakt: fromDTO(dto.huvudansvarigKontakt),
                 tekniskKontakt: fromDTO(dto.tekniskKontakt),
-                tekniskSupportkontakt: fromDTO(dto.tekniskSupportKontakt)
+                tekniskSupportkontakt: fromDTO(dto.tekniskSupportKontakt),
+                nat: dto.nat?.collect { dtoNat ->
+                    getOrCreate(dtoNat)
+                }
         ).save()
         true
     }
@@ -143,5 +158,15 @@ class TjansteKomponentService {
                 epost: dto.epost,
                 telefon: dto.telefon
         )
+    }
+
+    private Nat getOrCreate(NatDTO dto) {
+        def nat = Nat.findById(dto.id)
+        if (nat == null) {
+            nat = new Nat(namn: dto.namn)
+            nat.id = dto.id
+            nat.save()
+        }
+        nat
     }
 }

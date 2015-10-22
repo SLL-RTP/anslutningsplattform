@@ -12,11 +12,10 @@ class Bestallning {
     Driftmiljo driftmiljo
     Personkontakt bestallare
     Producentbestallning producentbestallning
-    String otherInfo //TODO: document
+    String otherInfo
 
     static hasMany = [
-            konsumentbestallningar: Konsumentbestallning,
-            nat: Nat
+            konsumentbestallningar: Konsumentbestallning
     ]
 
     static constraints = {
@@ -26,7 +25,6 @@ class Bestallning {
         bestallare nullable: false
         producentbestallning nullable: true
         konsumentbestallningar nullable: true
-        nat nullable: false
         otherInfo nullable: true
     }
 }

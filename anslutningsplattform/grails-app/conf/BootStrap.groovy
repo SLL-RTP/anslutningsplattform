@@ -1,6 +1,7 @@
 import org.apache.shiro.crypto.hash.Sha256Hash
 import se.skltp.ap.Funktionkontakt
 import se.skltp.ap.Personkontakt
+import se.skltp.ap.Nat
 import se.skltp.ap.Tjanstekomponent
 import se.skltp.ap.security.Role
 import se.skltp.ap.security.User
@@ -35,6 +36,12 @@ class BootStrap {
                         telefon: "031170920"
                 )
 
+                def nat = Nat.findById("internet")
+                if (nat == null) {
+                    nat = new Nat(namn: "Internet")
+                    nat.id = "internet"
+                }
+
                 def tk1 = new Tjanstekomponent(
                         hsaId: "SE165565594230-0016",
                         beskrivning: "NPÖ 2",
@@ -44,7 +51,9 @@ class BootStrap {
                         huvudansvarigKontakt: pk1,
                         tekniskKontakt: pk2,
                         tekniskSupportkontakt: fk1
-                ).save(failOnError: true)
+                )
+                tk1.addToNat(nat)
+                tk1.save(failOnError: true)
 
                 //Roles
                 def adminRole = new Role(name: 'ADMINISTRATÖR')

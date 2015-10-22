@@ -18,6 +18,7 @@ class TjanstekomponentDTO {
     PersonkontaktDTO huvudansvarigKontakt
     PersonkontaktDTO tekniskKontakt
     FunktionkontaktDTO tekniskSupportKontakt
+    List<NatDTO> nat
 
     static constraints = {
         id nullable: true
@@ -29,5 +30,6 @@ class TjanstekomponentDTO {
         huvudansvarigKontakt nullable: true
         tekniskKontakt nullable: true
         tekniskSupportKontakt nullable: true
+        nat nullable: true
     }
 }
