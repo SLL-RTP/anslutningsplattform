@@ -12,8 +12,10 @@ class ProducentbestallningDTO {
     List<ProducentanslutningDTO> producentanslutningar
     List<UppdateradProducentanslutningDTO> uppdateradProducentanslutningar
     TjanstekomponentDTO tjanstekomponent
+    String namnPaEtjanst
 
     static constraints = {
         tjanstekomponent nullable: false
+        namnPaEtjanst nullable: true
     }
 }

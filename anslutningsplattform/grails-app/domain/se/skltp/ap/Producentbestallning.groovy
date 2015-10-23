@@ -8,6 +8,7 @@ import groovy.transform.ToString
 @ToString(includeNames=true, includeFields = true)
 class Producentbestallning {
     Tjanstekomponent tjanstekomponent
+    String namnPaEtjanst
 
     static hasMany = [
             producentanslutningar: Producentanslutning,
@@ -18,6 +19,7 @@ class Producentbestallning {
         tjanstekomponent nullable: false
         producentanslutningar nullable: true
         uppdateradProducentanslutningar nullable: true
+        namnPaEtjanst nullable: true
     }
 }
 

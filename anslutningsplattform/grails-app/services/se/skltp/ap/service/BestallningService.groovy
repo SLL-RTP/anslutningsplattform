@@ -108,6 +108,7 @@ class BestallningService {
         }
         new Producentbestallning(
                 tjanstekomponent: getOrCreate(producentbestallningDTO.tjanstekomponent).addToDriftmiljoer(driftmiljo),
+                namnPaEtjanst: producentbestallningDTO.namnPaEtjanst,
                 producentanslutningar: producentbestallningDTO.producentanslutningar.collect {
                     new Producentanslutning(
                             rivtaProfil: it.rivtaProfil,
