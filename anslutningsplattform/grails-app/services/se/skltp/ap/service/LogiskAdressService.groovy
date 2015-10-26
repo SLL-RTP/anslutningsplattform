@@ -40,4 +40,8 @@ class LogiskAdressService {
 		takService.getForServiceContract(serviceComponentId, environmentId, serviceContractNamespace, majorVersion)
     }
 
+    def getKonsumentanslutningarForDoman(String takId, String serviceConsumerHSAId, String serviceDomainNS) {
+        takService.getKonsumentanslutningarForDoman(takId, serviceConsumerHSAId, serviceDomainNS)
+    }
+
 }

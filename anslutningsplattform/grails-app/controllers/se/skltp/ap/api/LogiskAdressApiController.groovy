@@ -20,7 +20,12 @@ class LogiskAdressApiController extends RestfulController {
             result = logiskAdressService.freeTextSearch(params.query, params.hasProperty('limit') ? params.getInt('limit') : DEFAULT_HSA_FREE_TEXT_SEARCH_LIMIT)
         } else if (params.serviceDomainId && params.environmentId) {
             //get logical addresses currently in use
-            result = logiskAdressService.getByEnvironmentAndServiceDomain(params.environmentId, params.serviceDomainId)
+            if (params.serviceConsumerHsaId) {
+//                result = logiskAdressService.getMatrix(params.environmentId, params.serviceConsumerHsaId, params.serviceDomainId)
+                result = logiskAdressService.getKonsumentanslutningarForDoman(params.environmentId, params.serviceConsumerHsaId, params.serviceDomainId)
+            } else {
+                result = logiskAdressService.getByEnvironmentAndServiceDomain(params.environmentId, params.serviceDomainId)
+            }
         }
         respond result
     }

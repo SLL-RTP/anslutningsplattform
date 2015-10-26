@@ -11,7 +11,10 @@ import se.skltp.ap.service.tak.m.VirtualiseringDTO
 import se.skltp.ap.service.tak.persistence.TakCacheFilePersistenceImpl
 import se.skltp.ap.service.tak.persistence.TakCachePersistenceServices
 import se.skltp.ap.services.dto.AdressDTO
+import se.skltp.ap.services.dto.KonsumentanslutningStatusDTO
+import se.skltp.ap.services.dto.LogiskAdressStatusDTO
 import se.skltp.ap.services.dto.TakRoutingEntryDTO
+import se.skltp.ap.services.dto.TjansteKontraktDTO
 import se.skltp.ap.services.dto.domain.LogiskAdressDTO
 import se.skltp.ap.services.dto.domain.TjanstekomponentDTO
 import se.skltp.ap.util.TjanstekontraktUtil
@@ -28,6 +31,9 @@ class TakService {
 
 	def takRoutingMap
 	def takCacheMap
+
+    def rivTaService
+    def hsaService
 
 	// don't do lazy init, we want to make sure that TAK-caches are populated
 	// and available at startup to make sure config is ok
@@ -294,6 +300,88 @@ class TakService {
 			}
 		}
 		result
+    }
+
+    def getKonsumentanslutningarForDoman(String takId, String serviceConsumerHSAId, String serviceDomainNS) {
+        TakCacheServices tak = takCacheMap.get(takId)
+        def tjanstekontraktMap = [:] //temporary object to fill with TAK data
+        tak.getAllVirtualiseringar().findAll {
+            it.tjanstekontrakt.contains(serviceDomainNS)
+        }.each {
+            if(!tjanstekontraktMap[it.tjanstekontrakt]) {
+                tjanstekontraktMap[it.tjanstekontrakt] = [:]
+            }
+            tjanstekontraktMap[it.tjanstekontrakt][it.reciverId] = [possible: true]
+        }
+        tak.getAllAnropsBehorigheter().findAll {
+            it.senderId == serviceConsumerHSAId && it.tjanstekontrakt.contains(serviceDomainNS)
+        }.each {
+            tjanstekontraktMap[it.tjanstekontrakt][it.reciverId].put('active', true)
+        }
+        //create DTO:s based on our temporary map
+        tjanstekontraktMap.keySet().collect { takTjanstekontrakt ->
+            def tjanstekontrakt = getRivTaTjanstekontrakt(takTjanstekontrakt as String, serviceDomainNS)
+            KonsumentanslutningStatusDTO kas = new KonsumentanslutningStatusDTO(
+                    tjanstekontraktNamn: tjanstekontrakt.namn,
+                    tjanstekontraktNamnrymd: tjanstekontrakt.namnrymd,
+                    tjanstekontraktMajorVersion: tjanstekontrakt.majorVersion,
+                    tjanstekontraktMinorVersion: tjanstekontrakt.minorVersion
+            )
+            kas.logiskAdressStatuses = tjanstekontraktMap[takTjanstekontrakt].keySet().collect { logiskAdressHsaId ->
+                LogiskAdressStatusDTO logiskAdressStatusDTO =
+                        new LogiskAdressStatusDTO(
+                                hsaId: logiskAdressHsaId,
+                                namn: getNameForHsaId(takId, logiskAdressHsaId)
+                        )
+                //noinspection GroovyDoubleNegation
+                logiskAdressStatusDTO.possible = !!tjanstekontraktMap[takTjanstekontrakt][logiskAdressHsaId]['possible']
+                //noinspection GroovyDoubleNegation
+                logiskAdressStatusDTO.enabled = !!tjanstekontraktMap[takTjanstekontrakt][logiskAdressHsaId]['active']
+                logiskAdressStatusDTO
+            }
+            kas
+        }
+    }
+
+    String getNameForHsaId(String takId, String hsaId) {
+        def name = hsaService.getNameForHsaId(hsaId)
+        if (name.contains('SAKNAS')) {
+            name = 'NAMN SAKNAS'
+            TakCacheServices tak = takCacheMap.get(takId)
+            for (tjanstekomponentDTO in tak.getAllTjanstekomponenter()) {
+                if (tjanstekomponentDTO.hsaId == hsaId) {
+                    name = tjanstekomponentDTO.getBeskrivning()
+                    break
+                } else {
+                    for (anropsbehorighetInfo in tjanstekomponentDTO.anropsbehorighetInfo) {
+                        if (anropsbehorighetInfo.logiskAdressHsaId == hsaId) {
+                            name = anropsbehorighetInfo.logiskAdressBeskrivning
+                            break
+                        }
+                    }
+                    for (anropsAdressInfo in tjanstekomponentDTO.anropsAdressInfo) {
+                        def found = false
+                        for (vagvalsInfo in anropsAdressInfo.vagvalsInfo) {
+                            if (vagvalsInfo.logiskAdressHsaId == hsaId) {
+                                name = vagvalsInfo.logiskAdressBeskrivning
+                                found = true
+                                break
+                            }
+                        }
+                        if (found) {
+                            break
+                        }
+                    }
+                }
+            }
+        }
+        name
+    }
+
+    TjansteKontraktDTO getRivTaTjanstekontrakt(String takTjanstekontrakt, String serviceDomainNS) {
+        rivTaService.getTjansteKontraktForDoman(serviceDomainNS).find {
+            return TjanstekontraktUtil.isNamnrymdEqual(it.namnrymd, it.majorVersion as String, takTjanstekontrakt)
+        }
     }
 
 // END: PUBLIC METHODS
