@@ -10,16 +10,27 @@ class LogiskAdressService {
     def hsaService
 	def takService
 
-    List<LogiskAdressDTO> freeTextSearch(String queryString, int limit) {
-		//getLogiskAdressMockDTOs(queryString)
-
+    List<LogiskAdressDTO> freeTextSearch(String queryString, int limit, String takId) {
         List<HsaDTO> hsaDTOList = hsaService.freeTextSearch(queryString, limit)
-        hsaDTOList.collect {
+        def logiskAdressList = hsaDTOList.collect {
             new LogiskAdressDTO(
                     hsaId: it.hsaId,
                     namn: it.namn
             )
-        }        
+        }
+        if (logiskAdressList.size() < limit) {
+            log.debug "found ${logiskAdressList.size()} logiska adresser in HSA, also trying TAK"
+            def takLogiskaAdresser = takService.freeTextSearchLogiskAdresser(takId, queryString, limit)
+            for (LogiskAdressDTO logiskAdressDTO in takLogiskaAdresser) {
+                if (!logiskAdressList.find {it.hsaId == logiskAdressDTO.hsaId}) { //prevent duplicates
+                    logiskAdressList.push(logiskAdressDTO)
+                }
+            }
+            log.debug "after TAK search we now have ${logiskAdressList.size()} logiska adresser"
+        } else {
+            log.debug "not searching TAK since we found enough results in HSA"
+        }
+        logiskAdressList
     }
 
     List<LogiskAdressDTO> getByEnvironmentAndServiceDomain(String environmentId, String serviceDomainId) {

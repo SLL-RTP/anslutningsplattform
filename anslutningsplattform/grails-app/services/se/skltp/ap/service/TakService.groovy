@@ -347,6 +347,57 @@ class TakService {
         }
     }
 
+    def freeTextSearchLogiskAdresser(String takId, String query, int limit) {
+        def lowerCaseQuery = query.toLowerCase()
+        def results = []
+        TakCacheServices tak = takCacheMap.get(takId)
+        for (tjanstekomponentDTO in tak.getAllTjanstekomponenter()) {
+            if (tjanstekomponentDTO.hsaId.toLowerCase().contains(lowerCaseQuery)
+                    || tjanstekomponentDTO.getBeskrivning().toLowerCase().contains(lowerCaseQuery)) {
+                addLogiskAdressIfNotFound(results, tjanstekomponentDTO.hsaId, tjanstekomponentDTO.beskrivning)
+            }
+            if (results.size() >= limit) {
+                break;
+            }
+            for (anropsbehorighetInfo in tjanstekomponentDTO.anropsbehorighetInfo) {
+                if (anropsbehorighetInfo.logiskAdressHsaId.toLowerCase().contains(lowerCaseQuery)
+                        || anropsbehorighetInfo.logiskAdressBeskrivning.toLowerCase().contains(lowerCaseQuery)) {
+                    addLogiskAdressIfNotFound(results, anropsbehorighetInfo.logiskAdressHsaId, anropsbehorighetInfo.logiskAdressBeskrivning)
+                }
+                if (results.size() >= limit) {
+                    break;
+                }
+            }
+            if (results.size() >= limit) {
+                break;
+            }
+            for (anropsAdressInfo in tjanstekomponentDTO.anropsAdressInfo) {
+                for (vagvalsInfo in anropsAdressInfo.vagvalsInfo) {
+                    if (vagvalsInfo.logiskAdressHsaId.toLowerCase().contains(lowerCaseQuery)
+                        || vagvalsInfo.logiskAdressBeskrivning.toLowerCase().contains(lowerCaseQuery)) {
+                        addLogiskAdressIfNotFound(results, vagvalsInfo.logiskAdressHsaId, vagvalsInfo.logiskAdressBeskrivning)
+                    }
+                    if (results.size() >= limit) {
+                        break;
+                    }
+                }
+                if (results.size() >= limit) {
+                    break;
+                }
+            }
+            if (results.size() >= limit) {
+                break;
+            }
+        }
+        results
+    }
+
+    def addLogiskAdressIfNotFound(List<LogiskAdressDTO> dtos, String hsaId, String beskrivning) {
+        if (!dtos.find { it.hsaId == hsaId }) {
+            dtos.push(new LogiskAdressDTO(hsaId: hsaId, namn: beskrivning))
+        }
+    }
+
     String getNameForHsaId(String takId, String hsaId) {
         def name = 'NAMN SAKNAS'
         TakCacheServices tak = takCacheMap.get(takId)

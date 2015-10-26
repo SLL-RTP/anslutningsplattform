@@ -15,9 +15,9 @@ class LogiskAdressApiController extends RestfulController {
     def query() {
         log.debug params
         def result = []
-        if (params.query) { //TODO: also require environment here?
+        if (params.query && params.environmentId) { //TODO: also require environment here?
             //free text search
-            result = logiskAdressService.freeTextSearch(params.query, params.hasProperty('limit') ? params.getInt('limit') : DEFAULT_HSA_FREE_TEXT_SEARCH_LIMIT)
+            result = logiskAdressService.freeTextSearch(params.query, params.hasProperty('limit') ? params.getInt('limit') : DEFAULT_HSA_FREE_TEXT_SEARCH_LIMIT, params.environmentId)
         } else if (params.serviceDomainId && params.environmentId) {
             //get logical addresses currently in use
             if (params.serviceConsumerHsaId) {
