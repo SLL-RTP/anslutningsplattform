@@ -319,27 +319,31 @@ class TakService {
             tjanstekontraktMap[it.tjanstekontrakt][it.reciverId].put('active', true)
         }
         //create DTO:s based on our temporary map
-        tjanstekontraktMap.keySet().collect { takTjanstekontrakt ->
+        tjanstekontraktMap.keySet().findResults { takTjanstekontrakt ->
             def tjanstekontrakt = getRivTaTjanstekontrakt(takTjanstekontrakt as String, serviceDomainNS)
-            KonsumentanslutningStatusDTO kas = new KonsumentanslutningStatusDTO(
-                    tjanstekontraktNamn: tjanstekontrakt.namn,
-                    tjanstekontraktNamnrymd: tjanstekontrakt.namnrymd,
-                    tjanstekontraktMajorVersion: tjanstekontrakt.majorVersion,
-                    tjanstekontraktMinorVersion: tjanstekontrakt.minorVersion
-            )
-            kas.logiskAdressStatuses = tjanstekontraktMap[takTjanstekontrakt].keySet().collect { logiskAdressHsaId ->
-                LogiskAdressStatusDTO logiskAdressStatusDTO =
-                        new LogiskAdressStatusDTO(
-                                hsaId: logiskAdressHsaId,
-                                namn: getNameForHsaId(takId, logiskAdressHsaId)
-                        )
-                //noinspection GroovyDoubleNegation
-                logiskAdressStatusDTO.possible = !!tjanstekontraktMap[takTjanstekontrakt][logiskAdressHsaId]['possible']
-                //noinspection GroovyDoubleNegation
-                logiskAdressStatusDTO.enabled = !!tjanstekontraktMap[takTjanstekontrakt][logiskAdressHsaId]['active']
-                logiskAdressStatusDTO
+            if (tjanstekontrakt != null) {
+                KonsumentanslutningStatusDTO kas = new KonsumentanslutningStatusDTO(
+                        tjanstekontraktNamn: tjanstekontrakt.namn,
+                        tjanstekontraktNamnrymd: tjanstekontrakt.namnrymd,
+                        tjanstekontraktMajorVersion: tjanstekontrakt.majorVersion,
+                        tjanstekontraktMinorVersion: tjanstekontrakt.minorVersion
+                )
+                kas.logiskAdressStatuses = tjanstekontraktMap[takTjanstekontrakt].keySet().collect { logiskAdressHsaId ->
+                    LogiskAdressStatusDTO logiskAdressStatusDTO =
+                            new LogiskAdressStatusDTO(
+                                    hsaId: logiskAdressHsaId,
+                                    namn: getNameForHsaId(takId, logiskAdressHsaId)
+                            )
+                    //noinspection GroovyDoubleNegation
+                    logiskAdressStatusDTO.possible = !!tjanstekontraktMap[takTjanstekontrakt][logiskAdressHsaId]['possible']
+                    //noinspection GroovyDoubleNegation
+                    logiskAdressStatusDTO.enabled = !!tjanstekontraktMap[takTjanstekontrakt][logiskAdressHsaId]['active']
+                    logiskAdressStatusDTO
+                }
+                kas
+            } else {
+                null
             }
-            kas
         }
     }
 
@@ -379,9 +383,17 @@ class TakService {
     }
 
     TjansteKontraktDTO getRivTaTjanstekontrakt(String takTjanstekontrakt, String serviceDomainNS) {
-        rivTaService.getTjansteKontraktForDoman(serviceDomainNS).find {
+        def rivTjanstekontrakt = rivTaService.getTjansteKontraktForDoman(serviceDomainNS).find {
             return TjanstekontraktUtil.isNamnrymdEqual(it.namnrymd, it.majorVersion as String, takTjanstekontrakt)
         }
+        if (!rivTjanstekontrakt) {
+            log.warn "could not find tjanstekontrakt (RIV) for $takTjanstekontrakt in $serviceDomainNS"
+            log.warn "tjanstekontrakt (RIV) i $serviceDomainNS:"
+            rivTaService.getTjansteKontraktForDoman(serviceDomainNS).each {
+                log.warn "$it"
+            }
+        }
+        rivTjanstekontrakt
     }
 
 // END: PUBLIC METHODS
