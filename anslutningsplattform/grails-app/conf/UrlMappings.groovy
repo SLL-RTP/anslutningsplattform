@@ -62,6 +62,11 @@ class UrlMappings {
                 format = "json"
             }
 
+            "/logicalAddresses/$hsaId"(version: '1.0', controller: 'logiskAdressApi') {
+                action = [GET: "getForHsaId"]
+                format = "json"
+            }
+
             "/driftmiljos"(controller: 'driftMiljoApi') {
                 action = [GET: "list"]
                 format = "json"

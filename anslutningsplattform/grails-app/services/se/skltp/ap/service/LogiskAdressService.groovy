@@ -36,6 +36,14 @@ class LogiskAdressService {
 		dtoList
     }
 
+    LogiskAdressDTO getLogiskAdressForHsaId(String takId, String hsaId) {
+        def name = hsaService.getNameForHsaId(hsaId)
+        if (name.contains('SAKNAS')) {
+            name = takService.getNameForHsaId(takId, hsaId)
+        }
+        new LogiskAdressDTO(hsaId: hsaId, namn: name)
+    }
+
     List<LogiskAdressDTO> getForServiceContract(String serviceComponentId, String environmentId, String serviceContractNamespace, int majorVersion) {		 
 		takService.getForServiceContract(serviceComponentId, environmentId, serviceContractNamespace, majorVersion)
     }

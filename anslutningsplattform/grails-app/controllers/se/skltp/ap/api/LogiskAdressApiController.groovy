@@ -35,4 +35,17 @@ class LogiskAdressApiController extends RestfulController {
         respond logiskAdressService.getForServiceContract(serviceComponentId, environmentId, serviceContractNamespace, majorVersion)
     }
 
+    def getForHsaId(String hsaId) {
+        if (params.environmentId) {
+            def logiskAddressDTO = logiskAdressService.getLogiskAdressForHsaId(params.environmentId, hsaId)
+            if (!logiskAddressDTO.namn.contains('SAKNAS')) {
+                respond logiskAddressDTO
+            } else {
+                render(status: 404)
+            }
+        } else {
+            render(status: 404)
+        }
+    }
+
 }

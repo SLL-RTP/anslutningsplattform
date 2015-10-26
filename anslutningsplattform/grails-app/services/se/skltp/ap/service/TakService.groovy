@@ -332,7 +332,7 @@ class TakService {
                     LogiskAdressStatusDTO logiskAdressStatusDTO =
                             new LogiskAdressStatusDTO(
                                     hsaId: logiskAdressHsaId,
-                                    namn: getNameForHsaId(takId, logiskAdressHsaId)
+                                    namn: getNameForHsaIdInternal(takId, logiskAdressHsaId)
                             )
                     //noinspection GroovyDoubleNegation
                     logiskAdressStatusDTO.possible = !!tjanstekontraktMap[takTjanstekontrakt][logiskAdressHsaId]['possible']
@@ -348,33 +348,30 @@ class TakService {
     }
 
     String getNameForHsaId(String takId, String hsaId) {
-        def name = hsaService.getNameForHsaId(hsaId)
-        if (name.contains('SAKNAS')) {
-            name = 'NAMN SAKNAS'
-            TakCacheServices tak = takCacheMap.get(takId)
-            for (tjanstekomponentDTO in tak.getAllTjanstekomponenter()) {
-                if (tjanstekomponentDTO.hsaId == hsaId) {
-                    name = tjanstekomponentDTO.getBeskrivning()
-                    break
-                } else {
-                    for (anropsbehorighetInfo in tjanstekomponentDTO.anropsbehorighetInfo) {
-                        if (anropsbehorighetInfo.logiskAdressHsaId == hsaId) {
-                            name = anropsbehorighetInfo.logiskAdressBeskrivning
+        def name = 'NAMN SAKNAS'
+        TakCacheServices tak = takCacheMap.get(takId)
+        for (tjanstekomponentDTO in tak.getAllTjanstekomponenter()) {
+            if (tjanstekomponentDTO.hsaId == hsaId) {
+                name = tjanstekomponentDTO.getBeskrivning()
+                break
+            } else {
+                for (anropsbehorighetInfo in tjanstekomponentDTO.anropsbehorighetInfo) {
+                    if (anropsbehorighetInfo.logiskAdressHsaId == hsaId) {
+                        name = anropsbehorighetInfo.logiskAdressBeskrivning
+                        break
+                    }
+                }
+                for (anropsAdressInfo in tjanstekomponentDTO.anropsAdressInfo) {
+                    def found = false
+                    for (vagvalsInfo in anropsAdressInfo.vagvalsInfo) {
+                        if (vagvalsInfo.logiskAdressHsaId == hsaId) {
+                            name = vagvalsInfo.logiskAdressBeskrivning
+                            found = true
                             break
                         }
                     }
-                    for (anropsAdressInfo in tjanstekomponentDTO.anropsAdressInfo) {
-                        def found = false
-                        for (vagvalsInfo in anropsAdressInfo.vagvalsInfo) {
-                            if (vagvalsInfo.logiskAdressHsaId == hsaId) {
-                                name = vagvalsInfo.logiskAdressBeskrivning
-                                found = true
-                                break
-                            }
-                        }
-                        if (found) {
-                            break
-                        }
+                    if (found) {
+                        break
                     }
                 }
             }
@@ -382,7 +379,15 @@ class TakService {
         name
     }
 
-    TjansteKontraktDTO getRivTaTjanstekontrakt(String takTjanstekontrakt, String serviceDomainNS) {
+    private String getNameForHsaIdInternal(String takId, String hsaId) {
+        def name = hsaService.getNameForHsaId(hsaId)
+        if (name.contains('SAKNAS')) {
+            name = getNameForHsaId(takId, hsaId)
+        }
+        name
+    }
+
+    private TjansteKontraktDTO getRivTaTjanstekontrakt(String takTjanstekontrakt, String serviceDomainNS) {
         def rivTjanstekontrakt = rivTaService.getTjansteKontraktForDoman(serviceDomainNS).find {
             return TjanstekontraktUtil.isNamnrymdEqual(it.namnrymd, it.majorVersion as String, takTjanstekontrakt)
         }
