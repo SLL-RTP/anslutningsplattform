@@ -17,7 +17,8 @@ class ShiroSecurityFilters {
       adressApi: ['*'],
       bestallningApi: ['*'],
       currentUserApi: ['*'],
-      natApi: ['*']
+      natApi: ['*'],
+      anslutningStatusApi: ['*']
     ]
 
     private boolean findAction(controllerName, actionName){

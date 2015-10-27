@@ -6,12 +6,13 @@ import groovy.transform.ToString
  * @author Martin Samuelsson
  */
 @ToString(includeNames=true, includeFields = true)
-class KonsumentanslutningStatusDTO {
+class AnslutningStatusDTO {
     String tjanstekontraktNamn
     String tjanstekontraktNamnrymd
     int tjanstekontraktMajorVersion
     int tjanstekontraktMinorVersion
     Date giltigFranTid
     Date giltigTillTid
+    boolean installeratIDriftmiljo
     List<LogiskAdressStatusDTO> logiskAdressStatuses
 }

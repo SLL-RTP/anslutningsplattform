@@ -81,6 +81,16 @@ class UrlMappings {
                 action = [GET: "get"]
                 format = "json"
             }
+
+            "/anslutningar/konsument"(controller: 'anslutningStatusApi') {
+                action = [GET: "getKonsumentanslutningar"]
+                format = "json"
+            }
+
+            "/anslutningar/producent"(controller: 'anslutningStatusApi') {
+                action = [GET: "getProducentanslutningar"]
+                format = "json"
+            }
         }
 
         "/"(view: "/index")

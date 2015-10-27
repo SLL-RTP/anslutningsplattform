@@ -11,7 +11,7 @@ import se.skltp.ap.service.tak.m.VirtualiseringDTO
 import se.skltp.ap.service.tak.persistence.TakCacheFilePersistenceImpl
 import se.skltp.ap.service.tak.persistence.TakCachePersistenceServices
 import se.skltp.ap.services.dto.AdressDTO
-import se.skltp.ap.services.dto.KonsumentanslutningStatusDTO
+import se.skltp.ap.services.dto.AnslutningStatusDTO
 import se.skltp.ap.services.dto.LogiskAdressStatusDTO
 import se.skltp.ap.services.dto.TakRoutingEntryDTO
 import se.skltp.ap.services.dto.TjansteKontraktDTO
@@ -302,6 +302,73 @@ class TakService {
 		result
     }
 
+    def getProducentanslutningarForDoman(String takId, String serviceProducerHSAId, String serviceDomainNS) {
+        TakCacheServices tak = takCacheMap.get(takId)
+        def tjanstekontraktMap = [:] //temporary object to fill with TAK data
+
+        tak.getAllTjanstekontrakt().findAll {
+            log.debug "${it.namnrymd} ${it.majorVersion} ${it.beskrivning}"
+            it.namnrymd.contains(serviceDomainNS)
+        }.each {
+            tjanstekontraktMap[it.namnrymd] = [:]
+        }
+
+        tak.getAllTjanstekomponenter().find {
+            it.hsaId.equals(serviceProducerHSAId)
+        }.getAnropsAdressInfo().each { anropsAdressInfo ->
+            anropsAdressInfo.getVagvalsInfo().findAll {
+                it.tjanstekontraktNamnrymd.contains(serviceDomainNS)
+            }.each {
+                tjanstekontraktMap[it.tjanstekontraktNamnrymd][it.logiskAdressHsaId] = [enabled: true, possible: true]
+            }
+        }
+
+        def anslutningStatuses = tjanstekontraktMap.keySet().findResults { takTjanstekontrakt ->
+            def tjanstekontrakt = getRivTaTjanstekontrakt(takTjanstekontrakt as String, serviceDomainNS)
+            if (tjanstekontrakt != null) {
+                AnslutningStatusDTO kas = new AnslutningStatusDTO(
+                        tjanstekontraktNamn: tjanstekontrakt.namn,
+                        tjanstekontraktNamnrymd: tjanstekontrakt.namnrymd,
+                        tjanstekontraktMajorVersion: tjanstekontrakt.majorVersion,
+                        tjanstekontraktMinorVersion: tjanstekontrakt.minorVersion,
+                        installeratIDriftmiljo: true
+                )
+                kas.logiskAdressStatuses = tjanstekontraktMap[takTjanstekontrakt].keySet().collect { logiskAdressHsaId ->
+                    LogiskAdressStatusDTO logiskAdressStatusDTO =
+                            new LogiskAdressStatusDTO(
+                                    hsaId: logiskAdressHsaId,
+                                    namn: getNameForHsaIdInternal(takId, logiskAdressHsaId)
+                            )
+                    //noinspection GroovyDoubleNegation
+                    logiskAdressStatusDTO.possible = !!tjanstekontraktMap[takTjanstekontrakt][logiskAdressHsaId]['possible']
+                    //noinspection GroovyDoubleNegation
+                    logiskAdressStatusDTO.enabled = !!tjanstekontraktMap[takTjanstekontrakt][logiskAdressHsaId]['enabled']
+                    logiskAdressStatusDTO
+                }
+                kas
+            } else {
+                null
+            }
+        }
+
+        //add kontrakts possibly not installed in environment
+        rivTaService.getTjansteKontraktForDoman(serviceDomainNS).each { rivtjanstekontrakt ->
+            if (!anslutningStatuses.find { (it.tjanstekontraktNamnrymd == rivtjanstekontrakt.namnrymd
+                && it.tjanstekontraktMajorVersion == rivtjanstekontrakt.majorVersion
+                && it.tjanstekontraktMinorVersion == rivtjanstekontrakt.minorVersion)}) {
+                anslutningStatuses << new AnslutningStatusDTO(
+                        tjanstekontraktNamn: rivtjanstekontrakt.namn,
+                        tjanstekontraktNamnrymd: rivtjanstekontrakt.namnrymd,
+                        tjanstekontraktMajorVersion: rivtjanstekontrakt.majorVersion,
+                        tjanstekontraktMinorVersion: rivtjanstekontrakt.minorVersion,
+                        installeratIDriftmiljo: false)
+            }
+        }
+
+        anslutningStatuses
+
+    }
+
     def getKonsumentanslutningarForDoman(String takId, String serviceConsumerHSAId, String serviceDomainNS) {
         TakCacheServices tak = takCacheMap.get(takId)
         def tjanstekontraktMap = [:] //temporary object to fill with TAK data
@@ -322,11 +389,12 @@ class TakService {
         tjanstekontraktMap.keySet().findResults { takTjanstekontrakt ->
             def tjanstekontrakt = getRivTaTjanstekontrakt(takTjanstekontrakt as String, serviceDomainNS)
             if (tjanstekontrakt != null) {
-                KonsumentanslutningStatusDTO kas = new KonsumentanslutningStatusDTO(
+                AnslutningStatusDTO kas = new AnslutningStatusDTO(
                         tjanstekontraktNamn: tjanstekontrakt.namn,
                         tjanstekontraktNamnrymd: tjanstekontrakt.namnrymd,
                         tjanstekontraktMajorVersion: tjanstekontrakt.majorVersion,
-                        tjanstekontraktMinorVersion: tjanstekontrakt.minorVersion
+                        tjanstekontraktMinorVersion: tjanstekontrakt.minorVersion,
+                        installeratIDriftmiljo: true
                 )
                 kas.logiskAdressStatuses = tjanstekontraktMap[takTjanstekontrakt].keySet().collect { logiskAdressHsaId ->
                     LogiskAdressStatusDTO logiskAdressStatusDTO =
