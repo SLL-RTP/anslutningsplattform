@@ -1,4 +1,5 @@
 <#-- @ftlvariable name="bestallning" type="se.skltp.ap.Bestallning" -->
+<#-- @ftlvariable name="domanLookup" type="java.util.Map<java.lang.String, se.skltp.ap.services.dto.TjansteDomanDTO>" -->
 WebMailForm
 /1060\
 §
