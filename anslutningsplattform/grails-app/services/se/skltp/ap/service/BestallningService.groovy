@@ -14,6 +14,7 @@ import se.skltp.ap.Producentbestallning
 import se.skltp.ap.Tjanstekomponent
 import se.skltp.ap.UppdateradKonsumentanslutning
 import se.skltp.ap.UppdateradProducentanslutning
+import se.skltp.ap.services.dto.TjansteDomanDTO
 import se.skltp.ap.services.dto.domain.BestallningDTO
 import se.skltp.ap.services.dto.domain.DriftmiljoDTO
 import se.skltp.ap.services.dto.domain.FunktionkontaktDTO
@@ -32,6 +33,8 @@ class BestallningService {
     def freemarkerConfiguration
 
     def grailsApplication
+
+    def rivTaService
 
     def handleBestallning(BestallningDTO bestallningDTO) {
         def bestallning = insertBestallning(bestallningDTO)
@@ -70,10 +73,28 @@ class BestallningService {
     }
 
     private String createBestallningMailContent(Bestallning bestallning) {
+        //prepare lookup map so we can get svensktKortNamn for doman based on kontrakt
+        Map<String, TjansteDomanDTO> domanLookup = new HashMap<>();
+        def domaner = rivTaService.listTjansteDoman()
+        bestallning.producentbestallning?.producentanslutningar?.each { pa ->
+            domanLookup.put(pa.tjanstekontraktNamnrymd, domaner.find { pa.tjanstekontraktNamnrymd.contains(it.tjansteDomanId) })
+        }
+        bestallning.producentbestallning?.uppdateradProducentanslutningar?.each { pa ->
+            domanLookup.put(pa.tjanstekontraktNamnrymd, domaner.find { pa.tjanstekontraktNamnrymd.contains(it.tjansteDomanId) })
+        }
+        bestallning.konsumentbestallningar?.each { konsumentbestallning ->
+            konsumentbestallning.konsumentanslutningar?.each { ka ->
+                domanLookup.put(ka.tjanstekontraktNamnrymd, domaner.find { ka.tjanstekontraktNamnrymd.contains(it.tjansteDomanId) })
+            }
+            konsumentbestallning.uppdateradKonsumentanslutningar?.each { ka ->
+                domanLookup.put(ka.tjanstekontraktNamnrymd, domaner.find { ka.tjanstekontraktNamnrymd.contains(it.tjansteDomanId) })
+            }
+        }
         def template = freemarkerConfiguration.getTemplate("mail.ftl")
         def writer = new StringWriter()
         Map<String, Object> templateParams = new HashMap<>()
         templateParams.put('bestallning', bestallning)
+        templateParams.put('domanLookup', domanLookup)
         template.process(templateParams, writer)
         writer.toString()
     }

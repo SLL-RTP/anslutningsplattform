@@ -57,7 +57,7 @@ tjänsteproducent:
     <#if (producentbestallning.producentanslutningar)?has_content>
         <#list producentbestallning.producentanslutningar as producentanslutning>
         [${producentanslutning_index+1}]
-            tjänstekontrakt: ${producentanslutning.tjanstekontraktNamnrymd} v${producentanslutning.tjanstekontraktMajorVersion}.${producentanslutning.tjanstekontraktMinorVersion}
+            tjänstekontrakt: ${producentanslutning.tjanstekontraktNamnrymd} v${producentanslutning.tjanstekontraktMajorVersion}.${producentanslutning.tjanstekontraktMinorVersion} (${domanLookup[producentanslutning.tjanstekontraktNamnrymd].svensktKortNamn})
             RIVTA-profil: ${producentanslutning.rivtaProfil}
             URL: ${producentanslutning.url}
             giltig: ${producentanslutning.giltigFranTid?date?iso_local} - ${producentanslutning.giltigTillTid?date?iso_local}
@@ -78,7 +78,7 @@ tjänsteproducent:
     <#if (producentbestallning.uppdateradProducentanslutningar)?has_content>
         <#list producentbestallning.uppdateradProducentanslutningar as uppdateradProducentanslutning>
         [${uppdateradProducentanslutning_index+1}]
-            tjänstekontrakt: ${uppdateradProducentanslutning.tjanstekontraktNamnrymd} v${uppdateradProducentanslutning.tjanstekontraktMajorVersion}.${uppdateradProducentanslutning.tjanstekontraktMinorVersion}
+            tjänstekontrakt: ${uppdateradProducentanslutning.tjanstekontraktNamnrymd} v${uppdateradProducentanslutning.tjanstekontraktMajorVersion}.${uppdateradProducentanslutning.tjanstekontraktMinorVersion} (${domanLookup[uppdateradProducentanslutning.tjanstekontraktNamnrymd].svensktKortNamn})
             RIVTA-profil: ${uppdateradProducentanslutning.rivtaProfil} (<#if uppdateradProducentanslutning.rivtaProfil == uppdateradProducentanslutning.tidigareRivtaProfil>oförändrad<#else>uppdaterad</#if>)
             URL: ${uppdateradProducentanslutning.url} (<#if uppdateradProducentanslutning.url == uppdateradProducentanslutning.tidigareUrl>oförändrad<#else>uppdaterad</#if>)
             giltig: ${uppdateradProducentanslutning.giltigFranTid?date?iso_local} - ${uppdateradProducentanslutning.giltigTillTid?date?iso_local}
@@ -155,7 +155,7 @@ Konsumentbeställningar
         <#if (konsumentbestallning.konsumentanslutningar)?has_content>
             <#list konsumentbestallning.konsumentanslutningar as konsumentanslutning>
             [${konsumentanslutning_index+1}]
-                tjänstekontrakt: ${konsumentanslutning.tjanstekontraktNamnrymd} v${konsumentanslutning.tjanstekontraktMajorVersion}.${konsumentanslutning.tjanstekontraktMinorVersion}
+                tjänstekontrakt: ${konsumentanslutning.tjanstekontraktNamnrymd} v${konsumentanslutning.tjanstekontraktMajorVersion}.${konsumentanslutning.tjanstekontraktMinorVersion} (${domanLookup[konsumentanslutning.tjanstekontraktNamnrymd].svensktKortNamn})
                 giltig: ${konsumentanslutning.giltigFranTid?date?iso_local} - ${konsumentanslutning.giltigTillTid?date?iso_local}
                 logiska adresser som skall läggas till:
                 <#if (konsumentanslutning.nyaLogiskaAdresser)?has_content>
@@ -174,7 +174,7 @@ Konsumentbeställningar
         <#if (konsumentbestallning.uppdateradKonsumentanslutningar)?has_content>
             <#list konsumentbestallning.uppdateradKonsumentanslutningar as uppdateradKonsumentanslutning>
             [${uppdateradKonsumentanslutning_index+1}]
-                tjänstekontrakt: ${uppdateradKonsumentanslutning.tjanstekontraktNamnrymd} v${uppdateradKonsumentanslutning.tjanstekontraktMajorVersion}.${uppdateradKonsumentanslutning.tjanstekontraktMinorVersion}
+                tjänstekontrakt: ${uppdateradKonsumentanslutning.tjanstekontraktNamnrymd} v${uppdateradKonsumentanslutning.tjanstekontraktMajorVersion}.${uppdateradKonsumentanslutning.tjanstekontraktMinorVersion} (${domanLookup[uppdateradKonsumentanslutning.tjanstekontraktNamnrymd].svensktKortNamn})
                 giltig: ${uppdateradKonsumentanslutning.giltigFranTid?datetime?iso_local} - ${uppdateradKonsumentanslutning.giltigTillTid?datetime?iso_local}
                 logiska adresser som skall läggas till:
                 <#if (uppdateradKonsumentanslutning.nyaLogiskaAdresser)?has_content>
