@@ -315,25 +315,34 @@ class TakService {
 
         tak.getAllTjanstekomponenter().find {
             it.hsaId.equals(serviceProducerHSAId)
-        }.getAnropsAdressInfo().each { anropsAdressInfo ->
+        }?.getAnropsAdressInfo()?.each { anropsAdressInfo ->
             anropsAdressInfo.getVagvalsInfo().findAll {
                 it.tjanstekontraktNamnrymd.contains(serviceDomainNS)
             }.each {
                 tjanstekontraktMap[it.tjanstekontraktNamnrymd][it.logiskAdressHsaId] = [enabled: true, possible: true]
+                tjanstekontraktMap[it.tjanstekontraktNamnrymd]['adress'] = [url: anropsAdressInfo.adress, rivtaProfil: anropsAdressInfo.rivtaProfilNamn]
             }
         }
 
         def anslutningStatuses = tjanstekontraktMap.keySet().findResults { takTjanstekontrakt ->
             def tjanstekontrakt = getRivTaTjanstekontrakt(takTjanstekontrakt as String, serviceDomainNS)
             if (tjanstekontrakt != null) {
+                def url = null, rivtaProfil = null
+                if (tjanstekontraktMap[takTjanstekontrakt]['adress']) {
+                    url = tjanstekontraktMap[takTjanstekontrakt]['adress']['url']
+                    rivtaProfil = tjanstekontraktMap[takTjanstekontrakt]['adress']['rivtaProfil']
+                }
                 AnslutningStatusDTO kas = new AnslutningStatusDTO(
                         tjanstekontraktNamn: tjanstekontrakt.namn,
                         tjanstekontraktNamnrymd: tjanstekontrakt.namnrymd,
                         tjanstekontraktMajorVersion: tjanstekontrakt.majorVersion,
                         tjanstekontraktMinorVersion: tjanstekontrakt.minorVersion,
-                        installeratIDriftmiljo: true
+                        installeratIDriftmiljo: true,
+                        producentUrl: url,
+                        producentRivtaProfil: rivtaProfil
                 )
-                kas.logiskAdressStatuses = tjanstekontraktMap[takTjanstekontrakt].keySet().collect { logiskAdressHsaId ->
+                kas.logiskAdressStatuses = tjanstekontraktMap[takTjanstekontrakt].keySet().findResults { logiskAdressHsaId ->
+                    if (logiskAdressHsaId == 'adress') return null
                     LogiskAdressStatusDTO logiskAdressStatusDTO =
                             new LogiskAdressStatusDTO(
                                     hsaId: logiskAdressHsaId,

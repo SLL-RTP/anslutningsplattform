@@ -15,4 +15,7 @@ class AnslutningStatusDTO {
     Date giltigTillTid
     boolean installeratIDriftmiljo
     List<LogiskAdressStatusDTO> logiskAdressStatuses
+    String producentUrl
+    String producentRivtaProfil
+
 }
