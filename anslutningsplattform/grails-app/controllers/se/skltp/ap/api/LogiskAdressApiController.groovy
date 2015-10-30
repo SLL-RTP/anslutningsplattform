@@ -1,7 +1,7 @@
 package se.skltp.ap.api
 
-import grails.converters.JSON
 import grails.rest.RestfulController
+import groovy.json.JsonOutput
 import se.skltp.ap.services.dto.domain.LogiskAdressDTO
 
 class LogiskAdressApiController extends RestfulController {
@@ -36,7 +36,7 @@ class LogiskAdressApiController extends RestfulController {
             def logiskAddressDTO = logiskAdressService.getLogiskAdressForHsaId(params.environmentId, hsaId)
             if (!logiskAddressDTO.namn.contains('SAKNAS')) {
                 //seems that you can not 'respond' a single object that does not contain a 'Long id'
-                render logiskAddressDTO as JSON
+                render JsonOutput.toJson(logiskAddressDTO)
             } else {
                 render(status: 404)
             }
