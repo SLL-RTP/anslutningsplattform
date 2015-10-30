@@ -21,6 +21,7 @@ class MailingService {
 		// uses the mail-plugin: http://grails.org/plugin/mail
 		try {
 			sendMail {
+				async true
 				to toAddress
 				from fromAddress
 				subject subjectField
