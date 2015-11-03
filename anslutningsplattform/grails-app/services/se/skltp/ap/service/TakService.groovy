@@ -392,7 +392,7 @@ class TakService {
         tak.getAllAnropsBehorigheter().findAll {
             it.senderId == serviceConsumerHSAId && it.tjanstekontrakt.contains(serviceDomainNS)
         }.each {
-            tjanstekontraktMap[it.tjanstekontrakt][it.reciverId].put('active', true)
+            tjanstekontraktMap[it.tjanstekontrakt][it.reciverId] = [possible: true, active: true] //if active, also possible
         }
         //create DTO:s based on our temporary map
         tjanstekontraktMap.keySet().findResults { takTjanstekontrakt ->
