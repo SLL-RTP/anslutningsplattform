@@ -1,9 +1,9 @@
 USE `anslutningsplattform`;
 -- MySQL dump 10.13  Distrib 5.6.19, for osx10.7 (i386)
 --
--- Host: rtp-a-db01.i.centrera.se    Database: anslutningsplattform
+-- Host: rtp-t-db01.i.centrera.se    Database: anslutningsplattform
 -- ------------------------------------------------------
--- Server version	5.1.73-log
+-- Server version	5.1.73
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -39,7 +39,7 @@ CREATE TABLE `bestallning` (
   CONSTRAINT `FK_rmpt7srpkcwsy5nvikqi9at4c` FOREIGN KEY (`producentbestallning_id`) REFERENCES `producentbestallning` (`id`),
   CONSTRAINT `FK_1o75o372k0p8fovb63umnrc81` FOREIGN KEY (`driftmiljo_id`) REFERENCES `driftmiljo` (`id`),
   CONSTRAINT `FK_p1chcfduor1708ru1rbur44ex` FOREIGN KEY (`bestallare_id`) REFERENCES `personkontakt` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -56,23 +56,6 @@ CREATE TABLE `bestallning_konsumentbestallning` (
   KEY `FK_c1gv5dhf9n1q4rbiv7oykaw49` (`bestallning_konsumentbestallningar_id`),
   CONSTRAINT `FK_c1gv5dhf9n1q4rbiv7oykaw49` FOREIGN KEY (`bestallning_konsumentbestallningar_id`) REFERENCES `bestallning` (`id`),
   CONSTRAINT `FK_bwccnjtdqqy52rr6ku1p28uhn` FOREIGN KEY (`konsumentbestallning_id`) REFERENCES `konsumentbestallning` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `bestallning_nat`
---
-
-DROP TABLE IF EXISTS `bestallning_nat`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `bestallning_nat` (
-  `bestallning_nat_id` bigint(20) NOT NULL,
-  `nat_id` varchar(255) DEFAULT NULL,
-  KEY `FK_2jsoogf8uhg27pujtgakexltf` (`nat_id`),
-  KEY `FK_1omhjfy184ijjhbdu3i56x1sr` (`bestallning_nat_id`),
-  CONSTRAINT `FK_1omhjfy184ijjhbdu3i56x1sr` FOREIGN KEY (`bestallning_nat_id`) REFERENCES `bestallning` (`id`),
-  CONSTRAINT `FK_2jsoogf8uhg27pujtgakexltf` FOREIGN KEY (`nat_id`) REFERENCES `nat` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -167,7 +150,7 @@ CREATE TABLE `konsumentbestallning` (
   PRIMARY KEY (`id`),
   KEY `FK_ipdcd8itip119wxanacocy8ai` (`tjanstekomponent_id`),
   CONSTRAINT `FK_ipdcd8itip119wxanacocy8ai` FOREIGN KEY (`tjanstekomponent_id`) REFERENCES `tjanstekomponent` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -216,7 +199,7 @@ CREATE TABLE `logisk_adress` (
   `namn` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_t0hh8k0lm3gmwpkueja279g16` (`hsa_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -249,7 +232,7 @@ CREATE TABLE `personkontakt` (
   `namn` varchar(255) NOT NULL,
   `telefon` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -298,11 +281,12 @@ DROP TABLE IF EXISTS `producentbestallning`;
 CREATE TABLE `producentbestallning` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `version` bigint(20) NOT NULL,
+  `namn_pa_etjanst` varchar(255) DEFAULT NULL,
   `tjanstekomponent_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_pt1cfj8tcs1nr1elo8nblviap` (`tjanstekomponent_id`),
   CONSTRAINT `FK_pt1cfj8tcs1nr1elo8nblviap` FOREIGN KEY (`tjanstekomponent_id`) REFERENCES `tjanstekomponent` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -350,7 +334,7 @@ CREATE TABLE `role` (
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_8sewwnpamngi6b1dwaa88askk` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -395,7 +379,7 @@ CREATE TABLE `tjanstekomponent` (
   `teknisk_supportkontakt_telefon` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_hve38rq1bac4udieiyc44ahyl` (`hsa_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -412,6 +396,23 @@ CREATE TABLE `tjanstekomponent_driftmiljo` (
   KEY `FK_clrm55eb6pj52u1u3c3vf8bjm` (`tjanstekomponent_driftmiljoer_id`),
   CONSTRAINT `FK_clrm55eb6pj52u1u3c3vf8bjm` FOREIGN KEY (`tjanstekomponent_driftmiljoer_id`) REFERENCES `tjanstekomponent` (`id`),
   CONSTRAINT `FK_73v0bcg0siyrupmc9sx8xknf6` FOREIGN KEY (`driftmiljo_id`) REFERENCES `driftmiljo` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tjanstekomponent_nat`
+--
+
+DROP TABLE IF EXISTS `tjanstekomponent_nat`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tjanstekomponent_nat` (
+  `tjanstekomponent_nat_id` bigint(20) NOT NULL,
+  `nat_id` varchar(255) DEFAULT NULL,
+  KEY `FK_os5ybv4d17hr8raghl9irffb` (`nat_id`),
+  KEY `FK_1bgrl8sldeev5ntxb2pqren71` (`tjanstekomponent_nat_id`),
+  CONSTRAINT `FK_1bgrl8sldeev5ntxb2pqren71` FOREIGN KEY (`tjanstekomponent_nat_id`) REFERENCES `tjanstekomponent` (`id`),
+  CONSTRAINT `FK_os5ybv4d17hr8raghl9irffb` FOREIGN KEY (`nat_id`) REFERENCES `nat` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -514,7 +515,7 @@ CREATE TABLE `user` (
   `username` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_sb8bbouer5wak8vyiiy4pf2bx` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -540,12 +541,12 @@ DROP TABLE IF EXISTS `user_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_roles` (
-  `user_id` bigint(20) NOT NULL,
   `role_id` bigint(20) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
   PRIMARY KEY (`user_id`,`role_id`),
   KEY `FK_5q4rc4fh1on6567qk69uesvyf` (`role_id`),
-  CONSTRAINT `FK_g1uebn6mqk9qiaw45vnacmyo2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-  CONSTRAINT `FK_5q4rc4fh1on6567qk69uesvyf` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
+  CONSTRAINT `FK_5q4rc4fh1on6567qk69uesvyf` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
+  CONSTRAINT `FK_g1uebn6mqk9qiaw45vnacmyo2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -566,6 +567,6 @@ CREATE TABLE `user_roles` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-05-21 13:22:13
+-- Dump completed on 2015-11-04 20:47:05
 
 INSERT INTO `anslutningsplattform`.`hibernate_unique_key` (`next_hi`) VALUES (1);
