@@ -40,6 +40,7 @@ class BootStrap {
                 if (nat == null) {
                     nat = new Nat(namn: "Internet")
                     nat.id = "internet"
+                    nat.save(failOnError: true)
                 }
 
                 def tk1 = new Tjanstekomponent(
@@ -50,9 +51,9 @@ class BootStrap {
                         pingForConfigurationURL: "http://ping.for.configuration.org/",
                         huvudansvarigKontakt: pk1,
                         tekniskKontakt: pk2,
-                        tekniskSupportkontakt: fk1
+                        tekniskSupportkontakt: fk1,
+                        nat: nat
                 )
-                tk1.addToNat(nat)
                 tk1.save(failOnError: true)
 
                 //Roles

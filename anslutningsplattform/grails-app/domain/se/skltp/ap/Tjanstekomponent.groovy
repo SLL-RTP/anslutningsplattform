@@ -15,10 +15,10 @@ class Tjanstekomponent {
     Personkontakt huvudansvarigKontakt
     Personkontakt tekniskKontakt
     Funktionkontakt tekniskSupportkontakt
+    Nat nat
 
     static hasMany = [
             driftmiljoer: Driftmiljo,
-            nat: Nat
     ]
     static embedded = ['huvudansvarigKontakt', 'tekniskKontakt', 'tekniskSupportkontakt']
 
@@ -31,6 +31,6 @@ class Tjanstekomponent {
         huvudansvarigKontakt nullable: true
         tekniskKontakt nullable: true
         tekniskSupportkontakt nullable: true
-        nat nullable: false
+        nat nullable: true
     }
 }
