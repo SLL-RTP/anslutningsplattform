@@ -80,7 +80,7 @@ Tjänsteproducent:
 . .  (inga)
     </#if>
 </#if>
-<#if (bestallning.konsumentbestallningar)?has_content>
+<#if bestallning.konsumentbestallningar?has_content>
 .
 .
 -------------------------------------------------------
@@ -177,6 +177,7 @@ tjänsteproducent:
 </#if>
 .
 </#if>
+<#if bestallning.konsumentbestallningar?has_content>
 <#list bestallning.konsumentbestallningar as konsumentbestallning>
 <#assign tjanstekomponent = konsumentbestallning.tjanstekomponent>
 tjänstekonsument:
@@ -212,6 +213,7 @@ tjänstekonsument:
 </#if>
 .
 </#list>
+</#if>
 .
 §
 användare: ¤${(bestallning.bestallare.hsaId)?keep_after_last("-")}¤
