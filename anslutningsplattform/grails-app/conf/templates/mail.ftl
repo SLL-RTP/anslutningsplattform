@@ -12,9 +12,9 @@ Beställarens e-post: ${bestallning.bestallare.epost}
 Beställarens HSA-ID: <#if bestallning.bestallare.hsaId??>${bestallning.bestallare.hsaId}<#else>(okänt)</#if>
 Beställarens roll: <#if bestallning.bestallareRoll??>${bestallning.bestallareRoll}<#else>(ej ifylld)</#if>
 <#if bestallning.producentbestallning??>
-Nät: <#list bestallning.producentbestallning.tjanstekomponent.nat as nat><#sep>, </#sep><#else>(inga nät valda)</#list>
+Nät: <#if bestallning.producentbestallning.tjanstekomponent.nat??>${bestallning.producentbestallning.tjanstekomponent.nat.namn}<#else>(inget nät valt)</#if>
 <#elseif bestallning.konsumentbestallningar?? && bestallning.konsumentbestallningar?size == 1>
-Nät: <#list bestallning.konsumentbestallningar[0].tjanstekomponent.nat as nat><#sep>, </#sep><#else>(inga nät valda)</#list>
+Nät: <#if bestallning.konsumentbestallningar[0].tjanstekomponent.nat??>${bestallning.konsumentbestallningar[0].tjanstekomponent.nat.namn}<#else>(inget nät valt)</#if>
 </#if>
 Övrig information från beställaren:
 <#if bestallning.otherInfo??>${bestallning.otherInfo}<#else>(ej ifylld)</#if>
