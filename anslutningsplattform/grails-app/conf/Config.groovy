@@ -276,6 +276,12 @@ environments {
 			confirmation.email.activated = false
             confirmation.email.subject = 'Beställning från Anslutningsplattformen'
         }
+        tjanstekomponent {
+            email {
+                address = 'johanna.essen@callistaenterprise.se'
+                subject = 'Beställning från Anslutningsplattformen'
+            }
+        }
 	}
 
 	production{

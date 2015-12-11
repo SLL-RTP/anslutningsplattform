@@ -24,8 +24,16 @@ class TjansteKomponentApiController {
             response.status = 400
             render dto.errors as JSON
         } else {
-            def success = tjansteKomponentService.update(dto)
-            render(status: success ? 204 : 400)
+            def returnCode = tjansteKomponentService.update(dto)
+            if (returnCode == -1) {
+                render(status: 400)
+            } else if (returnCode == 0) {
+               def m = [action:'none']
+                render m as JSON
+            } else {
+                def m = [action:'email']
+                render m as JSON
+            }
         }
     }
 

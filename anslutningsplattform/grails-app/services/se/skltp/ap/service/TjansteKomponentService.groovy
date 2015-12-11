@@ -15,6 +15,10 @@ class TjansteKomponentService {
 	
 	def takService
 
+    def mailingService
+
+    def grailsApplication
+
     @Transactional(readOnly = true)
     List<TjanstekomponentDTO> query(String takId, String queryString, int limit) {
 		// search both TAK and AP data to support cases where
@@ -78,7 +82,9 @@ class TjansteKomponentService {
                 hsaId: domainServiceComponent.hsaId,
                 beskrivning: domainServiceComponent.beskrivning,
                 organisation: domainServiceComponent.organisation,
-                ipadress: domainServiceComponent.ipadress,
+                producentIpadress: domainServiceComponent.producentIpadress,
+                producentDnsNamn: domainServiceComponent.producentDnsNamn,
+                konsumentIpadress: domainServiceComponent.konsumentIpadress,
                 pingForConfigurationURL: domainServiceComponent.pingForConfigurationURL,
                 huvudansvarigKontakt: new PersonkontaktDTO(
                         hsaId: domainServiceComponent.huvudansvarigKontakt?.hsaId,
@@ -100,22 +106,45 @@ class TjansteKomponentService {
         )
     }
 
-    boolean update(TjanstekomponentDTO dto) {
+    /**
+     * @param dto
+     * @return -1 if no tjanstekomponent with hsaId was fould, 0 if successful, 1 if successful and email is sent
+     */
+    int update(TjanstekomponentDTO dto) {
         def tjanstekomponent = Tjanstekomponent.findByHsaId(dto.hsaId)
         log.debug "$tjanstekomponent"
         if (tjanstekomponent) {
+            def shouldGenerateEmail = false
+            if (tjanstekomponent.beskrivning != dto.beskrivning
+                    || tjanstekomponent.organisation != dto.organisation
+                    || tjanstekomponent.producentIpadress != dto.producentIpadress
+                    || tjanstekomponent.producentDnsNamn != dto.producentDnsNamn
+                    || tjanstekomponent.pingForConfigurationURL != dto.pingForConfigurationURL
+                    || tjanstekomponent.konsumentIpadress != dto.konsumentIpadress
+                    || tjanstekomponent.nat.id != dto.nat.id) {
+                //this update should trigger email since more stuff than the contacts have changed
+                shouldGenerateEmail = true
+            }
             tjanstekomponent.beskrivning = dto.beskrivning
             tjanstekomponent.organisation = dto.organisation
-            tjanstekomponent.ipadress = dto.ipadress
+            tjanstekomponent.producentIpadress = dto.producentIpadress
+            tjanstekomponent.producentDnsNamn = dto.producentDnsNamn
+            tjanstekomponent.konsumentIpadress = dto.konsumentIpadress
             tjanstekomponent.pingForConfigurationURL = dto.pingForConfigurationURL
             tjanstekomponent.huvudansvarigKontakt = fromDTO(dto.huvudansvarigKontakt)
             tjanstekomponent.tekniskKontakt = fromDTO(dto.tekniskKontakt)
             tjanstekomponent.tekniskSupportkontakt = fromDTO(dto.tekniskSupportKontakt)
             tjanstekomponent.nat = dto.nat ? getOrCreate(dto.nat) : null
             tjanstekomponent.save()
-            return true
+            log.debug("should trigger email: $shouldGenerateEmail")
+            if (shouldGenerateEmail) {
+                emailTjanstekomponent(tjanstekomponent)
+                return 1
+            } else {
+                return 0
+            }
         }
-        false
+        -1
     }
 
     boolean create(TjanstekomponentDTO dto) {
@@ -123,18 +152,29 @@ class TjansteKomponentService {
             log.debug "unable to create Tjanstekomponent with hsaId ${dto.hsaId} since it already exists in DB"
             return false //TODO: handle this better
         }
-        new Tjanstekomponent(
+        def tjanstekomponent = new Tjanstekomponent(
                 hsaId: dto.hsaId,
                 beskrivning: dto.beskrivning,
                 organisation: dto.organisation,
-                ipadress: dto.ipadress,
+                producentIpadress: dto.producentIpadress,
+                producentDnsNamn: dto.producentDnsNamn,
+                konsumentIpadress: dto.konsumentIpadress,
                 pingForConfigurationURL: dto.pingForConfigurationURL,
                 huvudansvarigKontakt: fromDTO(dto.huvudansvarigKontakt),
                 tekniskKontakt: fromDTO(dto.tekniskKontakt),
                 tekniskSupportkontakt: fromDTO(dto.tekniskSupportKontakt),
                 nat: dto.nat ? getOrCreate(dto.nat) : null
         ).save()
+        emailTjanstekomponent(tjanstekomponent)
         true
+    }
+
+    def emailTjanstekomponent(Tjanstekomponent tjanstekomponent) {
+        def tjanstekomponentToAddress = grailsApplication.config.tjanstekomponent.email.address
+        def tjanstekomponentSubject = grailsApplication.config.tjanstekomponent.email.subject
+        def mailContent = createTjanstekomponentMailContent(tjanstekomponent)
+        mailingService.send(null, tjanstekomponentToAddress, tjanstekomponentSubject, mailContent)
+
     }
 
     private Personkontakt fromDTO(PersonkontaktDTO dto) {
@@ -161,5 +201,9 @@ class TjansteKomponentService {
             nat.save()
         }
         nat
+    }
+
+    private String createTjanstekomponentMailContent(Tjanstekomponent tjanstekomponent) {
+        return "tjanstekomponent... ${tjanstekomponent.beskrivning}"
     }
 }

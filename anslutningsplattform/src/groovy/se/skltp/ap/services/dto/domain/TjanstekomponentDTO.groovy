@@ -13,7 +13,9 @@ class TjanstekomponentDTO {
     String hsaId
     String beskrivning
     String organisation
-    String ipadress
+    String producentIpadress
+    String producentDnsNamn
+    String konsumentIpadress
     String pingForConfigurationURL
     PersonkontaktDTO huvudansvarigKontakt
     PersonkontaktDTO tekniskKontakt
@@ -25,7 +27,9 @@ class TjanstekomponentDTO {
         hsaId nullable: false
         beskrivning nullable: false
         organisation nullable: true, blank: true
-        ipadress nullable: true, blank: true
+        producentIpadress nullable: true, blank: true
+        producentDnsNamn nullable: true, blank: true
+        konsumentIpadress nullable: true, blank: true
         pingForConfigurationURL nullable: true, blank: true
         huvudansvarigKontakt nullable: true
         tekniskKontakt nullable: true

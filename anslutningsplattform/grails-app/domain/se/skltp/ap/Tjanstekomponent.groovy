@@ -10,7 +10,9 @@ class Tjanstekomponent {
     String hsaId
     String beskrivning
     String organisation
-    String ipadress
+    String producentIpadress
+    String producentDnsNamn
+    String konsumentIpadress
     String pingForConfigurationURL
     Personkontakt huvudansvarigKontakt
     Personkontakt tekniskKontakt
@@ -26,7 +28,9 @@ class Tjanstekomponent {
         hsaId blank: false, unique: true
         beskrivning nullable: false, blank: false
         organisation nullable: true, blank: true
-        ipadress nullable: true, blank: true
+        producentIpadress nullable: true, blank: true
+        producentDnsNamn nullable: true, blank: true
+        konsumentIpadress nullable: true, blank: true
         pingForConfigurationURL nullable: true, blank: true
         huvudansvarigKontakt nullable: true
         tekniskKontakt nullable: true
