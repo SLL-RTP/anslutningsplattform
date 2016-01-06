@@ -175,6 +175,7 @@ class BestallningService {
         }
         new Konsumentbestallning(
                 tjanstekomponent: getOrCreate(konsumentbestallningDTO.tjanstekomponent).addToDriftmiljoer(driftmiljo),
+                namnPaEtjanst: konsumentbestallningDTO.namnPaEtjanst,
                 konsumentanslutningar: konsumentbestallningDTO.konsumentanslutningar.collect {
                     new Konsumentanslutning(
                             tjanstekontraktNamnrymd: it.tjanstekontraktNamnrymd,

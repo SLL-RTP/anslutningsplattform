@@ -12,6 +12,7 @@ class KonsumentbestallningDTO {
     List<KonsumentanslutningDTO> konsumentanslutningar
     List<UppdateradKonsumentanslutningDTO> uppdateradKonsumentanslutningar
     TjanstekomponentDTO tjanstekomponent
+    String namnPaEtjanst
 
     static constraints = {
         tjanstekomponent nullable: false
