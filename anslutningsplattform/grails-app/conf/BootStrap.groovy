@@ -21,7 +21,8 @@ class BootStrap {
                         hsaId: "pk-hsa-1",
                         namn: "Kapo Kapo",
                         epost: "kapo@kapo.com",
-                        telefon: "031170920"
+                        telefon: "031170920",
+                        otherInfo: "Kapo other info"
                 )
 
                 def pk2 = new Personkontakt(

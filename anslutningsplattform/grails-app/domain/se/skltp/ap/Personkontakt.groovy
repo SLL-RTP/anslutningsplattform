@@ -11,6 +11,7 @@ class Personkontakt {
     String namn
     String epost
     String telefon
+    String otherInfo
 
     static hasMany = [
             bestallningar: Bestallning
@@ -19,5 +20,6 @@ class Personkontakt {
     static constraints = {
         epost blank: false //should also be unique but not possible since we also use this entity embedded in Tjanstekomponent
         hsaId nullable: true
+        otherInfo nullable: true
     }
 }

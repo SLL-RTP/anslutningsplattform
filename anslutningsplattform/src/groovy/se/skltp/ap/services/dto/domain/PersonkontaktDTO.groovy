@@ -13,11 +13,13 @@ class PersonkontaktDTO {
     String namn
     String epost
     String telefon
+    String otherInfo
 
     static constraints = {
         hsaId nullable: true, blank: true
         namn nullable: false, blank: false
         epost nullable: false, email: true, blank: false
         telefon nullable: false, blank: false
+        otherInfo nullable: true, blank: true
     }
 }
