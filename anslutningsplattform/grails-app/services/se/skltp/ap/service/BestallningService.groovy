@@ -90,7 +90,12 @@ class BestallningService {
                 domanLookup.put(ka.tjanstekontraktNamnrymd, domaner.find { ka.tjanstekontraktNamnrymd.contains(it.tjansteDomanId) })
             }
         }
-        def template = freemarkerConfiguration.getTemplate("mail.ftl")
+        def template
+        if (bestallning.producentbestallning != null) {
+            template = freemarkerConfiguration.getTemplate("producentBestallningMail.ftl")
+        } else {
+            template = freemarkerConfiguration.getTemplate("konsumentBestallningMail.ftl")
+        }
         def writer = new StringWriter()
         Map<String, Object> templateParams = new HashMap<>()
         templateParams.put('bestallning', bestallning)
@@ -293,9 +298,7 @@ class BestallningService {
                     huvudansvarigKontakt: dto.huvudansvarigKontakt != null ? fromDTO(dto.huvudansvarigKontakt) : null,
                     tekniskKontakt: dto.tekniskKontakt != null ? fromDTO(dto.tekniskKontakt) : null,
                     tekniskSupportkontakt: dto.tekniskSupportKontakt != null ? fromDTO(dto.tekniskSupportKontakt) : null,
-                    nat: dto.nat != null ? dto.nat.collect { natDto ->
-                        getOrCreate(natDto)
-                    } : new ArrayList<Nat>()
+                    nat: dto.nat != null ? getOrCreate(dto.nat) : null
             ).save()
         }
         tjanstekomponent
