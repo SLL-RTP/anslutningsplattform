@@ -15,7 +15,11 @@ class TjansteKomponentService {
 	
 	def takService
 
+    def kontaktService
+
     def mailingService
+
+    def freemarkerConfiguration
 
     def grailsApplication
 
@@ -110,11 +114,12 @@ class TjansteKomponentService {
 
     /**
      * @param dto
-     * @return -1 if no tjanstekomponent with hsaId was fould, 0 if successful, 1 if successful and email is sent
+     * @return -1 if no tjanstekomponent with hsaId was found, 0 if successful, 1 if successful and email is sent
      */
-    int update(TjanstekomponentDTO dto) {
+    int update(TjanstekomponentDTO dto, PersonkontaktDTO bestallare) {
         def tjanstekomponent = Tjanstekomponent.findByHsaId(dto.hsaId)
         log.debug "$tjanstekomponent"
+        log.debug "$bestallare"
         if (tjanstekomponent) {
             def shouldGenerateEmail = false
             if (tjanstekomponent.beskrivning != dto.beskrivning
@@ -127,6 +132,7 @@ class TjansteKomponentService {
                 //this update should trigger email since more stuff than the contacts have changed
                 shouldGenerateEmail = true
             }
+            def oldTjanstekomponent = copyTjanstekomponent(tjanstekomponent)
             tjanstekomponent.beskrivning = dto.beskrivning
             tjanstekomponent.organisation = dto.organisation
             tjanstekomponent.producentIpadress = dto.producentIpadress
@@ -139,8 +145,10 @@ class TjansteKomponentService {
             tjanstekomponent.nat = dto.nat ? getOrCreate(dto.nat) : null
             tjanstekomponent.save()
             log.debug("should trigger email: $shouldGenerateEmail")
+            log.debug("old: $oldTjanstekomponent")
+            log.debug("new: $tjanstekomponent")
             if (shouldGenerateEmail) {
-                emailTjanstekomponent(tjanstekomponent)
+                emailUpdatedTjanstekomponent(oldTjanstekomponent, tjanstekomponent, bestallare)
                 return 1
             } else {
                 return 0
@@ -149,11 +157,51 @@ class TjansteKomponentService {
         -1
     }
 
-    boolean create(TjanstekomponentDTO dto) {
+    boolean create(TjanstekomponentDTO dto, PersonkontaktDTO bestallare) {
         if (Tjanstekomponent.findByHsaId(dto.hsaId)) { //it already exists
             log.debug "unable to create Tjanstekomponent with hsaId ${dto.hsaId} since it already exists in DB"
             return false //TODO: handle this better
         }
+        Tjanstekomponent tjanstekomponent = fromDTO(dto)
+        tjanstekomponent = tjanstekomponent.save()
+        emailNewTjanstekomponent(tjanstekomponent, bestallare)
+        true
+    }
+
+    def emailNewTjanstekomponent(Tjanstekomponent tjanstekomponent, PersonkontaktDTO bestallare) {
+        def mailContent = createMailContentForNewTjanstekomponent(tjanstekomponent, bestallare)
+        def tjanstekomponentToAddress = grailsApplication.config.tjanstekomponent.email.address
+        def tjanstekomponentSubject = grailsApplication.config.tjanstekomponent.email.subject
+        mailingService.send(null, tjanstekomponentToAddress, tjanstekomponentSubject, mailContent)
+
+    }
+
+    def emailUpdatedTjanstekomponent(Tjanstekomponent oldTjanstekomponent, Tjanstekomponent newTjanstekomponent, PersonkontaktDTO bestallare) {
+        def mailContent = createMailContentForUpdatedTjanstekomponent(oldTjanstekomponent, newTjanstekomponent, bestallare)
+        def tjanstekomponentToAddress = grailsApplication.config.tjanstekomponent.email.address
+        def tjanstekomponentSubject = grailsApplication.config.tjanstekomponent.email.subject
+        mailingService.send(null, tjanstekomponentToAddress, tjanstekomponentSubject, mailContent)
+
+    }
+
+    private Tjanstekomponent copyTjanstekomponent(Tjanstekomponent input) {
+        def tjanstekomponent = new Tjanstekomponent(
+                hsaId: input.hsaId,
+                beskrivning: input.beskrivning,
+                organisation: input.organisation,
+                producentIpadress: input.producentIpadress,
+                producentDnsNamn: input.producentDnsNamn,
+                konsumentIpadress: input.konsumentIpadress,
+                pingForConfigurationURL: input.pingForConfigurationURL
+        )
+        if (input.nat) {
+            tjanstekomponent.nat = new Nat(namn: input.nat.namn)
+            tjanstekomponent.nat.id = input.nat.id
+        }
+        tjanstekomponent
+    }
+
+    private Tjanstekomponent fromDTO(TjanstekomponentDTO dto) {
         def tjanstekomponent = new Tjanstekomponent(
                 hsaId: dto.hsaId,
                 beskrivning: dto.beskrivning,
@@ -166,17 +214,8 @@ class TjansteKomponentService {
                 tekniskKontakt: fromDTO(dto.tekniskKontakt),
                 tekniskSupportkontakt: fromDTO(dto.tekniskSupportKontakt),
                 nat: dto.nat ? getOrCreate(dto.nat) : null
-        ).save()
-        emailTjanstekomponent(tjanstekomponent)
-        true
-    }
-
-    def emailTjanstekomponent(Tjanstekomponent tjanstekomponent) {
-        def tjanstekomponentToAddress = grailsApplication.config.tjanstekomponent.email.address
-        def tjanstekomponentSubject = grailsApplication.config.tjanstekomponent.email.subject
-        def mailContent = createTjanstekomponentMailContent(tjanstekomponent)
-        mailingService.send(null, tjanstekomponentToAddress, tjanstekomponentSubject, mailContent)
-
+        )
+        tjanstekomponent
     }
 
     private Personkontakt fromDTO(PersonkontaktDTO dto) {
@@ -206,7 +245,24 @@ class TjansteKomponentService {
         nat
     }
 
-    private String createTjanstekomponentMailContent(Tjanstekomponent tjanstekomponent) {
-        return "tjanstekomponent... ${tjanstekomponent.beskrivning}"
+    private String createMailContentForNewTjanstekomponent(Tjanstekomponent tjanstekomponent, PersonkontaktDTO bestallare) {
+        Map<String, Object> templateParams = new HashMap<>()
+        templateParams.put('tjanstekomponent', tjanstekomponent)
+        templateParams.put('bestallare', bestallare)
+        def template = freemarkerConfiguration.getTemplate("newTjanstekomponentMail.ftl")
+        def writer = new StringWriter()
+        template.process(templateParams, writer)
+        writer.toString()
+    }
+
+    private String createMailContentForUpdatedTjanstekomponent(Tjanstekomponent oldTjanstekomponent, Tjanstekomponent newTjanstekomponent, PersonkontaktDTO bestallare) {
+        Map<String, Object> templateParams = new HashMap<>()
+        templateParams.put('oldTjanstekomponent', oldTjanstekomponent)
+        templateParams.put('newTjanstekomponent', newTjanstekomponent)
+        templateParams.put('bestallare', bestallare)
+        def template = freemarkerConfiguration.getTemplate("updatedTjanstekomponentMail.ftl")
+        def writer = new StringWriter()
+        template.process(templateParams, writer)
+        writer.toString()
     }
 }
