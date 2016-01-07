@@ -128,7 +128,7 @@ class TjansteKomponentService {
                     || tjanstekomponent.producentDnsNamn != dto.producentDnsNamn
                     || tjanstekomponent.pingForConfigurationURL != dto.pingForConfigurationURL
                     || tjanstekomponent.konsumentIpadress != dto.konsumentIpadress
-                    || tjanstekomponent.nat.id != dto.nat.id) {
+                    || tjanstekomponent.nat?.id != dto.nat.id) {
                 //this update should trigger email since more stuff than the contacts have changed
                 shouldGenerateEmail = true
             }
