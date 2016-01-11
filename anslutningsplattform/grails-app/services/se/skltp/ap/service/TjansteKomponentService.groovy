@@ -94,15 +94,13 @@ class TjansteKomponentService {
                         hsaId: domainServiceComponent.huvudansvarigKontakt?.hsaId,
                         namn: domainServiceComponent.huvudansvarigKontakt?.namn,
                         epost: domainServiceComponent.huvudansvarigKontakt?.epost,
-                        telefon: domainServiceComponent.huvudansvarigKontakt?.telefon,
-                        otherInfo: domainServiceComponent.huvudansvarigKontakt?.otherInfo
+                        telefon: domainServiceComponent.huvudansvarigKontakt?.telefon
                 ),
                 tekniskKontakt: new PersonkontaktDTO(
                         hsaId: domainServiceComponent.tekniskKontakt?.hsaId,
                         namn: domainServiceComponent.tekniskKontakt?.namn,
                         epost: domainServiceComponent.tekniskKontakt?.epost,
-                        telefon: domainServiceComponent.tekniskKontakt?.telefon,
-                        otherInfo: domainServiceComponent.tekniskKontakt?.otherInfo
+                        telefon: domainServiceComponent.tekniskKontakt?.telefon
                 ),
                 tekniskSupportKontakt: new FunktionkontaktDTO(
                         epost: domainServiceComponent.tekniskSupportkontakt?.epost,
@@ -223,8 +221,7 @@ class TjansteKomponentService {
                 namn: dto.namn,
                 hsaId: dto.hsaId,
                 epost: dto.epost,
-                telefon: dto.telefon,
-                otherInfo: dto.otherInfo
+                telefon: dto.telefon
         )
     }
 
