@@ -18,6 +18,7 @@ class Tjanstekomponent {
     Personkontakt tekniskKontakt
     Funktionkontakt tekniskSupportkontakt
     Nat nat
+    String otherInfo
 
     static hasMany = [
             driftmiljoer: Driftmiljo,
@@ -36,5 +37,6 @@ class Tjanstekomponent {
         tekniskKontakt nullable: true
         tekniskSupportkontakt nullable: true
         nat nullable: true
+        otherInfo nullable: true, blank: true
     }
 }

@@ -12,7 +12,7 @@ Beställarens e-post: ${bestallare.epost!'-'}
 Beställarens HSA-ID: <#if bestallare.hsaId??>${bestallare.hsaId}<#else>(okänt)</#if>
 .
 Övrig information från beställaren:
-(fältet finns ej)
+${newTjanstekomponent.otherInfo!'-'} ${(newTjanstekomponent.otherInfo?? != oldTjanstekomponent.otherInfo??)?then('(uppdaterad)', '')}
 .
 .
 -------------------------------------------------------
@@ -38,17 +38,21 @@ Information om systeminstans
 Kontaktuppgifter
 -------------------------------------------------------
 <#assign kontakt = newTjanstekomponent.huvudansvarigKontakt>
-.  Huvudansvarig: ${kontakt.namn!'-'}
-.  E-postadress: ${kontakt.epost!'-'}
-.  Telefon: ${kontakt.telefon!'-'}
+<#assign oldKontakt = oldTjanstekomponent.huvudansvarigKontakt>
+.  Huvudansvarig: ${kontakt.namn!'-'} ${(oldKontakt?? && kontakt.namn != oldKontakt.namn)?then('(uppdaterad)', '')}
+.  E-postadress: ${kontakt.epost!'-'} ${(oldKontakt?? && kontakt.epost != oldKontakt.epost)?then('(uppdaterad)', '')}
+.  Telefon: ${kontakt.telefon!'-'} ${(oldKontakt?? && kontakt.telefon != oldKontakt.telefon)?then('(uppdaterad)', '')}
 . 
 <#assign kontakt = newTjanstekomponent.tekniskKontakt>
-.  Teknisk kontaktperson: ${kontakt.namn!'-'}
-.  E-postadress: ${kontakt.epost!'-'}
-.  Telefon: ${kontakt.telefon!'-'}
+<#assign oldKontakt = oldTjanstekomponent.tekniskKontakt>
+.  Teknisk kontaktperson: ${kontakt.namn!'-'} ${(oldKontakt?? && kontakt.namn != oldKontakt.namn)?then('(uppdaterad)', '')}
+.  E-postadress: ${kontakt.epost!'-'} ${(oldKontakt?? && kontakt.epost != oldKontakt.epost)?then('(uppdaterad)', '')}
+.  Telefon: ${kontakt.telefon!'-'} ${(oldKontakt?? && kontakt.telefon != oldKontakt.telefon)?then('(uppdaterad)', '')}
 .
-.  Teknisk support, funktionsbrevlåda: ${newTjanstekomponent.tekniskSupportkontakt.epost!'-'}
-.  Teknisk support, telefon: ${newTjanstekomponent.tekniskSupportkontakt.telefon!'-'}
+<#assign funktionKontakt = newTjanstekomponent.tekniskSupportkontakt>
+<#assign oldFunktionKontakt = oldTjanstekomponent.tekniskSupportkontakt>
+.  Teknisk support, funktionsbrevlåda: ${funktionKontakt.epost!'-'} ${(oldFunktionKontakt?? && funktionKontakt.epost != oldFunktionKontakt.epost)?then('(uppdaterad)', '')}
+.  Teknisk support, telefon: ${funktionKontakt.telefon!'-'} ${(oldFunktionKontakt?? && funktionKontakt.telefon != oldFunktionKontakt.telefon)?then('(uppdaterad)', '')}
 . 
 .
 §

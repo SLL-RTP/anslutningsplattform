@@ -21,6 +21,7 @@ class TjanstekomponentDTO {
     PersonkontaktDTO tekniskKontakt
     FunktionkontaktDTO tekniskSupportKontakt
     NatDTO nat
+    String otherInfo
 
     static constraints = {
         id nullable: true
@@ -35,5 +36,6 @@ class TjanstekomponentDTO {
         tekniskKontakt nullable: true
         tekniskSupportKontakt nullable: true
         nat nullable: true
+        otherInfo nullable: true, blank: true
     }
 }

@@ -106,8 +106,10 @@ class TjansteKomponentService {
                         epost: domainServiceComponent.tekniskSupportkontakt?.epost,
                         telefon: domainServiceComponent.tekniskSupportkontakt?.telefon
                 ),
-                nat: domainServiceComponent.nat ? new NatDTO(id: domainServiceComponent.nat.id, namn: domainServiceComponent.nat.namn) : null
+                nat: domainServiceComponent.nat ? new NatDTO(id: domainServiceComponent.nat.id, namn: domainServiceComponent.nat.namn) : null,
+                otherInfo: domainServiceComponent.otherInfo
         )
+        tjanstekomponentDTO
     }
 
     /**
@@ -126,7 +128,8 @@ class TjansteKomponentService {
                     || tjanstekomponent.producentDnsNamn != dto.producentDnsNamn
                     || tjanstekomponent.pingForConfigurationURL != dto.pingForConfigurationURL
                     || tjanstekomponent.konsumentIpadress != dto.konsumentIpadress
-                    || tjanstekomponent.nat?.id != dto.nat.id) {
+                    || tjanstekomponent.nat?.id != dto.nat.id
+                    || tjanstekomponent.otherInfo != dto.otherInfo) {
                 //this update should trigger email since more stuff than the contacts have changed
                 shouldGenerateEmail = true
             }
@@ -141,6 +144,7 @@ class TjansteKomponentService {
             tjanstekomponent.tekniskKontakt = fromDTO(dto.tekniskKontakt)
             tjanstekomponent.tekniskSupportkontakt = fromDTO(dto.tekniskSupportKontakt)
             tjanstekomponent.nat = dto.nat ? getOrCreate(dto.nat) : null
+            tjanstekomponent.otherInfo = dto.otherInfo
             tjanstekomponent.save()
             log.debug("should trigger email: $shouldGenerateEmail")
             log.debug("old: $oldTjanstekomponent")
@@ -149,7 +153,8 @@ class TjansteKomponentService {
                 emailUpdatedTjanstekomponent(oldTjanstekomponent, tjanstekomponent, bestallare)
                 return 1
             } else {
-                return 0
+                emailUpdatedTjanstekomponent(oldTjanstekomponent, tjanstekomponent, bestallare)
+                return 1
             }
         }
         -1
@@ -190,13 +195,30 @@ class TjansteKomponentService {
                 producentIpadress: input.producentIpadress,
                 producentDnsNamn: input.producentDnsNamn,
                 konsumentIpadress: input.konsumentIpadress,
-                pingForConfigurationURL: input.pingForConfigurationURL
+                pingForConfigurationURL: input.pingForConfigurationURL,
+                otherInfo: input.otherInfo,
+                huvudansvarigKontakt: copyPersonkontakt(input.huvudansvarigKontakt),
+                tekniskKontakt: copyPersonkontakt(input.tekniskKontakt),
+                tekniskSupportkontakt: input.tekniskSupportkontakt != null ?
+                        new Funktionkontakt(epost: input.tekniskSupportkontakt.epost,
+                                telefon: input.tekniskSupportkontakt.telefon)
+                        : null
         )
         if (input.nat) {
             tjanstekomponent.nat = new Nat(namn: input.nat.namn)
             tjanstekomponent.nat.id = input.nat.id
         }
         tjanstekomponent
+    }
+
+    private Personkontakt copyPersonkontakt(Personkontakt input) {
+        if (input == null) return null
+        new Personkontakt(
+                hsaId: input.hsaId,
+                namn: input.namn,
+                epost: input.epost,
+                telefon: input.telefon
+        )
     }
 
     private Tjanstekomponent fromDTO(TjanstekomponentDTO dto) {
@@ -211,7 +233,8 @@ class TjansteKomponentService {
                 huvudansvarigKontakt: fromDTO(dto.huvudansvarigKontakt),
                 tekniskKontakt: fromDTO(dto.tekniskKontakt),
                 tekniskSupportkontakt: fromDTO(dto.tekniskSupportKontakt),
-                nat: dto.nat ? getOrCreate(dto.nat) : null
+                nat: dto.nat ? getOrCreate(dto.nat) : null,
+                otherInfo: dto.otherInfo
         )
         tjanstekomponent
     }

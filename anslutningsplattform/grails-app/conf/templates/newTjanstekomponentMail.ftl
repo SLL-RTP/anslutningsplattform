@@ -11,7 +11,7 @@ Beställarens e-post: ${bestallare.epost!'-'}
 Beställarens HSA-ID: <#if bestallare.hsaId??>${bestallare.hsaId}<#else>(okänt)</#if>
 .
 Övrig information från beställaren:
-(fältet finns ej)
+${tjanstekomponent.otherInfo!'-'}
 .
 .
 -------------------------------------------------------
