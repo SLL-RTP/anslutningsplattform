@@ -137,6 +137,7 @@ class TjansteKomponentService {
             log.debug("old: $oldTjanstekomponent")
             log.debug("new: $tjanstekomponent")
             emailUpdatedTjanstekomponent(oldTjanstekomponent, tjanstekomponent, bestallare)
+            return 1
         }
         -1
     }
