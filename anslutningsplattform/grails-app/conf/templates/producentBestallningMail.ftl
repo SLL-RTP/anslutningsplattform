@@ -22,11 +22,11 @@ Producentbeställning
 <#assign producentbestallning = bestallning.producentbestallning>
 Tjänsteproducent:
 <#assign tjansteproducent = producentbestallning.tjanstekomponent>
-.  hsaId: ${tjansteproducent.hsaId}
+.  HSA-Id: ${tjansteproducent.hsaId}
 .  Namn på system: ${tjansteproducent.beskrivning!"-"}
 .  Namn på e-tjänst: ${producentbestallning.namnPaEtjanst!"-"}
 .
-.  nya producentanslutningar:
+.  Nya producentanslutningar:
 ------------------------------------------
 <#if (producentbestallning.producentanslutningar)?has_content>
 <#list producentbestallning.producentanslutningar?sort_by("tjanstekontraktNamnrymd") as producentanslutning>
@@ -47,14 +47,14 @@ Tjänsteproducent:
 . .  (inga)
 </#if>
 .
-.  uppdaterade producentanslutningar:
+.  Uppdaterade producentanslutningar:
 ------------------------------------------
 <#if (producentbestallning.uppdateradProducentanslutningar)?has_content>
 <#list producentbestallning.uppdateradProducentanslutningar?sort_by("tjanstekontraktNamnrymd") as uppdateradProducentanslutning>
 . .  [${uppdateradProducentanslutning_index+1}] ${uppdateradProducentanslutning.tjanstekontraktNamnrymd} v${uppdateradProducentanslutning.tjanstekontraktMajorVersion}.x (${domanLookup[uppdateradProducentanslutning.tjanstekontraktNamnrymd].svensktKortNamn})
 . . .  RIVTA-profil: ${uppdateradProducentanslutning.rivtaProfil} (<#if uppdateradProducentanslutning.rivtaProfil == uppdateradProducentanslutning.tidigareRivtaProfil>oförändrad<#else>uppdaterad</#if>)
 . . .  URL: ${uppdateradProducentanslutning.url} (<#if uppdateradProducentanslutning.url == uppdateradProducentanslutning.tidigareUrl>oförändrad<#else>uppdaterad</#if>)
-. . .  logiska adresser som ska läggas till:
+. . .  Logiska adresser som ska läggas till:
 <#if (uppdateradProducentanslutning.nyaLogiskaAdresser)?has_content>
 <#list uppdateradProducentanslutning.nyaLogiskaAdresser as logiskAdress>
 . . . .  [${logiskAdress_index+1}] ${logiskAdress.hsaId} - ${logiskAdress.namn}
@@ -62,7 +62,7 @@ Tjänsteproducent:
 <#else>
 . . . .  (inga)
 </#if>
-. . .  logiska adresser som ska tas bort:
+. . .  Logiska adresser som ska tas bort:
 <#if (uppdateradProducentanslutning.borttagnaLogiskaAdresser)?has_content>
 <#list uppdateradProducentanslutning.borttagnaLogiskaAdresser as logiskAdress>
 . . . .  [${logiskAdress_index+1}] ${logiskAdress.hsaId} - ${logiskAdress.namn}
@@ -84,14 +84,14 @@ Beställningar av anropsbehörighet / etablering av samverkan
 <#list bestallning.konsumentbestallningar as konsumentbestallning>
 Tjänstekonsument ${konsumentbestallning_index+1}
 <#assign tjanstekonsument = konsumentbestallning.tjanstekomponent>
-.  hsaId: ${tjanstekonsument.hsaId}
-.  beskrivning: ${tjanstekonsument.beskrivning}
+.  HSA-Id: ${tjanstekonsument.hsaId}
+.  Namn på system: ${tjanstekonsument.beskrivning}
 .
-.  konsumenten ska ha behörighet på följande tjänstekontrakt för följande logiska adresser:
+.  Konsumenten ska ha behörighet på följande tjänstekontrakt för följande logiska adresser:
 <#if (konsumentbestallning.konsumentanslutningar)?has_content>
 <#list konsumentbestallning.konsumentanslutningar?sort_by("tjanstekontraktNamnrymd") as konsumentanslutning>
 . .  [${konsumentanslutning_index+1}] ${konsumentanslutning.tjanstekontraktNamnrymd} v${konsumentanslutning.tjanstekontraktMajorVersion}.x (${domanLookup[konsumentanslutning.tjanstekontraktNamnrymd].svensktKortNamn})
-. . .  logiska adresser som ska läggas till:
+. . .  Logiska adresser som ska läggas till:
 <#if (konsumentanslutning.nyaLogiskaAdresser)?has_content>
 <#list konsumentanslutning.nyaLogiskaAdresser as logiskAdress>
 . . . .  [${logiskAdress_index+1}] ${logiskAdress.hsaId} - ${logiskAdress.namn}
@@ -113,38 +113,38 @@ System- och kontaktinformation
 <#assign tjanstekomponent = bestallning.producentbestallning.tjanstekomponent>
 tjänsteproducent:
 .  Organisation: ${tjanstekomponent.organisation!"-"}
-.  hsaId: ${tjanstekomponent.hsaId}
+.  HSA-Id: ${tjanstekomponent.hsaId}
 .  Namn på system: ${tjanstekomponent.beskrivning!"-"}
 .  Nät: <#if tjanstekomponent.nat??>${tjanstekomponent.nat.namn}<#else>(inget nät valt)</#if>
 .  IP-adress vid anrop till systemet (systemet är producent): ${tjanstekomponent.producentIpadress!"-"}
 .  DNS-namn: ${tjanstekomponent.producentDnsNamn!"-"}
 .  URL till övervakningstjänst: ${tjanstekomponent.pingForConfigurationURL!"-"}
 .
-.  huvudansvarig:
+.  Huvudansvarig:
 <#if tjanstekomponent.huvudansvarigKontakt??>
 <#assign kontaktperson = tjanstekomponent.huvudansvarigKontakt>
-. .  namn: ${kontaktperson.namn!"-"}
-. .  hsaId: ${kontaktperson.hsaId!"-"}
-. .  telefon: ${kontaktperson.telefon!"-"}
-. .  e-post: ${kontaktperson.epost!"-"}
+. .  Namn: ${kontaktperson.namn!"-"}
+. .  HSA-Id: ${kontaktperson.hsaId!"-"}
+. .  Telefon: ${kontaktperson.telefon!"-"}
+. .  E-post: ${kontaktperson.epost!"-"}
 <#else>
 . .  (ej angiven)
 </#if>
-.  teknisk kontakt:
+.  Teknisk kontakt:
 <#if tjanstekomponent.tekniskKontakt??>
 <#assign kontaktperson = tjanstekomponent.tekniskKontakt>
-. .  namn: ${kontaktperson.namn!"-"}
-. .  hsaId: ${kontaktperson.hsaId!"-"}
-. .  telefon: ${kontaktperson.telefon!"-"}
-. .  e-post: ${kontaktperson.epost!"-"}
+. .  Namn: ${kontaktperson.namn!"-"}
+. .  HSA-Id: ${kontaktperson.hsaId!"-"}
+. .  Telefon: ${kontaktperson.telefon!"-"}
+. .  E-post: ${kontaktperson.epost!"-"}
 <#else>
 . .  (ej angiven)
 </#if>
-.  funktionsbrevlåda:
+.  Funktionsbrevlåda:
 <#if tjanstekomponent.tekniskSupportkontakt??>
 <#assign funktionsbrevlada = tjanstekomponent.tekniskSupportkontakt>
-. .  telefon: ${funktionsbrevlada.telefon!"-"}
-. .  e-post: ${funktionsbrevlada.epost!"-"}
+. .  Telefon: ${funktionsbrevlada.telefon!"-"}
+. .  E-post: ${funktionsbrevlada.epost!"-"}
 <#else>
 . .  (ej angiven)
 </#if>
@@ -152,38 +152,38 @@ tjänsteproducent:
 <#if bestallning.konsumentbestallningar?has_content>
 <#list bestallning.konsumentbestallningar as konsumentbestallning>
 <#assign tjanstekomponent = konsumentbestallning.tjanstekomponent>
-tjänstekonsument ${konsumentbestallning_index+1}:
+Tjänstekonsument ${konsumentbestallning_index+1}:
 .  Organisation: ${tjanstekomponent.organisation!"-"}
-.  hsaId: ${tjanstekomponent.hsaId}
+.  HSA-Id: ${tjanstekomponent.hsaId}
 .  Namn på system: ${tjanstekomponent.beskrivning}
 .  Nät: <#if tjanstekomponent.nat??>${tjanstekomponent.nat.namn}<#else>(inget nät valt)</#if>
 .  IP-adress vid anrop från systemet (systemet är konsument): ${tjanstekomponent.konsumentIpadress!"-"}
 
-.  huvudansvarig:
+.  Huvudansvarig:
 <#if tjanstekomponent.huvudansvarigKontakt??>
 <#assign kontaktperson = tjanstekomponent.huvudansvarigKontakt>
-. .  namn: ${kontaktperson.namn!"-"}
-. .  hsaId: ${kontaktperson.hsaId!"-"}
-. .  telefon: ${kontaktperson.telefon!"-"}
-. .  e-post: ${kontaktperson.epost!"-"}
+. .  Namn: ${kontaktperson.namn!"-"}
+. .  HsaId: ${kontaktperson.hsaId!"-"}
+. .  Telefon: ${kontaktperson.telefon!"-"}
+. .  E-post: ${kontaktperson.epost!"-"}
 <#else>
 . .  (ej angiven)
 </#if>
-.  teknisk kontakt:
+.  Teknisk kontakt:
 <#if tjanstekomponent.tekniskKontakt??>
 <#assign kontaktperson = tjanstekomponent.tekniskKontakt>
-. .  namn: ${kontaktperson.namn!"-"}
-. .  hsaId: ${kontaktperson.hsaId!"-"}
-. .  telefon: ${kontaktperson.telefon!"-"}
-. .  e-post: ${kontaktperson.epost!"-"}
+. .  Namn: ${kontaktperson.namn!"-"}
+. .  HsaId: ${kontaktperson.hsaId!"-"}
+. .  Telefon: ${kontaktperson.telefon!"-"}
+. .  E-post: ${kontaktperson.epost!"-"}
 <#else>
 . .  (ej angiven)
 </#if>
-.  funktionsbrevlåda:
+.  Funktionsbrevlåda:
 <#if tjanstekomponent.tekniskSupportkontakt??>
 <#assign funktionsbrevlada = tjanstekomponent.tekniskSupportkontakt>
-. .  telefon: ${funktionsbrevlada.telefon!"-"}
-. .  e-post: ${funktionsbrevlada.epost!"-"}
+. .  Telefon: ${funktionsbrevlada.telefon!"-"}
+. .  E-post: ${funktionsbrevlada.epost!"-"}
 <#else>
 . .  (ej angiven)
 </#if>

@@ -12,19 +12,19 @@ Beställarens e-post: ${bestallare.epost!'-'}
 Beställarens HSA-ID: <#if bestallare.hsaId??>${bestallare.hsaId}<#else>(okänt)</#if>
 .
 Övrig information från beställaren:
-${newTjanstekomponent.otherInfo!'-'} ${(newTjanstekomponent.otherInfo?? != oldTjanstekomponent.otherInfo??)?then('(uppdaterad)', '')}
+${newTjanstekomponent.otherInfo!'-'}
 .
 .
 -------------------------------------------------------
 Information om systeminstans
 -------------------------------------------------------
-.  HSAid: ${newTjanstekomponent.hsaId}
-.  Organisation: ${newTjanstekomponent.organisation!'-'} ${(newTjanstekomponent.organisation?? != oldTjanstekomponent.organisation??)?then('(uppdaterad)', '')}
+.  HSA-Id: ${newTjanstekomponent.hsaId}
+.  Organisation: ${newTjanstekomponent.organisation!'-'} ${(newTjanstekomponent.organisation != oldTjanstekomponent.organisation)?then('(uppdaterad)', '')}
 .  Namn på system: ${newTjanstekomponent.beskrivning!'-'} ${(newTjanstekomponent.beskrivning != oldTjanstekomponent.beskrivning)?then('(uppdaterad)', '')}
 .  Url till övervakningstjänst: ${newTjanstekomponent.pingForConfigurationURL!'-'} ${(newTjanstekomponent.pingForConfigurationURL != oldTjanstekomponent.pingForConfigurationURL)?then('(uppdaterad)', '')}
-.  IP-adress vid anrop till systemet (systemet är producent): ${newTjanstekomponent.producentIpadress!'-'} ${(newTjanstekomponent.producentIpadress?? != oldTjanstekomponent.producentIpadress??)?then('(uppdaterad)', '')}
-.  Dns-namn: ${newTjanstekomponent.producentDnsNamn!'-'} ${(newTjanstekomponent.producentDnsNamn?? != oldTjanstekomponent.producentDnsNamn??)?then('(uppdaterad)', '')}
-.  IP-adress vid anrop från systemet (systemet är konsument): ${newTjanstekomponent.konsumentIpadress!'-'} ${(newTjanstekomponent.konsumentIpadress?? != oldTjanstekomponent.konsumentIpadress??)?then('(uppdaterad)', '')}
+.  IP-adress vid anrop till systemet (systemet är producent): ${newTjanstekomponent.producentIpadress!'-'} ${(newTjanstekomponent.producentIpadress != oldTjanstekomponent.producentIpadress)?then('(uppdaterad)', '')}
+.  Dns-namn: ${newTjanstekomponent.producentDnsNamn!'-'} ${(newTjanstekomponent.producentDnsNamn != oldTjanstekomponent.producentDnsNamn)?then('(uppdaterad)', '')}
+.  IP-adress vid anrop från systemet (systemet är konsument): ${newTjanstekomponent.konsumentIpadress!'-'} ${(newTjanstekomponent.konsumentIpadress != oldTjanstekomponent.konsumentIpadress)?then('(uppdaterad)', '')}
 <#if newTjanstekomponent.nat?? && oldTjanstekomponent.nat??>
 .  Nätverk: ${newTjanstekomponent.nat.namn} (${newTjanstekomponent.nat.id}) ${(newTjanstekomponent.nat.id != oldTjanstekomponent.nat.id)?then('(uppdaterad)', '')}
 <#elseif newTjanstekomponent.nat??>

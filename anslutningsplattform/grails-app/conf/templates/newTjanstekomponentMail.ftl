@@ -17,7 +17,7 @@ ${tjanstekomponent.otherInfo!'-'}
 -------------------------------------------------------
 Information om systeminstans
 -------------------------------------------------------
-.  HSAid: ${tjanstekomponent.hsaId} (Ny instans)
+.  HSA-Id: ${tjanstekomponent.hsaId} (Ny instans)
 .  Organisation: ${tjanstekomponent.organisation!'-'}
 .  Namn på system: ${tjanstekomponent.beskrivning!'-'}
 .  Url till övervakningstjänst: ${tjanstekomponent.pingForConfigurationURL!'-'}
