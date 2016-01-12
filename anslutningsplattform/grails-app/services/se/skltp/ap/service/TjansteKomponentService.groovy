@@ -121,18 +121,6 @@ class TjansteKomponentService {
         log.debug "$tjanstekomponent"
         log.debug "$bestallare"
         if (tjanstekomponent) {
-            def shouldGenerateEmail = false
-            if (tjanstekomponent.beskrivning != dto.beskrivning
-                    || tjanstekomponent.organisation != dto.organisation
-                    || tjanstekomponent.producentIpadress != dto.producentIpadress
-                    || tjanstekomponent.producentDnsNamn != dto.producentDnsNamn
-                    || tjanstekomponent.pingForConfigurationURL != dto.pingForConfigurationURL
-                    || tjanstekomponent.konsumentIpadress != dto.konsumentIpadress
-                    || tjanstekomponent.nat?.id != dto.nat.id
-                    || tjanstekomponent.otherInfo != dto.otherInfo) {
-                //this update should trigger email since more stuff than the contacts have changed
-                shouldGenerateEmail = true
-            }
             def oldTjanstekomponent = copyTjanstekomponent(tjanstekomponent)
             tjanstekomponent.beskrivning = dto.beskrivning
             tjanstekomponent.organisation = dto.organisation
@@ -144,18 +132,11 @@ class TjansteKomponentService {
             tjanstekomponent.tekniskKontakt = fromDTO(dto.tekniskKontakt)
             tjanstekomponent.tekniskSupportkontakt = fromDTO(dto.tekniskSupportKontakt)
             tjanstekomponent.nat = dto.nat ? getOrCreate(dto.nat) : null
-            tjanstekomponent.otherInfo = dto.otherInfo
+            tjanstekomponent.otherInfo = dto.otherInfo //transient, just needed for email
             tjanstekomponent.save()
-            log.debug("should trigger email: $shouldGenerateEmail")
             log.debug("old: $oldTjanstekomponent")
             log.debug("new: $tjanstekomponent")
-            if (shouldGenerateEmail) {
-                emailUpdatedTjanstekomponent(oldTjanstekomponent, tjanstekomponent, bestallare)
-                return 1
-            } else {
-                emailUpdatedTjanstekomponent(oldTjanstekomponent, tjanstekomponent, bestallare)
-                return 1
-            }
+            emailUpdatedTjanstekomponent(oldTjanstekomponent, tjanstekomponent, bestallare)
         }
         -1
     }
