@@ -25,6 +25,8 @@ class Tjanstekomponent {
     ]
     static embedded = ['huvudansvarigKontakt', 'tekniskKontakt', 'tekniskSupportkontakt']
 
+    static transients = ['otherInfo']
+
     static constraints = {
         hsaId blank: false, unique: true
         beskrivning nullable: false, blank: false
