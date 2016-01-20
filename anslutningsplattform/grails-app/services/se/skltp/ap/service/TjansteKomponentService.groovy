@@ -158,7 +158,11 @@ class TjansteKomponentService {
         def tjanstekomponentToAddress = grailsApplication.config.tjanstekomponent.email.address
         def tjanstekomponentSubject = grailsApplication.config.tjanstekomponent.email.subject
         mailingService.send(null, tjanstekomponentToAddress, tjanstekomponentSubject, mailContent)
-
+        def confirmationEmailActivated = grailsApplication.config.tjanstekomponent.confirmation.email.activated
+        if (confirmationEmailActivated && bestallare.epost?.trim()) {
+            def confirmationSubject = grailsApplication.config.tjanstekomponent.confirmation.email.subject
+            mailingService.send(null, bestallare.epost, confirmationSubject, mailContent)
+        }
     }
 
     def emailUpdatedTjanstekomponent(Tjanstekomponent oldTjanstekomponent, Tjanstekomponent newTjanstekomponent, PersonkontaktDTO bestallare) {
@@ -166,7 +170,11 @@ class TjansteKomponentService {
         def tjanstekomponentToAddress = grailsApplication.config.tjanstekomponent.email.address
         def tjanstekomponentSubject = grailsApplication.config.tjanstekomponent.email.subject
         mailingService.send(null, tjanstekomponentToAddress, tjanstekomponentSubject, mailContent)
-
+        def confirmationEmailActivated = grailsApplication.config.tjanstekomponent.confirmation.email.activated
+        if (confirmationEmailActivated && bestallare.epost?.trim()) {
+            def confirmationSubject = grailsApplication.config.tjanstekomponent.confirmation.email.subject
+            mailingService.send(null, bestallare.epost, confirmationSubject, mailContent)
+        }
     }
 
     private Tjanstekomponent copyTjanstekomponent(Tjanstekomponent input) {

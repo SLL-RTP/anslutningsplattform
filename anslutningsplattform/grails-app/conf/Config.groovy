@@ -281,6 +281,8 @@ environments {
                 address = 'johanna.essen@callistaenterprise.se'
                 subject = 'Beställning från Anslutningsplattformen'
             }
+            confirmation.email.activated = false
+            confirmation.email.subject = 'Beställning från Anslutningsplattformen'
         }
 	}
 
