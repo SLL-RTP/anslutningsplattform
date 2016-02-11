@@ -17,7 +17,7 @@ Beställarens roll: <#if bestallning.bestallareRoll??>${bestallning.bestallareRo
 .
 .
 -------------------------------------------------------
-Beställningar av anropsbehörighet / etablering av samverkan
+Beställningar av adresseringsbehörighet / etablering av samverkan
 -------------------------------------------------------
 <#assign konsumentbestallning = bestallning.konsumentbestallningar[0]>
 Tjänstekonsument:

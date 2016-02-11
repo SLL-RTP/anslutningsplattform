@@ -79,7 +79,7 @@ Tjänsteproducent:
 .
 .
 -------------------------------------------------------
-Beställningar av anropsbehörighet / etablering av samverkan
+Beställningar av adresseringsbehörighet / etablering av samverkan
 -------------------------------------------------------
 <#list bestallning.konsumentbestallningar as konsumentbestallning>
 Tjänstekonsument ${konsumentbestallning_index+1}
