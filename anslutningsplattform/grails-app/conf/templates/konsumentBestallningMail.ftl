@@ -26,7 +26,7 @@ HSA-Id: ${tjanstekonsument.hsaId}
 Namn på system: ${tjanstekonsument.beskrivning!"-"}
 Namn på e-tjänst: ${konsumentbestallning.namnPaEtjanst!"-"}
 .
-Konsumenten ska ha behörighet på följande tjänstekontrakt för följande logiska adresser:
+Konsumenten ska ha behörighet på följande tjänstekontrakt för följande logiska adresser (Ny konsument):
 <#if (konsumentbestallning.konsumentanslutningar)?has_content>
 <#list konsumentbestallning.konsumentanslutningar?sort_by("tjanstekontraktNamnrymd") as konsumentanslutning>
 .  [${konsumentanslutning_index+1}] ${konsumentanslutning.tjanstekontraktNamnrymd} v${konsumentanslutning.tjanstekontraktMajorVersion}.x (${domanLookup[konsumentanslutning.tjanstekontraktNamnrymd].svensktKortNamn})
