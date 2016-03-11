@@ -59,5 +59,5 @@ Kontaktuppgifter
 användare: ¤${(bestallare.hsaId)?keep_after_last("-")}¤
 £RTP£
 ñ${bestallare.epost!'epost_okand'}ñ
-ÿsupport@callistaenterprise.seÿ
+ÿÿ
 æRTPæ

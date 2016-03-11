@@ -195,5 +195,5 @@ Tjänstekonsument ${konsumentbestallning_index+1}:
 användare: ¤${(bestallning.bestallare.hsaId)?keep_after_last("-")}¤
 £RTP£
 ñ${bestallning.bestallare.epost}ñ
-ÿsupport@callistaenterprise.seÿ
+ÿÿ
 æRTPæ
